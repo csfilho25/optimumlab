@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimum Lab — Peptide Science & Excellence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep:    #08141c;
+    --bg-dark:    #0d1e28;
+    --bg-card:    #112233;
+    --bg-card2:   #0f1d2a;
+    --teal:       #1a3d52;
+    --teal-light: #1e4d65;
+    --gold:       #c9a258;
+    --gold-light: #e0bc7a;
+    --gold-dim:   #7a5f2e;
+    --white:      #f5f0e8;
+    --gray:       #8ca0ad;
+    --text:       #d4cfc7;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-deep);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: .6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: linear-gradient(180deg, rgba(8,20,28,.95) 0%, rgba(8,20,28,0) 100%);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,162,88,.12);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem; font-weight: 300; letter-spacing: .12em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); font-weight: 600; }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: .8rem; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--gray);
+    text-decoration: none; transition: color .3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    padding: .55rem 1.4rem;
+    border: 1px solid var(--gold);
+    color: var(--gold) !important;
+    border-radius: 2px;
+    transition: all .3s !important;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--bg-deep) !important; }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; overflow: hidden;
+    padding: 0 2rem;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 30%, rgba(26,61,82,.55) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 80% at 80% 80%, rgba(201,162,88,.08) 0%, transparent 60%),
+      linear-gradient(160deg, #08141c 0%, #0d2535 45%, #08141c 100%);
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a258' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .6rem;
+    padding: .4rem 1.2rem;
+    border: 1px solid rgba(201,162,88,.35);
+    border-radius: 100px;
+    font-size: .7rem; font-weight: 500; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 2rem;
+    animation: fadeUp .8s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--gold); box-shadow: 0 0 8px var(--gold);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 300; line-height: 1.05;
+    color: var(--white); letter-spacing: -.01em;
+    animation: fadeUp .9s .1s ease both;
+  }
+
+  .hero-title em {
+    font-style: italic; color: var(--gold);
+    display: block;
+  }
+
+  .hero-subtitle {
+    max-width: 540px; margin: 1.8rem auto 0;
+    font-size: 1rem; font-weight: 300; line-height: 1.7;
+    color: var(--gray);
+    animation: fadeUp 1s .2s ease both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; margin-top: 3rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 1s .3s ease both;
+  }
+
+  .btn-primary {
+    padding: .85rem 2.2rem;
+    background: var(--gold);
+    color: var(--bg-deep);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600; font-size: .85rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    border: none; border-radius: 2px; cursor: pointer;
+    text-decoration: none;
+    transition: all .3s;
+    box-shadow: 0 0 30px rgba(201,162,88,.2);
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    box-shadow: 0 0 45px rgba(201,162,88,.35);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    padding: .85rem 2.2rem;
+    border: 1px solid rgba(255,255,255,.2);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400; font-size: .85rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    background: transparent; border-radius: 2px; cursor: pointer;
+    text-decoration: none;
+    transition: all .3s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stats {
+    display: flex; gap: 4rem; margin-top: 5rem; justify-content: center;
+    animation: fadeUp 1s .5s ease both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; font-weight: 300; color: var(--gold);
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: .7rem; font-weight: 500; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--gray);
+    margin-top: .4rem;
+  }
+
+  .hero-divider {
+    position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,162,88,.3), transparent);
+  }
+
+  /* ─── SECTIONS ─── */
+  section { position: relative; z-index: 1; }
+
+  .section-label {
+    display: inline-block;
+    font-size: .68rem; font-weight: 600; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300; line-height: 1.2;
+    color: var(--white);
+  }
+
+  .section-title strong { font-weight: 600; }
+
+  /* ─── PROTOCOLS ─── */
+  #protocols {
+    padding: 8rem 4rem;
+    background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-dark) 100%);
+  }
+
+  .protocols-header {
+    text-align: center; margin-bottom: 5rem;
+  }
+
+  .protocols-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px;
+    max-width: 1100px; margin: 0 auto;
+    border: 1px solid rgba(201,162,88,.12);
+  }
+
+  .protocol-card {
+    background: var(--bg-card);
+    padding: 3.5rem;
+    position: relative; overflow: hidden;
+    transition: transform .4s, background .4s;
+  }
+  .protocol-card:hover { background: var(--teal); transform: translateY(-4px); }
+
+  .protocol-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0; transition: opacity .4s;
+  }
+  .protocol-card:hover::before { opacity: 1; }
+
+  .protocol-icon {
+    width: 48px; height: 48px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.8rem;
+    font-size: 1.3rem;
+  }
+
+  .protocol-tag {
+    display: inline-block;
+    font-size: .65rem; font-weight: 600; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: .8rem;
+  }
+
+  .protocol-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300; color: var(--white);
+    margin-bottom: .6rem;
+  }
+
+  .protocol-desc {
+    font-size: .9rem; line-height: 1.7; color: var(--gray);
+    margin-bottom: 2rem;
+  }
+
+  .protocol-features { list-style: none; margin-bottom: 2.5rem; }
+  .protocol-features li {
+    display: flex; align-items: center; gap: .8rem;
+    font-size: .85rem; color: var(--text);
+    padding: .5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .protocol-features li::before {
+    content: '→';
+    color: var(--gold); font-size: .75rem; flex-shrink: 0;
+  }
+
+  .protocol-dosage {
+    background: rgba(201,162,88,.08);
+    border-left: 2px solid var(--gold);
+    padding: 1rem 1.2rem;
+    font-size: .8rem; color: var(--gray); line-height: 1.6;
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* ─── ABOUT / WHY ─── */
+  #about {
+    padding: 8rem 4rem;
+    background: var(--bg-dark);
+  }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: center;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-chart {
+    background: var(--bg-card);
+    border: 1px solid rgba(201,162,88,.15);
+    border-radius: 4px; padding: 2rem;
+    overflow: hidden;
+  }
+
+  .chart-title {
+    font-size: .7rem; font-weight: 600; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .chart-row {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .chart-label {
+    font-size: .78rem; color: var(--gray); width: 90px; flex-shrink: 0;
+  }
+
+  .chart-bar-wrap {
+    flex: 1; background: rgba(255,255,255,.05);
+    border-radius: 100px; height: 8px; overflow: hidden;
+  }
+
+  .chart-bar {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    animation: barGrow 1.5s ease forwards;
+    width: 0;
+  }
+
+  @keyframes barGrow { to { width: var(--w); } }
+
+  .chart-val {
+    font-size: .78rem; color: var(--gold); font-weight: 600;
+    width: 40px; text-align: right; flex-shrink: 0;
+  }
+
+  .compare-table { margin-top: 2rem; width: 100%; border-collapse: collapse; }
+  .compare-table th {
+    font-size: .65rem; font-weight: 600; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--gold);
+    padding: .6rem .8rem; text-align: left;
+    border-bottom: 1px solid rgba(201,162,88,.2);
+  }
+  .compare-table td {
+    font-size: .8rem; color: var(--text);
+    padding: .7rem .8rem;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .compare-table td.highlight { color: var(--gold); font-weight: 600; }
+  .compare-table tr:last-child td { border-bottom: none; }
+
+  .about-content p {
+    font-size: .95rem; line-height: 1.8; color: var(--gray);
+    margin-bottom: 1.4rem;
+  }
+
+  .about-pills {
+    display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem;
+  }
+  .pill {
+    padding: .4rem 1rem;
+    border: 1px solid rgba(201,162,88,.25);
+    border-radius: 100px;
+    font-size: .75rem; color: var(--text);
+  }
+
+  /* ─── SCHEDULE / CRONOGRAMA ─── */
+  #schedule {
+    padding: 8rem 4rem;
+    background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-deep) 100%);
+  }
+
+  .schedule-header { text-align: center; margin-bottom: 5rem; }
+
+  .week-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 4px; max-width: 1000px; margin: 0 auto 4rem;
+  }
+
+  .day-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 4px; padding: 1rem .6rem;
+    text-align: center;
+    transition: all .3s;
+  }
+  .day-card:hover { border-color: rgba(201,162,88,.3); transform: translateY(-3px); }
+  .day-card.active {
+    background: var(--teal);
+    border-color: rgba(201,162,88,.4);
+  }
+
+  .day-name {
+    font-size: .65rem; font-weight: 700; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--gray); margin-bottom: .8rem;
+  }
+
+  .day-pill {
+    display: inline-block; padding: .25rem .5rem;
+    border-radius: 100px; font-size: .65rem; font-weight: 600;
+    letter-spacing: .08em; margin-bottom: .25rem;
+  }
+  .pill-ghk { background: rgba(26,77,101,.5); color: #6bc5e3; }
+  .pill-reta { background: rgba(201,162,88,.2); color: var(--gold); }
+  .pill-rest { background: rgba(255,255,255,.04); color: var(--gray); font-size: .6rem; }
+
+  .timeline {
+    max-width: 800px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 0;
+  }
+
+  .timeline-row {
+    display: grid; grid-template-columns: 80px 1px 1fr;
+    gap: 0 1.5rem; align-items: stretch;
+  }
+
+  .timeline-week {
+    text-align: right; padding: 1.2rem 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300; color: var(--gold-dim);
+    line-height: 1;
+  }
+
+  .timeline-line {
+    position: relative; display: flex; align-items: stretch;
+    justify-content: center;
+  }
+  .timeline-line::before {
+    content: ''; position: absolute;
+    left: 50%; top: 0; bottom: 0; width: 1px;
+    background: rgba(201,162,88,.2);
+    transform: translateX(-50%);
+  }
+  .timeline-dot {
+    position: absolute; top: 1.4rem;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 10px rgba(201,162,88,.5);
+    transform: translateX(-50%) translateX(-.5px);
+    left: 50%;
+    z-index: 1;
+  }
+
+  .timeline-content {
+    padding: 1rem 0 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .timeline-row:last-child .timeline-content { border-bottom: none; }
+
+  .timeline-title {
+    font-size: .8rem; font-weight: 600; color: var(--white);
+    margin-bottom: .3rem;
+  }
+  .timeline-desc { font-size: .8rem; color: var(--gray); line-height: 1.5; }
+
+  /* ─── QUOTE FORM ─── */
+  #orcamento {
+    padding: 8rem 4rem;
+    background: var(--bg-dark);
+  }
+
+  .orcamento-wrap {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.3fr; gap: 5rem;
+  }
+
+  .orcamento-info .section-title { margin-bottom: 2rem; }
+
+  .info-block {
+    background: var(--bg-card);
+    border: 1px solid rgba(201,162,88,.1);
+    border-radius: 4px; padding: 2rem;
+    margin-bottom: 1.2rem;
+    transition: border-color .3s;
+  }
+  .info-block:hover { border-color: rgba(201,162,88,.3); }
+
+  .info-block-title {
+    font-size: .7rem; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: .6rem;
+  }
+  .info-block p { font-size: .85rem; color: var(--gray); line-height: 1.6; }
+
+  .form-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(201,162,88,.15);
+    border-radius: 4px; padding: 3rem;
+  }
+
+  .form-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300; color: var(--white);
+    margin-bottom: 2rem;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.2rem; }
+
+  .form-group label {
+    font-size: .7rem; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--gray);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 2px; padding: .85rem 1rem;
+    color: var(--white);
+    font-family: 'Outfit', sans-serif; font-size: .9rem;
+    transition: border-color .3s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+
+  .form-group select option { background: var(--bg-card); }
+
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .protocol-selector {
+    display: grid; grid-template-columns: 1fr 1fr; gap: .8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .proto-opt {
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 4px; padding: 1rem;
+    cursor: pointer; transition: all .3s;
+    text-align: center;
+    position: relative;
+  }
+  .proto-opt:hover { border-color: var(--gold-dim); }
+  .proto-opt.selected {
+    border-color: var(--gold);
+    background: rgba(201,162,88,.08);
+  }
+  .proto-opt.selected::after {
+    content: '✓';
+    position: absolute; top: .4rem; right: .6rem;
+    font-size: .7rem; color: var(--gold);
+  }
+
+  .proto-opt-name {
+    font-size: .85rem; font-weight: 600; color: var(--white);
+    margin-bottom: .2rem;
+  }
+  .proto-opt-desc { font-size: .7rem; color: var(--gray); }
+
+  .submit-btn {
+    width: 100%; padding: 1rem;
+    background: var(--gold); color: var(--bg-deep);
+    font-family: 'Outfit', sans-serif; font-weight: 700;
+    font-size: .85rem; letter-spacing: .12em;
+    text-transform: uppercase; border: none; border-radius: 2px;
+    cursor: pointer; transition: all .3s;
+    box-shadow: 0 4px 25px rgba(201,162,88,.2);
+  }
+  .submit-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 35px rgba(201,162,88,.35);
+  }
+
+  .form-note {
+    text-align: center; margin-top: 1rem;
+    font-size: .72rem; color: var(--gray); line-height: 1.5;
+  }
+
+  /* ─── SCIENCE ─── */
+  #science {
+    padding: 8rem 4rem;
+    background: var(--bg-deep);
+  }
+
+  .science-header { text-align: center; margin-bottom: 5rem; }
+
+  .results-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    max-width: 1000px; margin: 0 auto;
+    background: rgba(201,162,88,.1);
+  }
+
+  .result-card {
+    background: var(--bg-card); padding: 2.5rem;
+    position: relative; overflow: hidden;
+    transition: background .3s;
+  }
+  .result-card:hover { background: var(--teal); }
+
+  .result-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 300;
+    color: var(--gold); line-height: 1;
+    margin-bottom: .5rem;
+  }
+
+  .result-label {
+    font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--white);
+    margin-bottom: .5rem;
+  }
+  .result-desc { font-size: .8rem; color: var(--gray); line-height: 1.5; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 4rem;
+    border-top: 1px solid rgba(201,162,88,.12);
+    background: var(--bg-deep);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 2rem;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300; color: var(--white);
+  }
+  .footer-logo span { color: var(--gold); font-weight: 600; }
+
+  .footer-tagline {
+    font-size: .7rem; font-weight: 500; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gray); margin-top: .3rem;
+  }
+
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-size: .75rem; color: var(--gray); text-decoration: none;
+    transition: color .3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-disclaimer {
+    font-size: .7rem; color: var(--gray); max-width: 280px; line-height: 1.5;
+    opacity: .7;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #protocols, #about, #schedule, #orcamento, #science { padding: 5rem 1.5rem; }
+    .protocols-grid, .about-grid, .orcamento-wrap { grid-template-columns: 1fr; }
+    .week-grid { grid-template-columns: repeat(4,1fr); }
+    .results-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { padding: 2.5rem 1.5rem; flex-direction: column; }
+    .hero-stats { gap: 2rem; }
+  }
+
+  /* success state */
+  .success-msg {
+    display: none; text-align: center; padding: 2rem;
+    color: var(--gold);
+  }
+  .success-msg.show { display: block; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Optimum<span>Lab</span></a>
+  <ul class="nav-links">
+    <li><a href="#protocols">Protocolos</a></li>
+    <li><a href="#science">Ciência</a></li>
+    <li><a href="#schedule">Cronograma</a></li>
+    <li><a href="#orcamento" class="nav-cta">Orçamento</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-badge">
+    Peptide Science &amp; Excellence
+  </div>
+
+  <h1 class="hero-title">
+    Ciência aplicada<br>
+    <em>ao seu corpo.</em>
+  </h1>
+
+  <p class="hero-subtitle">
+    Protocolos de peptídeos de alto desempenho — formulados com precisão, respaldados por ciência, pensados para resultados reais.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#orcamento" class="btn-primary">Solicitar Orçamento</a>
+    <a href="#protocols" class="btn-outline">Ver Protocolos</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">~24%</div>
+      <div class="hero-stat-label">Perda de peso</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">86%</div>
+      <div class="hero-stat-label">Resolução hepática</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">4K+</div>
+      <div class="hero-stat-label">Genes modulados</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">12</div>
+      <div class="hero-stat-label">Semanas de protocolo</div>
+    </div>
+  </div>
+
+  <div class="hero-divider"></div>
+</section>
+
+<!-- PROTOCOLS -->
+<section id="protocols">
+  <div class="protocols-header reveal">
+    <div class="section-label">Nossos Protocolos</div>
+    <h2 class="section-title">Tecnologia de <strong>última geração</strong></h2>
+  </div>
+
+  <div class="protocols-grid reveal">
+
+    <!-- RETATRUTIDA -->
+    <div class="protocol-card">
+      <div class="protocol-icon">⬡</div>
+      <div class="protocol-tag">Triplo Agonista GIP/GLP-1/Glucagon</div>
+      <h3 class="protocol-name">Retatrutida</h3>
+      <p class="protocol-desc">
+        O primeiro triplo agonista do mundo — atua em 3 receptores simultaneamente para máxima eficácia metabólica e perda de gordura visceral.
+      </p>
+      <ul class="protocol-features">
+        <li>Queima de gordura abdominal visceral</li>
+        <li>Controle de apetite e saciedade</li>
+        <li>Aceleração do metabolismo basal</li>
+        <li>Melhora do perfil lipídico e pressão</li>
+        <li>Reversão de esteatose hepática</li>
+      </ul>
+      <div class="protocol-dosage">
+        <strong style="color:var(--gold)">Protocolo:</strong> Sem 1-4: 1mg | Sem 5-12: 2mg<br>
+        Aplicação semanal (quinta-feira) · Subcutânea · 1 vial 20mg = 12 semanas
+      </div>
+    </div>
+
+    <!-- GHK-Cu -->
+    <div class="protocol-card">
+      <div class="protocol-icon">◈</div>
+      <div class="protocol-tag">Peptídeo de Cobre — Colágeno &amp; Pele</div>
+      <h3 class="protocol-name">GHK-Cu</h3>
+      <p class="protocol-desc">
+        Tripeptídeo endógeno que modula mais de 4.000 genes — ativando juventude, regeneração e combatendo o envelhecimento em profundidade.
+      </p>
+      <ul class="protocol-features">
+        <li>Estímulo de colágeno tipos I, III e IV</li>
+        <li>Firmeza e elasticidade da pele</li>
+        <li>Combate à flacidez durante perda de peso</li>
+        <li>Crescimento e espessura dos fios</li>
+        <li>Neuroproteção e anti-inflamatório</li>
+      </ul>
+      <div class="protocol-dosage">
+        <strong style="color:var(--gold)">Protocolo:</strong> 1,6mg/dia (8UI) · Segunda a sexta<br>
+        Subcutânea · 2 vials 50mg = 12 semanas completas
+      </div>
+    </div>
+
+    <!-- COMBO -->
+    <div class="protocol-card" style="grid-column: 1/-1; display:grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 3rem 3.5rem;">
+      <div>
+        <div class="protocol-tag">Protocolo Combinado</div>
+        <h3 class="protocol-name" style="font-size:1.6rem;">Retatrutida + GHK-Cu</h3>
+        <p class="protocol-desc">
+          A Retatrutida promove perda de peso acelerada — e o GHK-Cu protege e renova a pele durante esse processo. Emagreça sem sacrificar a aparência.
+        </p>
+      </div>
+      <div>
+        <div class="chart-title" style="margin-bottom:1rem;">Comparativo de Eficácia</div>
+        <div class="chart-row">
+          <span class="chart-label" style="font-size:.75rem">Semaglutida</span>
+          <div class="chart-bar-wrap">
+            <div class="chart-bar" style="--w:60%"></div>
+          </div>
+          <span class="chart-val">~15%</span>
+        </div>
+        <div class="chart-row">
+          <span class="chart-label" style="font-size:.75rem">Tirzepatida</span>
+          <div class="chart-bar-wrap">
+            <div class="chart-bar" style="--w:82%"></div>
+          </div>
+          <span class="chart-val">~21%</span>
+        </div>
+        <div class="chart-row">
+          <span class="chart-label" style="font-size:.75rem; color:var(--gold)">Retatrutida</span>
+          <div class="chart-bar-wrap">
+            <div class="chart-bar" style="--w:100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold-light))"></div>
+          </div>
+          <span class="chart-val" style="color:var(--gold-light)">~24%</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SCIENCE -->
+<section id="science">
+  <div class="science-header reveal">
+    <div class="section-label">Resultados Clínicos</div>
+    <h2 class="section-title">Ciência de <strong>Fase 2</strong></h2>
+    <p style="max-width:500px; margin:.8rem auto 0; font-size:.9rem; color:var(--gray);">
+      Dados clínicos reais. Resultados comprovados em estudos controlados.
+    </p>
+  </div>
+
+  <div class="results-grid reveal">
+    <div class="result-card">
+      <div class="result-num">24.2%</div>
+      <div class="result-label">Perda de peso corporal</div>
+      <div class="result-desc">Em 48 semanas de estudo clínico Fase 2, superando todos os comparadores.</div>
+    </div>
+    <div class="result-card">
+      <div class="result-num">86%</div>
+      <div class="result-label">Resolução de MASLD</div>
+      <div class="result-desc">Reversão de esteatose hepática (gordura no fígado) em até 86% dos casos.</div>
+    </div>
+    <div class="result-card">
+      <div class="result-num">↓PCR</div>
+      <div class="result-label">Redução Inflamatória</div>
+      <div class="result-desc">Redução significativa de PCR, IL-6 e outros marcadores de inflamação crônica.</div>
+    </div>
+    <div class="result-card">
+      <div class="result-num">4K+</div>
+      <div class="result-label">Genes modulados</div>
+      <div class="result-desc">GHK-Cu reprograma a expressão gênica de células envelhecidas — ativando regeneração e juventude.</div>
+    </div>
+    <div class="result-card">
+      <div class="result-num">4–6</div>
+      <div class="result-label">Semanas para resultados</div>
+      <div class="result-desc">Pele visivelmente mais firme, com menos rugas, a partir de 4 a 6 semanas de GHK-Cu.</div>
+    </div>
+    <div class="result-card">
+      <div class="result-num">3×</div>
+      <div class="result-label">Receptores ativos</div>
+      <div class="result-desc">GLP-1 + GIP + Glucagon. A única molécula que ativa os três simultaneamente.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule">
+  <div class="schedule-header reveal">
+    <div class="section-label">Cronograma</div>
+    <h2 class="section-title">12 semanas de <strong>transformação</strong></h2>
+  </div>
+
+  <div class="week-grid reveal">
+    <div class="day-card">
+      <div class="day-name">Seg</div>
+      <span class="day-pill pill-ghk">GHK 8UI</span>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Ter</div>
+      <span class="day-pill pill-ghk">GHK 8UI</span>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Qua</div>
+      <span class="day-pill pill-ghk">GHK 8UI</span>
+    </div>
+    <div class="day-card active">
+      <div class="day-name">Qui</div>
+      <span class="day-pill pill-ghk" style="margin-bottom:.3rem; display:block;">GHK 8UI</span>
+      <span class="day-pill pill-reta">RETA</span>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Sex</div>
+      <span class="day-pill pill-ghk">GHK 8UI</span>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Sáb</div>
+      <span class="day-pill pill-rest">Descanso</span>
+    </div>
+    <div class="day-card">
+      <div class="day-name">Dom</div>
+      <span class="day-pill pill-rest">Descanso</span>
+    </div>
+  </div>
+
+  <div class="timeline reveal">
+    <div class="timeline-row">
+      <div class="timeline-week">1–2</div>
+      <div class="timeline-line"><div class="timeline-dot"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-title">Adaptação — Retatrutida 1mg + GHK-Cu 8UI/dia</div>
+        <div class="timeline-desc">Início da ação. Peptídeo começa a sinalizar células. Pode notar pele mais hidratada.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">3–4</div>
+      <div class="timeline-line"><div class="timeline-dot"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-title">Tolerância estabelecida — Fase 1 final</div>
+        <div class="timeline-desc">Colágeno em produção. Textura da pele melhora. Cabelo pode parecer mais forte.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">5</div>
+      <div class="timeline-line"><div class="timeline-dot" style="background:var(--gold-light)"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-title" style="color:var(--gold)">↑ Aumento de dose — Retatrutida 2mg</div>
+        <div class="timeline-desc">Transição para fase de resultados. Metabolismo acelerado.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">5–8</div>
+      <div class="timeline-line"><div class="timeline-dot"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-title">Resultados visíveis — Abertura do 2º vial GHK (sem 7)</div>
+        <div class="timeline-desc">Pele mais firme, menos linhas finas, unhas mais resistentes. Cicatrização acelerada.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">9–12</div>
+      <div class="timeline-line"><div class="timeline-dot" style="background:var(--gold-light); box-shadow: 0 0 15px rgba(224,188,122,.7)"></div></div>
+      <div class="timeline-content">
+        <div class="timeline-title">Pico dos resultados</div>
+        <div class="timeline-desc">Firmeza notável, elasticidade restaurada. Gordura visceral reduzida. Quem tira fotos antes/depois nota diferença clara.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE FORM -->
+<section id="orcamento">
+  <div class="orcamento-wrap">
+
+    <div class="orcamento-info reveal">
+      <div class="section-label">Orçamento</div>
+      <h2 class="section-title">Solicite seu <strong>protocolo</strong></h2>
+      <p style="font-size:.9rem; color:var(--gray); line-height:1.8; margin: 1.5rem 0 2rem;">
+        Preencha o formulário e nossa equipe entrará em contato em até 24h com todas as informações sobre disponibilidade, valores e orientações de uso.
+      </p>
+
+      <div class="info-block">
+        <div class="info-block-title">⬡ Protocolo Completo</div>
+        <p>Retatrutida (1 vial 20mg) + GHK-Cu (2 vials 50mg) — 12 semanas completas.</p>
+      </div>
+
+      <div class="info-block">
+        <div class="info-block-title">◈ Materiais Incluídos</div>
+        <p>Instruções detalhadas de reconstituição, cronograma semanal e suporte via WhatsApp.</p>
+      </div>
+
+      <div class="info-block">
+        <div class="info-block-title">⟳ Entrega</div>
+        <p>Envio refrigerado com embalagem especializada. Todo o Brasil.</p>
+      </div>
+
+      <div class="info-block">
+        <div class="info-block-title">📋 Material Educativo</div>
+        <p>Este é material educativo. Consulte sempre um profissional de saúde antes de iniciar qualquer protocolo.</p>
+      </div>
+    </div>
+
+    <div class="form-card reveal">
+      <h3>Solicitar Orçamento</h3>
+
+      <div class="protocol-selector">
+        <div class="proto-opt selected" onclick="toggleProto(this)">
+          <div class="proto-opt-name">Retatrutida</div>
+          <div class="proto-opt-desc">Triplo agonista</div>
+        </div>
+        <div class="proto-opt selected" onclick="toggleProto(this)">
+          <div class="proto-opt-name">GHK-Cu</div>
+          <div class="proto-opt-desc">Peptídeo de cobre</div>
+        </div>
+        <div class="proto-opt" onclick="toggleProto(this)">
+          <div class="proto-opt-name">Combo</div>
+          <div class="proto-opt-desc">Reta + GHK-Cu</div>
+        </div>
+        <div class="proto-opt" onclick="toggleProto(this)">
+          <div class="proto-opt-name">Outro</div>
+          <div class="proto-opt-desc">Falar com equipe</div>
+        </div>
+      </div>
+
+      <form id="quoteForm" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome</label>
+            <input type="text" placeholder="Seu nome" required>
+          </div>
+          <div class="form-group">
+            <label>WhatsApp</label>
+            <input type="tel" placeholder="(11) 99999-9999" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" placeholder="seu@email.com" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Estado</label>
+            <select>
+              <option value="">Selecione</option>
+              <option>RJ</option><option>SP</option><option>MG</option>
+              <option>RS</option><option>PR</option><option>SC</option>
+              <option>BA</option><option>PE</option><option>CE</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Como nos encontrou?</label>
+            <select>
+              <option value="">Selecione</option>
+              <option>Instagram</option>
+              <option>Indicação</option>
+              <option>Google</option>
+              <option>Outro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Observações (opcional)</label>
+          <textarea placeholder="Alguma dúvida ou informação adicional..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Enviar Solicitação →</button>
+      </form>
+
+      <div class="success-msg" id="successMsg">
+        <div style="font-size:2rem; margin-bottom:1rem;">✓</div>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--white); margin-bottom:.5rem;">Solicitação Enviada!</div>
+        <div style="font-size:.85rem; color:var(--gray);">Nossa equipe entrará em contato em até 24h via WhatsApp.</div>
+      </div>
+
+      <p class="form-note">Material educativo. Este não é um serviço médico. Consulte sempre um profissional de saúde.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Optimum<span>Lab</span></div>
+    <div class="footer-tagline">Peptide Science · Education · Excellence</div>
+  </div>
+  <div class="footer-links">
+    <a href="#protocols">Protocolos</a>
+    <a href="#science">Ciência</a>
+    <a href="#schedule">Cronograma</a>
+    <a href="#orcamento">Orçamento</a>
+  </div>
+  <div class="footer-disclaimer">
+    Este material é educativo e não substitui orientação médica profissional. Consulte sempre um profissional de saúde.
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Protocol toggle
+  function toggleProto(el) {
+    el.classList.toggle('selected');
+  }
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('quoteForm').style.display = 'none';
+    document.getElementById('successMsg').classList.add('show');
+  }
+
+  // Animate bars when in view
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.chart-bar').forEach(bar => {
+          bar.style.animation = 'none';
+          bar.offsetHeight;
+          bar.style.animation = 'barGrow 1.5s ease forwards';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.protocol-card').forEach(c => barObserver.observe(c));
+</script>
+</body>
+</html>

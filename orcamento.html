@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimum Lab — Orçamentos</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #0b1820;
+  --bg2:      #0f1e28;
+  --bg3:      #142030;
+  --card:     #162535;
+  --card2:    #1a2d3f;
+  --border:   #1e3348;
+  --gold:     #c9a258;
+  --gold2:    #e0bc7a;
+  --gold-bg:  rgba(201,162,88,.12);
+  --teal:     #1a8a7a;
+  --teal2:    #22b8a4;
+  --teal-bg:  rgba(34,184,164,.12);
+  --white:    #f0ece4;
+  --gray:     #7a9ab0;
+  --gray2:    #4a6a80;
+  --text:     #c8d8e4;
+  --red:      #e05555;
+  --success:  #22b8a4;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);font-family:'Outfit',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+
+/* ── HEADER ── */
+.header{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 20px;
+  background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:50;
+}
+.logo-icon{
+  width:38px;height:38px;border-radius:10px;
+  background:linear-gradient(135deg,var(--bg3),var(--card2));
+  border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;color:var(--gold);
+  letter-spacing:-.5px;flex-shrink:0;
+}
+.logo-text{font-size:17px;font-weight:700;color:var(--white)}
+.logo-sub{font-size:11px;color:var(--gray);font-weight:400;letter-spacing:.02em}
+
+/* ── STEPPER ── */
+.stepper{
+  display:flex;align-items:center;
+  padding:14px 20px;
+  background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  overflow-x:auto;gap:0;
+}
+.step{
+  display:flex;align-items:center;gap:0;flex-shrink:0;
+}
+.step-circle{
+  width:32px;height:32px;border-radius:50%;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:600;color:var(--gray2);
+  background:var(--bg3);
+  transition:all .3s;flex-shrink:0;
+}
+.step-circle.active{
+  border-color:var(--gold);color:var(--gold);
+  background:var(--gold-bg);
+  box-shadow:0 0 0 3px rgba(201,162,88,.15);
+}
+.step-circle.done{
+  border-color:var(--teal2);background:var(--teal2);color:var(--bg);
+}
+.step-circle.done::after{content:'✓';font-size:14px;font-weight:700}
+.step-circle.done span{display:none}
+.step-line{
+  width:40px;height:2px;
+  background:var(--border);
+  transition:background .3s;
+}
+.step-line.done{background:var(--teal2)}
+
+/* ── CONTENT ── */
+.content{max-width:640px;margin:0 auto;padding:24px 16px 100px}
+
+/* ── SECTION TITLE ── */
+.page-title{
+  display:flex;align-items:center;gap:10px;
+  font-size:20px;font-weight:700;color:var(--white);
+  margin-bottom:20px;
+}
+.page-title-icon{font-size:20px}
+
+/* ── CARDS ── */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:14px;
+}
+.card-label{
+  font-size:11px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gray);margin-bottom:14px;
+}
+
+/* ── INPUTS ── */
+.field{margin-bottom:14px}
+.field label{
+  display:block;font-size:12px;font-weight:600;
+  color:var(--gray);margin-bottom:6px;
+  letter-spacing:.04em;
+}
+.field input,.field select,.field textarea{
+  width:100%;padding:12px 14px;
+  background:var(--bg3);
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  color:var(--white);font-family:'Outfit',sans-serif;
+  font-size:14px;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  appearance:none;
+}
+.field input:focus,.field select:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(201,162,88,.1);
+}
+.field input::placeholder{color:var(--gray2)}
+.field select option{background:var(--card)}
+
+.field-row{display:grid;gap:10px}
+.field-row.col2{grid-template-columns:1fr 1fr}
+.field-row.col3{grid-template-columns:1fr 1fr 1fr}
+
+/* ── PARTNER INPUT ── */
+.partner-wrap{display:flex;gap:8px}
+.partner-wrap input{flex:1}
+.btn-activate{
+  padding:12px 18px;
+  background:var(--gold);color:var(--bg);
+  border:none;border-radius:10px;
+  font-family:'Outfit',sans-serif;font-weight:700;
+  font-size:13px;cursor:pointer;white-space:nowrap;
+  transition:all .2s;
+}
+.btn-activate:hover{background:var(--gold2);transform:translateY(-1px)}
+
+/* ── SHIPPING ── */
+.shipping-title{
+  display:flex;align-items:center;gap:8px;
+  font-size:14px;font-weight:600;color:var(--white);
+  margin-bottom:12px;
+}
+
+/* ── TOGGLE ── */
+.toggle-row{
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:12px;
+}
+.toggle-info{}
+.toggle-info .toggle-title{
+  font-size:14px;font-weight:600;color:var(--white);
+  margin-bottom:4px;
+}
+.toggle-info .toggle-sub{font-size:12px;color:var(--gold);margin-bottom:8px}
+.toggle-info .toggle-desc{font-size:12px;color:var(--gray);line-height:1.5}
+.toggle{
+  position:relative;width:48px;height:26px;flex-shrink:0;
+  cursor:pointer;
+}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{
+  position:absolute;inset:0;
+  background:var(--bg3);border:1.5px solid var(--border);
+  border-radius:13px;transition:all .3s;
+}
+.toggle input:checked~.toggle-track{
+  background:var(--gold);border-color:var(--gold);
+}
+.toggle-thumb{
+  position:absolute;top:3px;left:3px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--gray);transition:all .3s;
+}
+.toggle input:checked~.toggle-track~.toggle-thumb,
+.toggle input:checked+.toggle-track+.toggle-thumb{
+  left:23px;background:var(--bg);
+}
+.toggle input:checked~.toggle-thumb{left:23px;background:var(--bg)}
+
+/* ── PRODUCT GRID ── */
+.products-grid{display:grid;gap:10px}
+.product-item{
+  display:flex;align-items:center;
+  background:var(--bg3);border:1.5px solid var(--border);
+  border-radius:12px;padding:14px;gap:12px;
+  cursor:pointer;transition:all .25s;
+}
+.product-item:hover{border-color:var(--gold-bg);background:var(--card2)}
+.product-item.selected{
+  border-color:var(--gold);background:var(--gold-bg);
+}
+.prod-check{
+  width:22px;height:22px;border-radius:6px;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .25s;font-size:12px;
+}
+.product-item.selected .prod-check{
+  background:var(--gold);border-color:var(--gold);color:var(--bg);
+}
+.prod-info{flex:1}
+.prod-name{font-size:14px;font-weight:600;color:var(--white);margin-bottom:2px}
+.prod-desc{font-size:11px;color:var(--gray);line-height:1.4}
+.prod-tags{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+.prod-tag{
+  font-size:10px;font-weight:600;padding:2px 7px;
+  border-radius:100px;border:1px solid var(--gold);
+  color:var(--gold);letter-spacing:.04em;
+}
+.prod-price{
+  font-size:15px;font-weight:700;color:var(--gold);
+  text-align:right;flex-shrink:0;
+}
+.prod-qty-wrap{
+  display:flex;align-items:center;gap:8px;margin-top:8px;
+}
+.qty-btn{
+  width:28px;height:28px;border-radius:8px;
+  border:1.5px solid var(--border);
+  background:var(--bg3);color:var(--white);
+  font-size:16px;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;
+  transition:all .2s;font-weight:600;
+}
+.qty-btn:hover{border-color:var(--gold);color:var(--gold)}
+.qty-val{font-size:14px;font-weight:600;color:var(--white);min-width:20px;text-align:center}
+
+/* ── ORDER SUMMARY TABLE ── */
+.summary-table{width:100%;border-collapse:collapse}
+.summary-table th{
+  font-size:10px;font-weight:700;letter-spacing:.1em;
+  color:var(--gray);text-transform:uppercase;
+  padding:6px 0;border-bottom:1px solid var(--border);
+  text-align:left;
+}
+.summary-table th:last-child,.summary-table td:last-child{text-align:right}
+.summary-table th:nth-child(3),.summary-table td:nth-child(3){text-align:right;color:var(--gray)}
+.summary-table td{
+  padding:10px 0;font-size:13px;color:var(--text);
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.summary-table td:last-child{font-weight:700;color:var(--white)}
+.summary-table .td-qty{font-size:13px;color:var(--gray);padding-right:10px;width:30px}
+
+.totals-block{margin-top:4px}
+.total-row{
+  display:flex;justify-content:space-between;
+  padding:7px 0;font-size:13px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.total-row .label{color:var(--gray)}
+.total-row .val{color:var(--text);font-weight:500}
+.total-row.highlight .label{font-weight:700;color:var(--white)}
+.total-row.highlight .val{font-weight:700;color:var(--gold);font-size:15px}
+
+.note-teal{
+  font-size:12px;color:var(--teal2);
+  margin-top:10px;line-height:1.5;
+}
+
+.btn-copy{
+  width:100%;padding:13px;
+  background:var(--bg3);border:1.5px solid var(--border);
+  border-radius:10px;color:var(--white);
+  font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all .2s;margin-top:12px;
+}
+.btn-copy:hover{border-color:var(--gold);color:var(--gold)}
+.copied{color:var(--teal2) !important;border-color:var(--teal2) !important}
+
+/* ── PAYMENT TABS ── */
+.pay-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.pay-tab{
+  padding:12px;border-radius:10px;
+  border:2px solid var(--border);
+  background:var(--bg3);
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;
+  color:var(--gray);cursor:pointer;transition:all .2s;
+}
+.pay-tab.active{
+  border-color:var(--teal2);color:var(--teal2);
+  background:var(--teal-bg);
+}
+.no-card{font-size:12px;color:var(--red);margin-top:8px}
+
+/* ── BOTTOM BAR ── */
+.bottom-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;z-index:40;
+}
+.cart-info{
+  display:flex;align-items:center;gap:10px;
+  flex-shrink:0;
+}
+.cart-icon-wrap{
+  width:40px;height:40px;border-radius:10px;
+  background:var(--bg3);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer;transition:all .2s;flex-shrink:0;
+}
+.cart-icon-wrap:hover{border-color:var(--gold)}
+.cart-count{font-size:12px;color:var(--gray)}
+.cart-total{font-size:15px;font-weight:700;color:var(--white)}
+
+.btn-back{
+  width:40px;height:40px;border-radius:10px;
+  background:var(--bg3);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--gray);cursor:pointer;
+  transition:all .2s;flex-shrink:0;
+}
+.btn-back:hover{border-color:var(--gold);color:var(--gold)}
+
+.btn-next{
+  flex:1;padding:13px 20px;
+  background:var(--gold);color:var(--bg);
+  border:none;border-radius:10px;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:all .2s;
+}
+.btn-next:hover{background:var(--gold2);transform:translateY(-1px)}
+.btn-next.green{background:var(--teal2);color:var(--bg)}
+.btn-next.green:hover{background:#2dd4be}
+.btn-next:disabled{background:var(--bg3);color:var(--gray2);cursor:not-allowed;transform:none}
+
+/* ── DISCOUNT BADGE ── */
+.discount-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 10px;border-radius:100px;
+  background:rgba(34,184,164,.15);border:1px solid var(--teal2);
+  font-size:11px;color:var(--teal2);font-weight:600;
+  margin-top:8px;
+}
+
+/* ── CPF VALID ── */
+.field-valid{position:relative}
+.field-valid .valid-icon{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  color:var(--teal2);font-size:16px;
+}
+
+/* ── STEP ANIM ── */
+.step-page{display:none;animation:fadeIn .25s ease}
+.step-page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── FINAL CONFIRM ── */
+.confirm-block{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:18px;margin-bottom:14px;
+}
+.confirm-title{
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gray);margin-bottom:12px;
+}
+.confirm-row{
+  display:flex;justify-content:space-between;
+  font-size:13px;padding:4px 0;
+}
+.confirm-row .k{color:var(--gray)}
+.confirm-row .v{color:var(--white);font-weight:500;text-align:right}
+
+/* ── WA BTN ── */
+.btn-wa{
+  width:100%;padding:16px;
+  background:#25D366;color:#fff;
+  border:none;border-radius:12px;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:all .2s;
+  box-shadow:0 4px 20px rgba(37,211,102,.2);
+}
+.btn-wa:hover{background:#20c05a;transform:translateY(-2px)}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--card2);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo-icon">OL</div>
+  <div>
+    <div class="logo-text">OptimumLab</div>
+    <div class="logo-sub">Orçamentos</div>
+  </div>
+</div>
+
+<!-- STEPPER -->
+<div class="stepper" id="stepper">
+  <div class="step"><div class="step-circle" id="sc1"><span>1</span></div></div>
+  <div class="step-line" id="sl1"></div>
+  <div class="step"><div class="step-circle" id="sc2"><span>2</span></div></div>
+  <div class="step-line" id="sl2"></div>
+  <div class="step"><div class="step-circle" id="sc3"><span>3</span></div></div>
+  <div class="step-line" id="sl3"></div>
+  <div class="step"><div class="step-circle" id="sc4"><span>4</span></div></div>
+  <div class="step-line" id="sl4"></div>
+  <div class="step"><div class="step-circle" id="sc5"><span>5</span></div></div>
+  <div class="step-line" id="sl5"></div>
+  <div class="step"><div class="step-circle" id="sc6"><span>6</span></div></div>
+</div>
+
+<div class="content">
+
+  <!-- ── STEP 1: CATÁLOGO ── -->
+  <div class="step-page active" id="page1">
+    <div style="background:linear-gradient(90deg,rgba(34,184,164,.15),rgba(201,162,88,.1));border:1px solid rgba(34,184,164,.35);border-radius:10px;padding:10px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--teal2)">
+      <span style="font-size:16px">🧪</span> Água bacteriostática gratuita em todos os pedidos!
+    </div>
+    <div class="page-title"><span class="page-title-icon">🧬</span> Selecione os Peptídeos</div>
+
+    <!-- SEARCH + FILTER -->
+    <div style="margin-bottom:14px;display:flex;gap:10px;flex-wrap:wrap">
+      <input type="text" id="searchInput" placeholder="🔍  Buscar peptídeo..." oninput="filterProducts()"
+        style="flex:1;min-width:180px;padding:11px 14px;background:var(--bg3);border:1.5px solid var(--border);
+        border-radius:10px;color:var(--white);font-family:Outfit,sans-serif;font-size:14px;outline:none">
+      <select id="filterCat" onchange="filterProducts()"
+        style="padding:11px 14px;background:var(--bg3);border:1.5px solid var(--border);
+        border-radius:10px;color:var(--white);font-family:Outfit,sans-serif;font-size:13px;outline:none;cursor:pointer">
+        <option value="">Todas categorias</option>
+        <option value="emagrecimento">Emagrecimento</option>
+        <option value="pele">Pele & Beleza</option>
+        <option value="regeneracao">Regeneração</option>
+        <option value="hormonio">Hormônios / GH</option>
+        <option value="cardio">Cardio & Longevidade</option>
+        <option value="cerebro">Cérebro & Sono</option>
+        <option value="stack">Stacks / Combos</option>
+      </select>
+    </div>
+
+    <div class="products-grid" id="productGrid"></div>
+
+    <script>
+    const CATALOG = [
+      // ── EMAGRECIMENTO ──
+      {id:1,  name:'RETATRUTIDE',             dose:'20mg',      price:1500, cat:'emagrecimento', tags:['GLP-1','GIP','Glucagon'], desc:'Triplo agonista — perda de gordura visceral máxima (até 24%)'},
+      {id:2,  name:'RETATRUTIDE',             dose:'10mg',      price:900,  cat:'emagrecimento', tags:['GLP-1','GIP','Glucagon'], desc:'Dose inicial — 6 semanas de protocolo'},
+      {id:3,  name:'RETATRUTIDE',             dose:'40mg',      price:2200, cat:'emagrecimento', tags:['GLP-1','GIP','Glucagon'], desc:'Dose avançada — 24 semanas de protocolo'},
+      {id:4,  name:'TIRZEPATIDE',             dose:'10mg',      price:450,  cat:'emagrecimento', tags:['GLP-1','GIP'],           desc:'Duplo agonista GLP-1/GIP — ~21% perda de peso'},
+      {id:5,  name:'TIRZEPATIDE',             dose:'20mg',      price:700,  cat:'emagrecimento', tags:['GLP-1','GIP'],           desc:'Dose intermediária — 10 semanas'},
+      {id:6,  name:'TIRZEPATIDE',             dose:'40mg',      price:1200, cat:'emagrecimento', tags:['GLP-1','GIP'],           desc:'Dose completa — 20 semanas de protocolo'},
+      {id:7,  name:'TIRZEPATIDE',             dose:'60mg',      price:1600, cat:'emagrecimento', tags:['GLP-1','GIP'],           desc:'Dose máxima — 30 semanas de protocolo'},
+      {id:8,  name:'CAGRILINTIDE',            dose:'5mg',       price:500,  cat:'emagrecimento', tags:['Amilina','GLP-1'],       desc:'Análogo de amilina — controle de apetite e saciedade'},
+      {id:9,  name:'MAZDUTIDE',               dose:'10mg',      price:800,  cat:'emagrecimento', tags:['GLP-1','Glucagon'],      desc:'Duplo agonista GLP-1/Glucagon — metabolismo e gordura'},
+      {id:10, name:'5-AMINO-1MQ',             dose:'50mg',      price:800,  cat:'emagrecimento', tags:['NNMT','Metabolismo'],    desc:'Inibidor de NNMT — ativa metabolismo celular e queima gordura'},
+      {id:11, name:'HGH FRAGMENT 176-191',    dose:'5mg',       price:450,  cat:'emagrecimento', tags:['GH','Lipolítico'],       desc:'Fragmento de GH — potente ação lipolítica localizada'},
+      {id:12, name:'AOD-9604',                dose:'5mg',       price:350,  cat:'emagrecimento', tags:['GH','Queima'],           desc:'Peptídeo lipolítico — redução de gordura sem efeitos GH'},
+      // ── PELE & BELEZA ──
+      {id:13, name:'GHK-Cu',                  dose:'50mg',      price:420,  cat:'pele', tags:['Colágeno','Pele','Cabelo'],   desc:'Peptídeo de cobre — colágeno, elastina, firmeza e cabelo'},
+      {id:14, name:'GLOW',                    dose:'70mg',      price:800,  cat:'pele', tags:['GHK-Cu','BPC-157','TB-500'], desc:'Stack beleza: GHK-Cu 50mg + BPC-157 10mg + TB-500 10mg'},
+      {id:15, name:'KLOW',                    dose:'80mg',      price:1000, cat:'pele', tags:['GHK-Cu','BPC-157','KPV'],    desc:'Stack avançado: GHK-Cu + BPC-157 + TB-500 + KPV 10mg'},
+      {id:16, name:'MELANOTAN II',            dose:'10mg',      price:300,  cat:'pele', tags:['Melanina','Bronze'],          desc:'Bronzeamento, libido e supressão de apetite'},
+      {id:17, name:'PT-141',                  dose:'10mg',      price:350,  cat:'pele', tags:['Libido','Melanocortina'],     desc:'Bremelanotida — libido e função sexual'},
+      // ── REGENERAÇÃO ──
+      {id:18, name:'BPC-157',                 dose:'5mg',       price:350,  cat:'regeneracao', tags:['Regeneração','Gástrico'],  desc:'Regeneração tecidual, cicatrização e proteção gástrica'},
+      {id:19, name:'TB-500',                  dose:'5mg',       price:380,  cat:'regeneracao', tags:['Recuperação','Mobilidade'],desc:'Timosina Beta-4 — recuperação muscular e mobilidade'},
+      {id:20, name:'WOLVERINE STACK',         dose:'20mg',      price:700,  cat:'regeneracao', tags:['BPC-157','TB-500'],        desc:'BPC-157 + TB-500 — recuperação e cicatrização máxima'},
+      {id:21, name:'KPV',                     dose:'10mg',      price:300,  cat:'regeneracao', tags:['Anti-inflamatório'],       desc:'Tripeptídeo anti-inflamatório — intestino e cicatrização'},
+      {id:22, name:'PEG-MGF',                 dose:'2mg',       price:500,  cat:'regeneracao', tags:['Músculo','IGF'],           desc:'Fator de crescimento mecânico — hipertrofia e recuperação'},
+      // ── HORMÔNIOS / GH ──
+      {id:23, name:'CJC-1295 NO DAC + IPAMORELIN', dose:'5mg/5mg', price:500, cat:'hormonio', tags:['GHRH','GHRP','GH'],  desc:'Combo secretagogo — pulso de GH, sono e composição corporal'},
+      {id:24, name:'HEXARELIN',               dose:'2mg',       price:300,  cat:'hormonio', tags:['GHRP','GH'],           desc:'Secretagogo potente de GH — massa magra e recuperação'},
+      {id:25, name:'IPAMORELIN',              dose:'5mg',       price:300,  cat:'hormonio', tags:['GHRP','GH','Sono'],    desc:'Secretagogo seletivo de GH — sono, recuperação e composição'},
+      {id:26, name:'TESAMORELIN',             dose:'10mg',      price:450,  cat:'hormonio', tags:['GHRH','GH','Gordura'], desc:'Análogo de GHRH — aprovado para redução de gordura visceral'},
+      {id:27, name:'KISSPEPTIN-10',           dose:'10mg',      price:500,  cat:'hormonio', tags:['LH','FSH','Testosterona'], desc:'Regulador hormonal — estimula LH/FSH e testosterona'},
+      {id:28, name:'TESTAGEN',                dose:'20mg',      price:800,  cat:'hormonio', tags:['Testosterona','Peptídeo'], desc:'Peptídeo testicular — suporte à produção de testosterona'},
+      // ── CARDIO & LONGEVIDADE ──
+      {id:29, name:'CARDIOGEN',               dose:'20mg',      price:800,  cat:'cardio', tags:['Cardio','Peptídeo'],        desc:'Peptídeo cardíaco — proteção e saúde do miocárdio'},
+      {id:30, name:'LIVAGEN',                 dose:'20mg',      price:800,  cat:'cardio', tags:['Longevidade','Imunomodulador'], desc:'Peptídeo imunomodulador — longevidade e imunidade'},
+      {id:31, name:'PROSTAMAX',               dose:'20mg',      price:800,  cat:'cardio', tags:['Próstata','Peptídeo'],       desc:'Peptídeo prostático — saúde e função da próstata'},
+      {id:32, name:'CARTALAX',                dose:'20mg',      price:600,  cat:'cardio', tags:['Cartilagem','Articulação'],  desc:'Peptídeo cartilaginoso — regeneração articular'},
+      {id:33, name:'HUMANIN',                 dose:'10mg',      price:1200, cat:'cardio', tags:['Mitocôndria','Longevidade'], desc:'Peptídeo mitocondrial — neuroproteção e longevidade'},
+      {id:34, name:'MOTS-C',                  dose:'10mg',      price:400,  cat:'cardio', tags:['Mitocôndria','Metabolismo'], desc:'Peptídeo mitocondrial — metabolismo e sensibilidade à insulina'},
+      {id:35, name:'MOTS-C',                  dose:'40mg',      price:1200, cat:'cardio', tags:['Mitocôndria','Metabolismo'], desc:'Dose avançada MOTS-C — 10 semanas de protocolo'},
+      {id:36, name:'THYMOSIN ALPHA-1',        dose:'10mg',      price:650,  cat:'cardio', tags:['Imunidade','Timo'],          desc:'Imunomodulador potente — resposta imune e antiviral'},
+      {id:37, name:'SS-31',                   dose:'10mg',      price:400,  cat:'cardio', tags:['Mitocôndria','Cardio'],      desc:'Peptídeo mitocondrial SS-31 — proteção cardíaca e energética'},
+      {id:38, name:'SS-31',                   dose:'50mg',      price:1300, cat:'cardio', tags:['Mitocôndria','Cardio'],      desc:'Dose avançada SS-31 — 12 semanas'},
+      {id:39, name:'NAD+',                    dose:'1000mg',    price:700,  cat:'cardio', tags:['NAD+','Longevidade'],        desc:'NAD+ puro — energia celular, reparo de DNA e longevidade'},
+      {id:40, name:'SLU-PP-332',              dose:'5mg',       price:450,  cat:'cardio', tags:['ERR','Metabolismo'],         desc:'Agonista ERR — exercício em pílula, metabolismo e endurance'},
+      // ── CÉREBRO & SONO ──
+      {id:41, name:'DSIP',                    dose:'5mg',       price:300,  cat:'cerebro', tags:['Sono','Peptídeo'],          desc:'Peptídeo indutor de sono delta — qualidade e profundidade do sono'},
+      {id:42, name:'NA SELANK',               dose:'10mg',      price:500,  cat:'cerebro', tags:['Ansiedade','Cognitivo'],    desc:'Ansiolítico e nootrópico — reduz ansiedade e melhora cognição'},
+      {id:43, name:'NA SEMAX',                dose:'10mg',      price:500,  cat:'cerebro', tags:['BDNF','Cognitivo'],         desc:'Análogo de ACTH — BDNF, foco, memória e neuroproteção'},
+    ];
+
+    function makeCard(p) {
+      return `<div class="product-item" data-id="${p.id}" data-name="${p.name} (${p.dose})" data-price="${p.price}" data-cat="${p.cat}" onclick="toggleProduct(this)">
+        <div class="prod-check"></div>
+        <div class="prod-info">
+          <div class="prod-name">${p.name} <span style="color:var(--gray);font-weight:400;font-size:12px">${p.dose}</span></div>
+          <div class="prod-desc">${p.desc}</div>
+          <div class="prod-tags">${p.tags.map(t=>`<span class="prod-tag">${t}</span>`).join('')}</div>
+          <div class="prod-qty-wrap" onclick="event.stopPropagation()">
+            <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+            <span class="qty-val">1</span>
+            <button class="qty-btn" onclick="changeQty(this,1)">+</button>
+          </div>
+        </div>
+        <div class="prod-price">R$ ${p.price.toLocaleString('pt-BR')}</div>
+      </div>`;
+    }
+
+    function renderCatalog(list) {
+      document.getElementById('productGrid').innerHTML = list.length
+        ? list.map(makeCard).join('')
+        : '<div style="text-align:center;padding:40px;color:var(--gray)">Nenhum produto encontrado.</div>';
+    }
+
+    function filterProducts() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const cat = document.getElementById('filterCat').value;
+      const filtered = CATALOG.filter(p => {
+        const matchQ = !q || p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.tags.some(t=>t.toLowerCase().includes(q));
+        const matchCat = !cat || p.cat === cat;
+        return matchQ && matchCat;
+      });
+      renderCatalog(filtered);
+    }
+
+    renderCatalog(CATALOG);
+    </script>
+  </div>
+
+  <!-- ── STEP 2: REVISÃO ── -->
+  <div class="step-page" id="page2">
+    <div class="page-title"><span class="page-title-icon">🛒</span> Revisão do Pedido</div>
+    <div class="card">
+      <div class="card-label">Itens selecionados</div>
+      <div id="reviewItems"></div>
+    </div>
+    <div class="card">
+      <div class="totals-block" id="reviewTotals"></div>
+    </div>
+    <p class="note-teal">✓ Enviamos a água bacteriostática necessária para a reconstituição.</p>
+  </div>
+
+  <!-- ── STEP 3: PARCEIRO & ENTREGA ── -->
+  <div class="step-page" id="page3">
+    <div class="page-title"><span class="page-title-icon">🚚</span> Parceiro & Entrega</div>
+
+    <div class="card">
+      <div class="card-label">Vim através do link do(a):</div>
+      <div class="partner-wrap">
+        <input type="text" id="partnerInput" placeholder="Digite o nome do parceiro para obter o desconto">
+        <button class="btn-activate" onclick="activateDiscount()">Ativar Desconto</button>
+      </div>
+      <div id="discountMsg"></div>
+    </div>
+
+    <div class="card">
+      <div class="shipping-title">🚛 Método de Envio</div>
+      <div class="field">
+        <select id="shippingMethod" onchange="updateShipping()">
+          <option value="50">Transportadora (R$ 50,00)</option>
+          <option value="30">Correios PAC (R$ 30,00)</option>
+          <option value="45">Correios SEDEX (R$ 45,00)</option>
+          <option value="0">Retirada (R$ 0,00)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="toggle-title">Seguro do envio</div>
+          <div class="toggle-sub">10% sobre o valor da compra</div>
+          <div class="toggle-desc">O seguro cobre eventuais perdas ou danos durante o transporte. Não nos responsabilizamos por extravios dos Correios ou transportadoras.</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="insuranceToggle" onchange="updateInsurance()">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 4: PRÉ-ORÇAMENTO ── -->
+  <div class="step-page" id="page4">
+    <div class="page-title"><span class="page-title-icon">📋</span> Pré-Orçamento</div>
+    <div class="card">
+      <div class="card-label">Itens do Pedido</div>
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>Qtd</th>
+            <th>Item</th>
+            <th>Unit.</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="summaryItems"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-label">Totais</div>
+      <div id="summaryTotals"></div>
+    </div>
+    <p class="note-teal">✓ Enviamos a água bacteriostática necessária para a reconstituição.</p>
+    <button class="btn-copy" id="copyBtn" onclick="copyQuote()">📋 Copiar Pré-Orçamento</button>
+  </div>
+
+  <!-- ── STEP 5: DADOS PESSOAIS ── -->
+  <div class="step-page" id="page5">
+    <div class="page-title"><span class="page-title-icon">👤</span> Seus Dados</div>
+    <div class="card">
+      <div class="field">
+        <label>Nome Completo</label>
+        <input type="text" id="fname" placeholder="Seu nome completo">
+      </div>
+      <div class="field field-valid">
+        <label>CPF</label>
+        <input type="text" id="cpf" placeholder="000.000.000-00" oninput="formatCPF(this)" maxlength="14">
+        <span class="valid-icon" id="cpfIcon" style="display:none">✓</span>
+      </div>
+      <div class="field">
+        <label>E-mail</label>
+        <input type="email" id="femail" placeholder="seu@email.com">
+      </div>
+      <div class="field">
+        <label>Telefone / WhatsApp</label>
+        <input type="tel" id="fphone" placeholder="(21) 99999-9999" oninput="formatPhone(this)">
+      </div>
+      <div class="field">
+        <label>CEP</label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="fcep" placeholder="00000-000" oninput="formatCEP(this)" maxlength="9" style="flex:1">
+          <button class="btn-activate" onclick="lookupCEP()" style="white-space:nowrap">Buscar ↗</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Endereço (Rua)</label>
+        <input type="text" id="fstreet" placeholder="Rua, Avenida...">
+      </div>
+      <div class="field-row col2">
+        <div class="field">
+          <label>Número</label>
+          <input type="text" id="fnum" placeholder="Nº">
+        </div>
+        <div class="field">
+          <label>Complemento</label>
+          <input type="text" id="fcomp" placeholder="Apto, bloco...">
+        </div>
+      </div>
+      <div class="field-row col2">
+        <div class="field">
+          <label>Cidade</label>
+          <input type="text" id="fcity" placeholder="Cidade">
+        </div>
+        <div class="field">
+          <label>UF</label>
+          <select id="fuf">
+            <option value="">UF</option>
+            <option>AC</option><option>AL</option><option>AM</option><option>AP</option>
+            <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+            <option>GO</option><option>MA</option><option>MG</option><option>MS</option>
+            <option>MT</option><option>PA</option><option>PB</option><option>PE</option>
+            <option>PI</option><option>PR</option><option>RJ</option><option>RN</option>
+            <option>RO</option><option>RR</option><option>RS</option><option>SC</option>
+            <option>SE</option><option>SP</option><option>TO</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 6: FINALIZAR ── -->
+  <div class="step-page" id="page6">
+    <div class="page-title"><span class="page-title-icon">✅</span> Finalizar Pedido</div>
+
+    <div class="confirm-block">
+      <div class="confirm-title">Dados do Cliente</div>
+      <div id="confirmClient"></div>
+    </div>
+
+    <div class="confirm-block">
+      <div class="confirm-title">Endereço de Entrega</div>
+      <div id="confirmAddress"></div>
+    </div>
+
+    <div class="confirm-block">
+      <div class="confirm-title">Itens do Pedido</div>
+      <table class="summary-table">
+        <thead>
+          <tr><th>Qtd</th><th>Item</th><th>Unit.</th><th>Total</th></tr>
+        </thead>
+        <tbody id="finalItems"></tbody>
+      </table>
+    </div>
+
+    <div class="confirm-block">
+      <div class="confirm-title">Totais</div>
+      <div id="finalTotals"></div>
+      <div style="margin-top:14px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:16px">💳</span>
+          <span style="font-size:13px;font-weight:600;color:var(--white)">Pagamento:</span>
+        </div>
+        <div class="pay-tabs">
+          <button class="pay-tab active" onclick="selectPay(this,'PIX')">PIX</button>
+          <button class="pay-tab" onclick="selectPay(this,'USDT')">USDT</button>
+        </div>
+        <div class="no-card">⚠ Não aceitamos cartão de crédito.</div>
+      </div>
+    </div>
+
+    <p class="note-teal" style="margin-bottom:20px">✓ Enviamos a água bacteriostática necessária para a reconstituição.</p>
+
+    <button class="btn-wa" onclick="sendWhatsApp()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Finalizar no WhatsApp
+    </button>
+  </div>
+
+</div><!-- /content -->
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+  <button class="btn-back" id="backBtn" onclick="goBack()" style="display:none">←</button>
+  <div class="cart-info" id="cartInfo">
+    <div class="cart-icon-wrap">🛒</div>
+    <div>
+      <div class="cart-count" id="cartCount">0 itens</div>
+      <div class="cart-total" id="cartTotal">R$ 0,00</div>
+    </div>
+  </div>
+  <button class="btn-next" id="nextBtn" onclick="goNext()">
+    Continuar →
+  </button>
+</div>
+
+<script>
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let currentStep = 1;
+let selectedProducts = [];
+let discount = 0;
+let discountLabel = '';
+let shipping = 50;
+let insurance = false;
+let payMethod = 'PIX';
+
+// Initially no products selected — user picks them
+document.querySelectorAll('.product-item').forEach(el => {
+  el.classList.remove('selected');
+  el.querySelector('.prod-check').textContent = '';
+});
+
+// ── STEPPER ───────────────────────────────────────────────────────────────────
+function updateStepper() {
+  for (let i = 1; i <= 6; i++) {
+    const sc = document.getElementById('sc'+i);
+    const sl = document.getElementById('sl'+i);
+    sc.classList.remove('active','done');
+    if (sl) sl.classList.remove('done');
+    if (i < currentStep) { sc.classList.add('done'); if (sl) sl.classList.add('done'); }
+    else if (i === currentStep) sc.classList.add('active');
+  }
+  document.getElementById('backBtn').style.display = currentStep > 1 ? 'flex' : 'none';
+  const nb = document.getElementById('nextBtn');
+  if (currentStep === 6) { nb.style.display = 'none'; } else { nb.style.display = 'flex'; }
+  if (currentStep === 1) nb.textContent = 'Continuar →';
+  else if (currentStep === 5) nb.textContent = 'Revisar →';
+  else nb.textContent = 'Continuar →';
+}
+
+function showPage(n) {
+  document.querySelectorAll('.step-page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── PRODUCT TOGGLE ────────────────────────────────────────────────────────────
+function toggleProduct(el) {
+  el.classList.toggle('selected');
+  const check = el.querySelector('.prod-check');
+  check.textContent = el.classList.contains('selected') ? '✓' : '';
+  check.style.color = 'var(--bg)';
+  check.style.background = el.classList.contains('selected') ? 'var(--gold)' : '';
+  check.style.border = el.classList.contains('selected') ? '2px solid var(--gold)' : '2px solid var(--border)';
+  updateCart();
+}
+
+function changeQty(btn, delta) {
+  const qtyEl = btn.parentElement.querySelector('.qty-val');
+  let v = parseInt(qtyEl.textContent) + delta;
+  if (v < 1) v = 1;
+  qtyEl.textContent = v;
+  updateCart();
+}
+
+function getSelectedItems() {
+  const items = [];
+  document.querySelectorAll('.product-item.selected').forEach(el => {
+    const qty = parseInt(el.querySelector('.qty-val').textContent);
+    const price = parseFloat(el.dataset.price);
+    items.push({
+      id: el.dataset.id,
+      name: el.dataset.name,
+      price, qty,
+      total: price * qty
+    });
+  });
+  return items;
+}
+
+function updateCart() {
+  const items = getSelectedItems();
+  const subtotal = items.reduce((a,i) => a+i.total, 0);
+  document.getElementById('cartCount').textContent = items.length + (items.length===1?' item':' itens');
+  document.getElementById('cartTotal').textContent = 'R$ '+fmt(subtotal);
+}
+
+// ── FORMAT ────────────────────────────────────────────────────────────────────
+function fmt(v) {
+  return v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function calcTotals(items) {
+  const subtotal = items.reduce((a,i) => a+i.total, 0);
+  const discountAmt = Math.round(subtotal * discount / 100);
+  const afterDiscount = subtotal - discountAmt;
+  const insuranceAmt = insurance ? Math.round(afterDiscount * 0.1) : 0;
+  const total = afterDiscount + shipping + insuranceAmt;
+  return {subtotal, discountAmt, afterDiscount, insuranceAmt, total};
+}
+
+// ── RENDER HELPERS ────────────────────────────────────────────────────────────
+function renderSummaryItems(containerId, items) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = items.map(i => `
+    <tr>
+      <td class="td-qty">${i.qty}</td>
+      <td>${i.name}</td>
+      <td>R$ ${fmt(i.price)}</td>
+      <td>R$ ${fmt(i.total)}</td>
+    </tr>
+  `).join('');
+}
+
+function renderTotals(containerId, items, showLabel) {
+  const {subtotal, discountAmt, insuranceAmt, total} = calcTotals(items);
+  let html = `
+    <div class="total-row"><span class="label">Subtotal</span><span class="val">R$ ${fmt(subtotal)}</span></div>`;
+  if (discountAmt > 0) html += `
+    <div class="total-row"><span class="label">Desconto (${discountLabel})</span><span class="val" style="color:var(--teal2)">− R$ ${fmt(discountAmt)}</span></div>`;
+  const shippingLabel = document.getElementById('shippingMethod')
+    ? document.getElementById('shippingMethod').options[document.getElementById('shippingMethod').selectedIndex].text.split(' (')[0].toUpperCase()
+    : 'TRANSPORTADORA';
+  html += `<div class="total-row"><span class="label">Frete (${shippingLabel})</span><span class="val">R$ ${fmt(shipping)}</span></div>`;
+  if (insuranceAmt > 0) html += `
+    <div class="total-row"><span class="label">Seguro (10%)</span><span class="val">R$ ${fmt(insuranceAmt)}</span></div>`;
+  const secLabel = insurance ? 'Com Seguro' : 'Sem Seguro';
+  html += `<div class="total-row highlight"><span class="label">${secLabel}</span><span class="val">R$ ${fmt(total)}</span></div>`;
+  html += `<div class="total-row highlight" style="margin-top:4px;border-top:1px solid var(--border);padding-top:10px">
+    <span class="label" style="font-size:15px">Total Estimado</span>
+    <span class="val" style="font-size:17px">R$ ${fmt(total)}</span></div>`;
+  document.getElementById(containerId).innerHTML = html;
+}
+
+// ── STEP 3: DISCOUNT + SHIPPING ───────────────────────────────────────────────
+function activateDiscount() {
+  const val = document.getElementById('partnerInput').value.trim().toLowerCase();
+  const codes = {
+    'dr silva': 10, 'dra ana': 10, 'otimize': 15,
+    'clinica': 10, 'teste': 5, 'optimum': 20
+  };
+  if (codes[val] !== undefined) {
+    discount = codes[val];
+    discountLabel = val.toUpperCase() + ' ' + discount + '%';
+    document.getElementById('discountMsg').innerHTML =
+      `<div class="discount-badge">✓ Desconto de ${discount}% ativado!</div>`;
+  } else {
+    discount = 0; discountLabel = '';
+    document.getElementById('discountMsg').innerHTML =
+      `<div style="font-size:12px;color:var(--red);margin-top:8px">Parceiro não encontrado.</div>`;
+  }
+}
+
+function updateShipping() {
+  shipping = parseFloat(document.getElementById('shippingMethod').value);
+}
+
+function updateInsurance() {
+  insurance = document.getElementById('insuranceToggle').checked;
+}
+
+// ── STEP 4: COPY ──────────────────────────────────────────────────────────────
+function copyQuote() {
+  const items = getSelectedItems();
+  const {subtotal, discountAmt, insuranceAmt, total} = calcTotals(items);
+  let txt = '📋 PRÉ-ORÇAMENTO — Optimum Lab\n';
+  txt += '─────────────────────\n';
+  items.forEach(i => txt += `${i.qty}x ${i.name} — R$ ${fmt(i.total)}\n`);
+  txt += '─────────────────────\n';
+  txt += `Subtotal: R$ ${fmt(subtotal)}\n`;
+  if (discountAmt > 0) txt += `Desconto: − R$ ${fmt(discountAmt)}\n`;
+  txt += `Frete: R$ ${fmt(shipping)}\n`;
+  if (insuranceAmt > 0) txt += `Seguro: R$ ${fmt(insuranceAmt)}\n`;
+  txt += `TOTAL: R$ ${fmt(total)}\n`;
+  txt += '─────────────────────\n';
+  txt += '✓ Inclui água bacteriostática para reconstituição.\n';
+  navigator.clipboard.writeText(txt).catch(()=>{});
+  const btn = document.getElementById('copyBtn');
+  btn.classList.add('copied');
+  btn.textContent = '✓ Copiado!';
+  setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='📋 Copiar Pré-Orçamento';},2000);
+}
+
+// ── STEP 5: FORMAT FIELDS ─────────────────────────────────────────────────────
+function formatCPF(el) {
+  let v = el.value.replace(/\D/g,'');
+  if (v.length > 11) v = v.slice(0,11);
+  v = v.replace(/(\d{3})(\d)/,'$1.$2')
+       .replace(/(\d{3})\.(\d{3})(\d)/,'$1.$2.$3')
+       .replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/,'$1.$2.$3-$4');
+  el.value = v;
+  document.getElementById('cpfIcon').style.display = v.length === 14 ? 'block' : 'none';
+}
+
+function formatPhone(el) {
+  let v = el.value.replace(/\D/g,'');
+  if (v.length > 11) v = v.slice(0,11);
+  v = v.replace(/^(\d{2})(\d)/,'($1) $2')
+       .replace(/(\d{5})(\d)/,'$1-$2');
+  el.value = v;
+}
+
+function formatCEP(el) {
+  let v = el.value.replace(/\D/g,'');
+  if (v.length > 8) v = v.slice(0,8);
+  v = v.replace(/(\d{5})(\d)/,'$1-$2');
+  el.value = v;
+}
+
+function lookupCEP() {
+  const cep = document.getElementById('fcep').value.replace(/\D/g,'');
+  if (cep.length !== 8) return;
+  // Simulated lookup since we can't fetch
+  const mock = {
+    '22280100': {street:'Rua Rodrigo de Brito', city:'Rio de Janeiro', uf:'RJ'},
+    '01310100': {street:'Avenida Paulista', city:'São Paulo', uf:'SP'},
+    '70040010': {street:'Esplanada dos Ministérios', city:'Brasília', uf:'DF'},
+  };
+  const data = mock[cep];
+  if (data) {
+    document.getElementById('fstreet').value = data.street;
+    document.getElementById('fcity').value = data.city;
+    document.getElementById('fuf').value = data.uf;
+  }
+}
+
+// ── PAYMENT ───────────────────────────────────────────────────────────────────
+function selectPay(btn, method) {
+  document.querySelectorAll('.pay-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  payMethod = method;
+}
+
+// ── WHATSAPP ──────────────────────────────────────────────────────────────────
+function sendWhatsApp() {
+  const items = getSelectedItems();
+  const {total} = calcTotals(items);
+  const name = document.getElementById('fname').value;
+  const phone = document.getElementById('fphone').value;
+  const city = document.getElementById('fcity').value;
+  const uf = document.getElementById('fuf').value;
+  let msg = `Olá! Gostaria de finalizar meu pedido na Optimum Lab.\n\n`;
+  msg += `👤 *${name}* — ${phone}\n`;
+  msg += `📍 ${city}/${uf}\n\n`;
+  msg += `🧬 *Itens:*\n`;
+  items.forEach(i => msg += `• ${i.qty}x ${i.name} — R$ ${fmt(i.total)}\n`);
+  msg += `\n💰 *Total: R$ ${fmt(total)}*\n`;
+  msg += `💳 Pagamento: ${payMethod}\n\n`;
+  msg += `Material educativo para pesquisa e consulta.`;
+  const encoded = encodeURIComponent(msg);
+  window.open(`https://wa.me/5521999999999?text=${encoded}`, '_blank');
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+function goNext() {
+  const items = getSelectedItems();
+  if (currentStep === 1 && items.length === 0) {
+    alert('Selecione pelo menos 1 produto para continuar.');
+    return;
+  }
+  if (currentStep === 2) {
+    // Render step 3 shipping summary
+  }
+  if (currentStep === 3) {
+    updateShipping();
+    // Render step 4
+    renderSummaryItems('summaryItems', items);
+    renderTotals('summaryTotals', items);
+  }
+  if (currentStep === 4) {
+    // go to step 5
+  }
+  if (currentStep === 5) {
+    // validate + render step 6
+    const name = document.getElementById('fname').value;
+    const cpf  = document.getElementById('cpf').value;
+    const phone = document.getElementById('fphone').value;
+    if (!name || !cpf || !phone) {
+      alert('Preencha nome, CPF e telefone para continuar.');
+      return;
+    }
+    renderFinalStep(items);
+  }
+
+  // Render step 2
+  if (currentStep === 1) {
+    renderStep2(items);
+  }
+
+  currentStep++;
+  updateStepper();
+  showPage(currentStep);
+}
+
+function renderStep2(items) {
+  let html = '';
+  items.forEach(i => {
+    html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--white)">${i.qty}x ${i.name}</div>
+        <div style="font-size:11px;color:var(--gray)">R$ ${fmt(i.price)} /unid</div>
+      </div>
+      <div style="font-size:14px;font-weight:700;color:var(--gold)">R$ ${fmt(i.total)}</div>
+    </div>`;
+  });
+  document.getElementById('reviewItems').innerHTML = html;
+  renderTotals('reviewTotals', items);
+}
+
+function renderFinalStep(items) {
+  const name = document.getElementById('fname').value;
+  const email = document.getElementById('femail').value;
+  const cpf = document.getElementById('cpf').value;
+  const phone = document.getElementById('fphone').value;
+  const street = document.getElementById('fstreet').value;
+  const num = document.getElementById('fnum').value;
+  const comp = document.getElementById('fcomp').value;
+  const city = document.getElementById('fcity').value;
+  const uf = document.getElementById('fuf').value;
+  const cep = document.getElementById('fcep').value;
+
+  document.getElementById('confirmClient').innerHTML = `
+    <div class="confirm-row"><span class="k">Nome</span><span class="v">${name||'—'}</span></div>
+    <div class="confirm-row"><span class="k">CPF</span><span class="v">${cpf||'—'}</span></div>
+    <div class="confirm-row"><span class="k">E-mail</span><span class="v">${email||'—'}</span></div>
+    <div class="confirm-row"><span class="k">WhatsApp</span><span class="v">${phone||'—'}</span></div>
+  `;
+  document.getElementById('confirmAddress').innerHTML = `
+    <div class="confirm-row"><span class="k">Endereço</span><span class="v">${street||'—'}${num?', '+num:''} ${comp||''}</span></div>
+    <div class="confirm-row"><span class="k">Cidade/UF</span><span class="v">${city||'—'}/${uf||'—'} — ${cep||'—'}</span></div>
+  `;
+  renderSummaryItems('finalItems', items);
+  renderTotals('finalTotals', items);
+}
+
+function goBack() {
+  if (currentStep <= 1) return;
+  currentStep--;
+  updateStepper();
+  showPage(currentStep);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+updateStepper();
+updateCart();
+</script>
+</body>
+</html>
