@@ -671,13 +671,88 @@
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
-    #protocols, #about, #schedule, #orcamento, #science { padding: 5rem 1.5rem; }
+    #protocols, #about, #schedule, #orcamento, #science, #library { padding: 5rem 1.5rem; }
     .protocols-grid, .about-grid, .orcamento-wrap { grid-template-columns: 1fr; }
     .week-grid { grid-template-columns: repeat(4,1fr); }
     .results-grid { grid-template-columns: 1fr; }
+    .lib-grid { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
     footer { padding: 2.5rem 1.5rem; flex-direction: column; }
     .hero-stats { gap: 2rem; }
+  }
+
+  /* ─── LIBRARY ─── */
+  #library {
+    padding: 8rem 4rem;
+    background: var(--bg-dark);
+  }
+  .library-header { text-align: center; margin-bottom: 3rem; }
+  .lib-filters {
+    display: flex; justify-content: center; gap: .6rem;
+    flex-wrap: wrap; margin-bottom: 3.5rem;
+  }
+  .lib-filter {
+    padding: .45rem 1.2rem; border: 1px solid rgba(201,162,88,.25);
+    border-radius: 100px; font-size: .72rem; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--gray); background: transparent;
+    cursor: pointer; transition: all .3s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .lib-filter:hover { border-color: var(--gold); color: var(--gold); }
+  .lib-filter.active { background: var(--gold); color: var(--bg-deep); border-color: var(--gold); }
+  .lib-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .lib-card {
+    background: var(--bg-card); border: 1px solid rgba(201,162,88,.1);
+    border-radius: 4px; overflow: hidden; transition: all .3s; cursor: pointer;
+  }
+  .lib-card:hover { border-color: rgba(201,162,88,.3); transform: translateY(-3px); }
+  .lib-card.hidden { display: none; }
+  .lib-card-head {
+    padding: 1.8rem 1.5rem 1.2rem; position: relative;
+  }
+  .lib-card-icon {
+    width: 36px; height: 36px; border: 1px solid var(--gold-dim);
+    border-radius: 2px; display: flex; align-items: center;
+    justify-content: center; margin-bottom: 1rem; font-size: 1rem;
+  }
+  .lib-card-tag {
+    font-size: .6rem; font-weight: 600; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: .5rem;
+  }
+  .lib-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300; color: var(--white);
+    margin-bottom: .4rem;
+  }
+  .lib-card-sub { font-size: .78rem; color: var(--gray); line-height: 1.5; }
+  .lib-card-arrow {
+    position: absolute; top: 1.8rem; right: 1.5rem;
+    font-size: .8rem; color: var(--gold); transition: transform .3s;
+  }
+  .lib-card.open .lib-card-arrow { transform: rotate(180deg); }
+  .lib-card-body {
+    max-height: 0; overflow: hidden; transition: max-height .4s ease;
+    padding: 0 1.5rem;
+  }
+  .lib-card.open .lib-card-body { max-height: 600px; }
+  .lib-card-inner {
+    padding: 0 0 1.5rem; border-top: 1px solid rgba(255,255,255,.06);
+    padding-top: 1rem;
+  }
+  .lib-feat { list-style: none; margin-bottom: 1rem; }
+  .lib-feat li {
+    font-size: .8rem; color: var(--text); padding: .3rem 0;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .lib-feat li::before { content: '→'; color: var(--gold); font-size: .7rem; flex-shrink: 0; }
+  .lib-dose {
+    background: rgba(201,162,88,.08); border-left: 2px solid var(--gold);
+    padding: .8rem 1rem; font-size: .75rem; color: var(--gray);
+    line-height: 1.6; border-radius: 0 2px 2px 0;
   }
 
   /* success state */
@@ -695,6 +770,7 @@
   <a href="#" class="nav-logo">Optimum<span>Lab</span></a>
   <ul class="nav-links">
     <li><a href="#protocols">Protocolos</a></li>
+    <li><a href="#library">Biblioteca</a></li>
     <li><a href="#science">Ciência</a></li>
     <li><a href="#schedule">Cronograma</a></li>
     <li><a href="orcamento.html" class="nav-cta">Orçamento</a></li>
@@ -827,6 +903,329 @@
             <div class="chart-bar" style="--w:100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold-light))"></div>
           </div>
           <span class="chart-val" style="color:var(--gold-light)">~24%</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LIBRARY -->
+<section id="library">
+  <div class="library-header reveal">
+    <div class="section-label">Biblioteca de Peptídeos</div>
+    <h2 class="section-title">Guia <strong>Científico</strong></h2>
+    <p style="max-width:520px; margin:.8rem auto 0; font-size:.9rem; color:var(--gray);">
+      Conheça cada peptídeo do nosso portfólio — mecanismo de ação, benefícios e protocolos baseados em evidência.
+    </p>
+  </div>
+
+  <div class="lib-filters reveal">
+    <button class="lib-filter active" onclick="filterLib('all')">Todos</button>
+    <button class="lib-filter" onclick="filterLib('emagrecimento')">Emagrecimento</button>
+    <button class="lib-filter" onclick="filterLib('longevidade')">Longevidade</button>
+    <button class="lib-filter" onclick="filterLib('regeneracao')">Regeneração</button>
+    <button class="lib-filter" onclick="filterLib('gh')">GH &amp; Performance</button>
+  </div>
+
+  <div class="lib-grid reveal">
+
+    <!-- Tirzepatida -->
+    <div class="lib-card" data-cat="emagrecimento" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">⬡</div>
+        <div class="lib-card-tag">Emagrecimento</div>
+        <h3 class="lib-card-name">Tirzepatida</h3>
+        <p class="lib-card-sub">Dual agonista GIP/GLP-1 — até 21% de perda de peso em estudos clínicos.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>Agonista duplo GIP + GLP-1 (aprovado FDA)</li>
+            <li>Controle glicêmico e redução de apetite</li>
+            <li>Redução de gordura visceral e hepática</li>
+            <li>Melhora de marcadores cardiometabólicos</li>
+            <li>Dose semanal — meia-vida ~5 dias</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> Escalonamento: 2,5mg → 5mg → 7,5mg → 10mg → 12,5mg → 15mg · Incrementos a cada 4 semanas · Aplicação semanal subcutânea
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AOD-9604 -->
+    <div class="lib-card" data-cat="emagrecimento" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">◇</div>
+        <div class="lib-card-tag">Emagrecimento</div>
+        <h3 class="lib-card-name">AOD-9604</h3>
+        <p class="lib-card-sub">Fragmento do GH (aa 176-191) — lipólise sem efeitos colaterais do hormônio do crescimento.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>Fragmento modificado do hormônio do crescimento</li>
+            <li>Estimula lipólise e inibe lipogênese</li>
+            <li>Sem impacto em IGF-1 ou glicose</li>
+            <li>Perfil de segurança GRAS (FDA)</li>
+            <li>Ação direcionada em tecido adiposo</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> 250–500mcg/dia · Em jejum · Subcutânea na região abdominal · Ciclos de 12 semanas
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tesamorelin -->
+    <div class="lib-card" data-cat="emagrecimento" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">⬢</div>
+        <div class="lib-card-tag">Emagrecimento</div>
+        <h3 class="lib-card-name">Tesamorelin</h3>
+        <p class="lib-card-sub">Análogo de GHRH aprovado pelo FDA — estimula GH natural e reduz gordura visceral.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>Análogo sintético de GHRH (aprovado FDA — Egrifta)</li>
+            <li>Estimula secreção pulsátil natural de GH</li>
+            <li>Redução significativa de gordura visceral</li>
+            <li>Preserva a regulação fisiológica do eixo GH</li>
+            <li>Melhora da composição corporal e perfil lipídico</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> 1–2mg/dia · Subcutânea antes de dormir · Ciclo mínimo de 8–12 semanas
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAD+ -->
+    <div class="lib-card" data-cat="longevidade" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">⟡</div>
+        <div class="lib-card-tag">Longevidade</div>
+        <h3 class="lib-card-name">NAD+ 500mg</h3>
+        <p class="lib-card-sub">Coenzima essencial para energia celular, reparo de DNA e ativação de sirtuínas.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>Cofator em 500+ reações enzimáticas</li>
+            <li>Ativa sirtuínas (SIRT1–SIRT7) — reguladores do envelhecimento</li>
+            <li>Suporta reparo de DNA via PARPs</li>
+            <li>Melhora função mitocondrial e energia celular</li>
+            <li>Neuroproteção e clareza cognitiva</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> 500mg por sessão · Subcutânea ou IV · 1–3x por semana · Ciclos de 4–8 semanas
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOTS-c -->
+    <div class="lib-card" data-cat="longevidade" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">◎</div>
+        <div class="lib-card-tag">Longevidade</div>
+        <h3 class="lib-card-name">MOTS-c</h3>
+        <p class="lib-card-sub">Peptídeo mitocondrial — mimético de exercício, ativa AMPK e metabolismo celular.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>Codificado pelo DNA mitocondrial (12S rRNA)</li>
+            <li>Ativa via AMPK — mimético de exercício</li>
+            <li>Regula metabolismo de glicose e ácidos graxos</li>
+            <li>Proteção contra estresse metabólico e envelhecimento</li>
+            <li>Melhora resistência física e composição corporal</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> 5–10mg · Subcutânea · 1–3x por semana · Ciclos de 4–8 semanas
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SS-31 -->
+    <div class="lib-card" data-cat="longevidade" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">◈</div>
+        <div class="lib-card-tag">Longevidade</div>
+        <h3 class="lib-card-name">SS-31 (Elamipretide)</h3>
+        <p class="lib-card-sub">Proteção mitocondrial direta — concentra-se 5.000× na mitocôndria, liga-se à cardiolipina.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>Penetra e concentra 5.000× na membrana mitocondrial</li>
+            <li>Estabiliza cardiolipina — integridade da membrana</li>
+            <li>Reduz estresse oxidativo mitocondrial (ROS)</li>
+            <li>Restaura produção de ATP em células envelhecidas</li>
+            <li>Proteção cardiovascular, renal e neurológica</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> 5–20mg/dia · Subcutânea · Ciclos de 4–8 semanas · Estudos clínicos em andamento
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BPC-157 + TB-500 -->
+    <div class="lib-card" data-cat="regeneracao" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">⊕</div>
+        <div class="lib-card-tag">Regeneração</div>
+        <h3 class="lib-card-name">BPC-157 + TB-500</h3>
+        <p class="lib-card-sub">Dupla regenerativa — reparo de tendões, músculos, GI e cicatrização acelerada.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>BPC-157: Proteção gástrica, estimula NO e angiogênese</li>
+            <li>TB-500: Regula actina, migração celular e regeneração</li>
+            <li>Sinergia em reparo de tendões, ligamentos e músculos</li>
+            <li>Proteção e regeneração do trato gastrointestinal</li>
+            <li>Ação anti-inflamatória sistêmica</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> BPC-157: 250–500mcg/dia + TB-500: 2mg 2x/semana · Subcutânea · Ciclos de 4–8 semanas
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wolverine Stack -->
+    <div class="lib-card" data-cat="regeneracao" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">⚡</div>
+        <div class="lib-card-tag">Regeneração</div>
+        <h3 class="lib-card-name">Wolverine Stack</h3>
+        <p class="lib-card-sub">Blend BPC-157 + TB-500 (10mg + 10mg) — regeneração acelerada em dose combinada.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>Blend otimizado: BPC-157 10mg + TB-500 10mg</li>
+            <li>Praticidade de dose única com dois peptídeos</li>
+            <li>Recuperação muscular e articular acelerada</li>
+            <li>Ideal para atletas e lesões recorrentes</li>
+            <li>Suporte à cicatrização e regeneração tecidual</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> 0,3–0,5mL/dia · Subcutânea · Próximo à área da lesão · Ciclos de 4–8 semanas
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pro Klow 80mg -->
+    <div class="lib-card" data-cat="regeneracao" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">✦</div>
+        <div class="lib-card-tag">Regeneração</div>
+        <h3 class="lib-card-name">Pro Klow 80mg</h3>
+        <p class="lib-card-sub">Blend 4-em-1: GHK-Cu 50mg + BPC 10mg + TB 10mg + KPV 10mg — multifuncional.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>GHK-Cu 50mg: Colágeno, pele, 4.000+ genes</li>
+            <li>BPC-157 10mg: Proteção gástrica e tecidual</li>
+            <li>TB-500 10mg: Regeneração e migração celular</li>
+            <li>KPV 10mg: Anti-inflamatório (inibe NF-κB)</li>
+            <li>Abordagem sinérgica multissistêmica</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> 0,1–0,2mL/dia · Subcutânea · Segunda a sexta · Ciclos de 8–12 semanas
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPV -->
+    <div class="lib-card" data-cat="regeneracao" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">◯</div>
+        <div class="lib-card-tag">Regeneração</div>
+        <h3 class="lib-card-name">KPV</h3>
+        <p class="lib-card-sub">Tripeptídeo anti-inflamatório derivado do α-MSH — inibe NF-κB, proteção intestinal.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>Derivado do α-MSH (hormônio melanocortina)</li>
+            <li>Inibe via NF-κB — master switch inflamatório</li>
+            <li>Proteção da mucosa intestinal (gut health)</li>
+            <li>Ação imunomoduladora sem imunossupressão</li>
+            <li>Potencial em condições autoimunes e inflamatórias</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> 200–500mcg/dia · Subcutânea ou oral · Ciclos de 4–8 semanas
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CJC-1295 + Ipamorelin -->
+    <div class="lib-card" data-cat="gh" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">△</div>
+        <div class="lib-card-tag">GH &amp; Performance</div>
+        <h3 class="lib-card-name">CJC-1295 + Ipamorelin</h3>
+        <p class="lib-card-sub">Secretagogos de GH — amplificam o pulso natural em 3-5× sem dessensibilizar.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>CJC-1295: Análogo de GHRH com meia-vida prolongada</li>
+            <li>Ipamorelin: GHRP seletivo, sem aumento de cortisol/prolactina</li>
+            <li>Amplificação de 3–5× do pulso natural de GH</li>
+            <li>Melhora da composição corporal e sono profundo</li>
+            <li>Regeneração tecidual e recuperação acelerada</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> 100–300mcg de cada · Subcutânea antes de dormir · 5x/semana · Ciclos de 8–12 semanas
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IGF-1 LR3 -->
+    <div class="lib-card" data-cat="gh" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">▲</div>
+        <div class="lib-card-tag">GH &amp; Performance</div>
+        <h3 class="lib-card-name">IGF-1 LR3</h3>
+        <p class="lib-card-sub">Fator de crescimento 3× mais potente — meia-vida de 20-30h, hipertrofia e recuperação.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <ul class="lib-feat">
+            <li>Versão modificada com meia-vida estendida (20–30h)</li>
+            <li>3× mais potente que IGF-1 nativo</li>
+            <li>Hiperplasia muscular — criação de novas fibras</li>
+            <li>Melhora captação de nutrientes pelas células</li>
+            <li>Recuperação acelerada pós-treino e lesões</li>
+          </ul>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> 20–100mcg/dia · Subcutânea ou intramuscular · Pós-treino · Ciclos de 4–6 semanas
+          </div>
         </div>
       </div>
     </div>
@@ -1083,6 +1482,7 @@
   </div>
   <div class="footer-links">
     <a href="#protocols">Protocolos</a>
+    <a href="#library">Biblioteca</a>
     <a href="#science">Ciência</a>
     <a href="#schedule">Cronograma</a>
     <a href="orcamento.html">Orçamento</a>
@@ -1129,6 +1529,25 @@
     });
   }, { threshold: 0.3 });
   document.querySelectorAll('.protocol-card').forEach(c => barObserver.observe(c));
+
+  // Library filter
+  function filterLib(cat) {
+    document.querySelectorAll('.lib-filter').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('.lib-card').forEach(card => {
+      if (cat === 'all' || card.dataset.cat === cat) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+        card.classList.remove('open');
+      }
+    });
+  }
+
+  // Library accordion toggle
+  function toggleLib(card) {
+    card.classList.toggle('open');
+  }
 </script>
 </body>
 </html>
