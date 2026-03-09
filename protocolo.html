@@ -910,6 +910,17 @@ const peptides = [
     notes: 'BPC tem fase de carga (2 sem) e manutenção (2 sem). TB-500 também tem fase de carga de 15 dias'
   },
   {
+    id: 'tb500', name: 'TB-500', icon: '⬡',
+    category: 'regeneracao', catLabel: 'Regeneração',
+    desc: 'Timosina Beta-4 — regeneração tecidual e angiogênese.',
+    vialSize: '10mg',
+    dose: '2mg/dia (carga) → 750mcg–1mg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '4–8 semanas',
+    pillClass: 'pill-reg', pillLabel: 'TB',
+    escalation: '15 dias de carga: 2mg/dia → Manutenção: 750mcg–1mg/dia',
+    notes: 'Aplicar SC próximo à área da lesão quando possível. Frasco 10mg — R$ 1.000,00'
+  },
+  {
     id: 'bpc157', name: 'BPC-157', icon: '⊕',
     category: 'regeneracao', catLabel: 'Regeneração',
     desc: 'Body Protection Compound — proteção gástrica e regeneração tecidual.',
@@ -1117,7 +1128,10 @@ const rules = [
   { type: 'warning', ids: ['retatrutida','aod9604'], msg: 'Retatrutida e AOD-9604 têm ações lipolíticas sobrepostas — <strong>considere usar apenas um</strong>.' },
   { type: 'warning', ids: ['wolverine','bpc157tb500'], msg: 'Wolverine Stack já contém BPC-157 + TB-500 — <strong>redundante</strong>. Escolha um dos dois.' },
   { type: 'warning', ids: ['wolverine','bpc157'], msg: 'Wolverine Stack já contém BPC-157 — <strong>redundante</strong> usar BPC standalone junto.' },
+  { type: 'warning', ids: ['wolverine','tb500'], msg: 'Wolverine Stack já contém TB-500 — <strong>redundante</strong> usar TB standalone junto.' },
   { type: 'warning', ids: ['bpc157tb500','bpc157'], msg: 'BPC+TB combo já inclui BPC-157 — <strong>redundante</strong> usar BPC standalone junto.' },
+  { type: 'warning', ids: ['bpc157tb500','tb500'], msg: 'BPC+TB combo já inclui TB-500 — <strong>redundante</strong> usar TB standalone junto.' },
+  { type: 'warning', ids: ['proklow','tb500'], msg: 'Pro Klow já contém TB-500 — pode ser redundante usar TB standalone junto.' },
   { type: 'warning', ids: ['proklow','ghkcu'], msg: 'Pro Klow já contém GHK-Cu 50mg — <strong>ajustar dose de GHK-Cu</strong> ou usar apenas Pro Klow.' },
   { type: 'warning', ids: ['proklow','kpv'], msg: 'Pro Klow já contém KPV 10mg — pode ser redundante se usar KPV separado.' },
   { type: 'warning', ids: ['proklow','bpc157tb500'], msg: 'Pro Klow já contém BPC + TB — pode ser redundante usar BPC+TB separado.' },
@@ -1128,6 +1142,8 @@ const rules = [
   // ── SYNERGIES ──
   { type: 'synergy', ids: ['bpc157tb500','ghkcu'], msg: '<strong>Sinergia regenerativa potencializada</strong> — GHK-Cu estimula colágeno enquanto BPC+TB reparam tecido profundo.' },
   { type: 'synergy', ids: ['bpc157','ghkcu'], msg: '<strong>Regeneração + colágeno</strong> — BPC-157 repara tecido e GHK-Cu estimula produção de colágeno.' },
+  { type: 'synergy', ids: ['tb500','bpc157'], msg: '<strong>Dupla regenerativa</strong> — TB-500 acelera migração celular e BPC-157 protege e repara tecidos. Sinergia clássica.' },
+  { type: 'synergy', ids: ['tb500','ghkcu'], msg: '<strong>Regeneração + remodelação</strong> — TB-500 regenera tecido profundo e GHK-Cu estimula colágeno e elastina.' },
   { type: 'synergy', ids: ['nad','motsc','ss31'], msg: '<strong>Stack longevidade completo</strong> — NAD+ (energia), MOTS-c (exercício), SS-31 (mitocôndria) atuam em vias complementares.' },
   { type: 'synergy', ids: ['nad','motsc'], msg: '<strong>Sinergia mitocondrial</strong> — NAD+ fornece substrato e MOTS-c ativa AMPK para otimizar metabolismo celular.' },
   { type: 'synergy', ids: ['nad','ss31'], msg: '<strong>Reparo + proteção mitocondrial</strong> — NAD+ para reparo de DNA e SS-31 para integridade da membrana.' },
