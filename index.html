@@ -689,6 +689,132 @@
     border-color: var(--gold);
   }
 
+  /* ─── CASES (Storage) ─── */
+  #cases {
+    padding: 8rem 4rem;
+    background: var(--bg-dark);
+  }
+  .cases-header { text-align: center; margin-bottom: 4rem; }
+  .cases-header .section-label { margin-bottom: 1rem; }
+  .cases-header .section-title { margin-bottom: 1.5rem; }
+  .cases-header-desc {
+    font-size: .9rem; color: var(--gray); line-height: 1.7;
+    max-width: 650px; margin: 0 auto;
+  }
+  .cases-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .4rem 1rem; border-radius: 20px;
+    background: rgba(201,162,88,.08);
+    border: 1px solid rgba(201,162,88,.15);
+    font-size: .7rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .cases-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .case-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(201,162,88,.08);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all .4s ease;
+    display: flex; flex-direction: column;
+  }
+  .case-card:hover {
+    border-color: rgba(201,162,88,.3);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,.3);
+  }
+
+  .case-card-img {
+    width: 100%; aspect-ratio: 4/3;
+    background: var(--bg-deep);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .case-card-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .5s ease;
+  }
+  .case-card:hover .case-card-img img { transform: scale(1.05); }
+  .case-card-img-placeholder {
+    color: var(--gray); font-size: .75rem; letter-spacing: .1em;
+    text-transform: uppercase; opacity: .5;
+  }
+
+  .case-card-body {
+    padding: 1.5rem;
+    flex: 1; display: flex; flex-direction: column;
+  }
+  .case-card-tag {
+    font-size: .6rem; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: .6rem;
+  }
+  .case-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600; color: var(--white);
+    margin-bottom: .6rem; line-height: 1.3;
+  }
+  .case-card-desc {
+    font-size: .8rem; color: var(--gray); line-height: 1.6;
+    margin-bottom: 1.2rem; flex: 1;
+  }
+  .case-card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; margin-top: auto;
+  }
+  .case-card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 600; color: var(--gold);
+  }
+  .case-card-price small {
+    font-size: .55rem; font-weight: 400; letter-spacing: .05em;
+    color: var(--gray); display: block;
+    font-family: 'Outfit', sans-serif;
+  }
+  .case-card-btn {
+    padding: .55rem 1.2rem;
+    border: 1px solid var(--gold); background: none;
+    color: var(--gold); border-radius: 3px;
+    font-size: .7rem; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; cursor: pointer;
+    text-decoration: none; transition: all .3s;
+    white-space: nowrap;
+  }
+  .case-card-btn:hover {
+    background: var(--gold); color: var(--bg-deep);
+  }
+
+  .cases-cta-bar {
+    text-align: center; margin-top: 3rem; padding: 2rem;
+    border-radius: 8px;
+    background: rgba(201,162,88,.04);
+    border: 1px solid rgba(201,162,88,.1);
+    max-width: 1100px; margin-left: auto; margin-right: auto;
+  }
+  .cases-cta-text {
+    font-size: .85rem; color: var(--gray); margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+  .cases-cta-btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .7rem 2rem; background: var(--gold);
+    color: var(--bg-deep); font-weight: 600;
+    font-size: .78rem; letter-spacing: .1em;
+    text-transform: uppercase; border-radius: 3px;
+    cursor: pointer; text-decoration: none; border: none;
+    transition: all .3s;
+  }
+  .cases-cta-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(201,162,88,.25);
+  }
+
   /* ─── FOOTER ─── */
   footer {
     padding: 4rem;
@@ -892,7 +1018,7 @@
     }
 
     /* Sections padding */
-    #about, #orcamento, #science, #library, #certificados { padding: 5rem 1.5rem; }
+    #about, #orcamento, #science, #library, #certificados, #cases { padding: 5rem 1.5rem; }
 
     /* Hero */
     .hero-stats {
@@ -916,6 +1042,11 @@
     .coa-card-purity { font-size: 2rem; }
     .coa-modal-content { width: 95%; }
 
+    /* Cases */
+    #cases { padding: 5rem 1.5rem; }
+    .cases-grid { grid-template-columns: 1fr; }
+    .case-card-name { font-size: 1.15rem; }
+
     /* Orçamento */
     .about-grid, .orcamento-wrap { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
@@ -936,6 +1067,7 @@
     <li><a href="protocolo.html">Protocolo</a></li>
     <li><a href="#science">Ciência</a></li>
     <li><a href="#certificados">Certificados</a></li>
+    <li><a href="#cases">Cases</a></li>
     <li><a href="orcamento.html" class="nav-cta">Orçamento</a></li>
   </ul>
   <button class="nav-burger" onclick="toggleMenu()" aria-label="Menu">
@@ -2496,6 +2628,102 @@
   </div>
 </div>
 
+<!-- CASES — Armazenamento -->
+<section id="cases">
+  <div class="cases-header reveal">
+    <div class="cases-badge">🖨️ Impressão 3D própria</div>
+    <div class="section-label">Armazenamento</div>
+    <h2 class="section-title">Cases para <strong>peptídeos</strong></h2>
+    <p class="cases-header-desc">
+      Cases de armazenamento projetados e impressos em 3D, com encaixes precisos para frascos de peptídeos. Controle de temperatura e umidade integrado, proteção contra luz e impacto.
+    </p>
+  </div>
+
+  <div class="cases-grid">
+
+    <div class="case-card reveal">
+      <div class="case-card-img">
+        <span class="case-card-img-placeholder">foto em breve</span>
+      </div>
+      <div class="case-card-body">
+        <div class="case-card-tag">Compacto</div>
+        <div class="case-card-name">Case Compacto — 10 Frascos</div>
+        <p class="case-card-desc">Case compacto com slots para até 10 frascos de 10ml. Trava de segurança e espuma interna de proteção. Ideal para transporte.</p>
+        <div class="case-card-footer">
+          <div class="case-card-price">—<small>preço sob consulta</small></div>
+          <a href="orcamento.html" class="case-card-btn">Consultar →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-card-img">
+        <span class="case-card-img-placeholder">foto em breve</span>
+      </div>
+      <div class="case-card-body">
+        <div class="case-card-tag">Monitorado</div>
+        <div class="case-card-name">Case com Higrômetro Digital</div>
+        <p class="case-card-desc">Monitoramento em tempo real de temperatura e umidade. Display digital integrado na tampa. Perfeito para armazenamento refrigerado.</p>
+        <div class="case-card-footer">
+          <div class="case-card-price">—<small>preço sob consulta</small></div>
+          <a href="orcamento.html" class="case-card-btn">Consultar →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-card-img">
+        <span class="case-card-img-placeholder">foto em breve</span>
+      </div>
+      <div class="case-card-body">
+        <div class="case-card-tag">Cilíndrico</div>
+        <div class="case-card-name">Recipiente com Trava de Rosca</div>
+        <p class="case-card-desc">Container cilíndrico com tampa rosqueada para frasco individual. Proteção máxima contra impacto e luz. Design modular empilhável.</p>
+        <div class="case-card-footer">
+          <div class="case-card-price">—<small>preço sob consulta</small></div>
+          <a href="orcamento.html" class="case-card-btn">Consultar →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-card-img">
+        <span class="case-card-img-placeholder">foto em breve</span>
+      </div>
+      <div class="case-card-body">
+        <div class="case-card-tag">Profissional</div>
+        <div class="case-card-name">Kit Completo de Aplicação</div>
+        <p class="case-card-desc">Case profissional com compartimentos organizados para seringas, frascos, agulhas e container de armazenamento. Tudo em um só lugar.</p>
+        <div class="case-card-footer">
+          <div class="case-card-price">—<small>preço sob consulta</small></div>
+          <a href="orcamento.html" class="case-card-btn">Consultar →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-card-img">
+        <span class="case-card-img-placeholder">foto em breve</span>
+      </div>
+      <div class="case-card-body">
+        <div class="case-card-tag">Multi-Tamanhos</div>
+        <div class="case-card-name">Estojo Multi-Frascos</div>
+        <p class="case-card-desc">Estojo com encaixes adaptáveis para frascos de diversos tamanhos. Interior em espuma de alta densidade. Fecho resistente.</p>
+        <div class="case-card-footer">
+          <div class="case-card-price">—<small>preço sob consulta</small></div>
+          <a href="orcamento.html" class="case-card-btn">Consultar →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cases-cta-bar reveal">
+    <p class="cases-cta-text">Cases customizados sob encomenda. Escolha a quantidade de slots, cor e acabamento.</p>
+    <a href="orcamento.html" class="cases-cta-btn">Solicitar Orçamento →</a>
+  </div>
+</section>
+
 <!-- QUOTE FORM -->
 <section id="orcamento">
   <div class="orcamento-wrap">
@@ -2628,6 +2856,7 @@
     <a href="protocolo.html">Protocolo</a>
     <a href="#science">Ciência</a>
     <a href="#certificados">Certificados</a>
+    <a href="#cases">Cases</a>
     <a href="orcamento.html">Orçamento</a>
   </div>
   <div class="footer-disclaimer">
