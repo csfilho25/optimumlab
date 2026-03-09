@@ -459,6 +459,218 @@
   }
   .result-desc { font-size: .8rem; color: var(--gray); line-height: 1.5; }
 
+  /* ─── CERTIFICADOS (CoA) ─── */
+  #certificados {
+    padding: 8rem 4rem;
+    background: var(--bg-deep);
+  }
+
+  .coa-header { text-align: center; margin-bottom: 4rem; }
+  .coa-header .section-label { margin-bottom: 1rem; }
+  .coa-header .section-title { margin-bottom: 1.5rem; }
+  .coa-header-desc {
+    font-size: .9rem; color: var(--gray); line-height: 1.7;
+    max-width: 600px; margin: 0 auto;
+  }
+
+  .coa-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .coa-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(201,162,88,.12);
+    border-radius: 8px;
+    padding: 1.8rem 1.5rem;
+    position: relative; overflow: hidden;
+    transition: all .4s ease;
+    cursor: pointer;
+  }
+  .coa-card:hover {
+    border-color: rgba(201,162,88,.35);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(201,162,88,.08);
+  }
+  .coa-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    opacity: 0; transition: opacity .4s;
+  }
+  .coa-card:hover::before { opacity: 1; }
+
+  .coa-card-top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .coa-card-lab {
+    font-size: .65rem; font-weight: 500; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--gray);
+  }
+  .coa-card-status {
+    display: flex; align-items: center; gap: .3rem;
+    font-size: .7rem; font-weight: 600; color: #4ade80;
+  }
+  .coa-card-status::before {
+    content: ''; width: 6px; height: 6px;
+    background: #4ade80; border-radius: 50%;
+  }
+
+  .coa-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem; font-weight: 600; color: var(--white);
+    margin-bottom: .6rem;
+  }
+
+  .coa-card-purity {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem; font-weight: 300; color: var(--gold);
+    line-height: 1; margin-bottom: .8rem;
+  }
+  .coa-card-purity span {
+    font-size: 1rem; color: var(--gray); font-family: 'Outfit', sans-serif;
+    font-weight: 400;
+  }
+
+  .coa-card-meta {
+    font-size: .72rem; color: var(--gray); line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .coa-card-btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-size: .72rem; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--gold);
+    background: none; border: 1px solid rgba(201,162,88,.25);
+    padding: .5rem 1rem; border-radius: 3px;
+    cursor: pointer; transition: all .3s;
+  }
+  .coa-card-btn:hover {
+    background: rgba(201,162,88,.1);
+    border-color: var(--gold);
+  }
+
+  .coa-cta {
+    text-align: center; margin-top: 3rem;
+    padding: 2.5rem; border-radius: 8px;
+    background: rgba(201,162,88,.04);
+    border: 1px solid rgba(201,162,88,.12);
+    max-width: 1100px; margin-left: auto; margin-right: auto;
+  }
+  .coa-cta-text {
+    font-size: .85rem; color: var(--gray); margin-bottom: 1.2rem;
+    line-height: 1.6;
+  }
+  .coa-cta-btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .7rem 2rem; border: 1px solid var(--gold);
+    color: var(--gold); background: none;
+    font-size: .78rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; border-radius: 3px;
+    cursor: pointer; text-decoration: none;
+    transition: all .3s;
+  }
+  .coa-cta-btn:hover {
+    background: var(--gold); color: var(--bg-deep);
+  }
+
+  /* CoA Badge nos library cards */
+  .coa-badge {
+    position: absolute; top: .8rem; right: .8rem;
+    font-size: .6rem; font-weight: 600; letter-spacing: .06em;
+    padding: .25rem .6rem; border-radius: 3px;
+    background: rgba(201,162,88,.12);
+    border: 1px solid rgba(201,162,88,.25);
+    color: var(--gold); cursor: pointer;
+    transition: all .3s; z-index: 2;
+    text-decoration: none;
+  }
+  .coa-badge:hover {
+    background: rgba(201,162,88,.25);
+    transform: scale(1.05);
+  }
+
+  /* CoA Modal */
+  .coa-modal {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,.88);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .35s ease;
+  }
+  .coa-modal.open { opacity: 1; pointer-events: all; }
+
+  .coa-modal-content {
+    position: relative; max-width: 520px; width: 90%;
+    background: var(--bg-card); border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(201,162,88,.15);
+    box-shadow: 0 24px 64px rgba(0,0,0,.5);
+    transform: scale(.92); transition: transform .35s ease;
+  }
+  .coa-modal.open .coa-modal-content { transform: scale(1); }
+
+  .coa-modal-header {
+    padding: 1.5rem 1.8rem;
+    border-bottom: 1px solid rgba(201,162,88,.1);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .coa-modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600; color: var(--white);
+  }
+  .coa-modal-purity {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 300; color: var(--gold);
+  }
+
+  .coa-modal-img-wrap {
+    position: relative; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .coa-modal-img-wrap img {
+    width: 100%; display: block;
+    filter: blur(3px);
+    transition: filter .3s;
+  }
+  .coa-modal-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.05) 50%, rgba(0,0,0,.2) 100%);
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .coa-modal-watermark {
+    font-size: .85rem; font-weight: 600; letter-spacing: .15em;
+    text-transform: uppercase; color: rgba(201,162,88,.6);
+    background: rgba(8,20,28,.7); padding: .6rem 1.5rem;
+    border-radius: 4px; border: 1px solid rgba(201,162,88,.3);
+  }
+
+  .coa-modal-footer {
+    padding: 1.2rem 1.8rem;
+    border-top: 1px solid rgba(201,162,88,.1);
+    text-align: center;
+  }
+  .coa-modal-note {
+    font-size: .75rem; color: var(--gray); line-height: 1.5;
+  }
+
+  .coa-modal-close {
+    position: absolute; top: 1rem; right: 1rem; z-index: 10;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(8,20,28,.8); border: 1px solid rgba(201,162,88,.2);
+    color: var(--white); font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all .3s;
+  }
+  .coa-modal-close:hover {
+    background: var(--gold); color: var(--bg-deep);
+    border-color: var(--gold);
+  }
+
   /* ─── FOOTER ─── */
   footer {
     padding: 4rem;
@@ -507,13 +719,16 @@
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
-    #about, #orcamento, #science, #library { padding: 5rem 1.5rem; }
+    #about, #orcamento, #science, #library, #certificados { padding: 5rem 1.5rem; }
     .about-grid, .orcamento-wrap { grid-template-columns: 1fr; }
     .results-grid { grid-template-columns: 1fr; }
     .lib-grid { grid-template-columns: 1fr; }
+    .coa-grid { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
     footer { padding: 2.5rem 1.5rem; flex-direction: column; }
     .hero-stats { gap: 2rem; }
+    .coa-card-purity { font-size: 2rem; }
+    .coa-modal-content { width: 95%; }
   }
 
   /* ─── LIBRARY ─── */
@@ -639,6 +854,7 @@
     <li><a href="#library">Biblioteca</a></li>
     <li><a href="protocolo.html">Protocolo</a></li>
     <li><a href="#science">Ciência</a></li>
+    <li><a href="#certificados">Certificados</a></li>
     <li><a href="orcamento.html" class="nav-cta">Orçamento</a></li>
   </ul>
 </nav>
@@ -712,6 +928,7 @@
     <!-- Retatrutida -->
     <div class="lib-card" data-cat="emagrecimento" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">⬡</div>
         <div class="lib-card-tag">Emagrecimento</div>
         <h3 class="lib-card-name">Retatrutida</h3>
@@ -760,6 +977,7 @@
     <!-- GHK-Cu -->
     <div class="lib-card" data-cat="regeneracao" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">◈</div>
         <div class="lib-card-tag">Regeneração</div>
         <h3 class="lib-card-name">GHK-Cu</h3>
@@ -806,6 +1024,7 @@
     <!-- Tirzepatida -->
     <div class="lib-card" data-cat="emagrecimento" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">⬡</div>
         <div class="lib-card-tag">Emagrecimento</div>
         <h3 class="lib-card-name">Tirzepatida</h3>
@@ -899,6 +1118,7 @@
     <!-- Tesamorelin -->
     <div class="lib-card" data-cat="emagrecimento" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">⬢</div>
         <div class="lib-card-tag">Emagrecimento</div>
         <h3 class="lib-card-name">Tesamorelin</h3>
@@ -994,6 +1214,7 @@
     <!-- MOTS-c -->
     <div class="lib-card" data-cat="longevidade" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">◎</div>
         <div class="lib-card-tag">Longevidade</div>
         <h3 class="lib-card-name">MOTS-c</h3>
@@ -1041,6 +1262,7 @@
     <!-- SS-31 -->
     <div class="lib-card" data-cat="longevidade" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">◈</div>
         <div class="lib-card-tag">Longevidade</div>
         <h3 class="lib-card-name">SS-31 (Elamipretide)</h3>
@@ -1087,6 +1309,7 @@
     <!-- BPC-157 + TB-500 -->
     <div class="lib-card" data-cat="regeneracao" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">⊕</div>
         <div class="lib-card-tag">Regeneração</div>
         <h3 class="lib-card-name">BPC-157 + TB-500</h3>
@@ -1224,6 +1447,7 @@
     <!-- KPV -->
     <div class="lib-card" data-cat="regeneracao" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">◯</div>
         <div class="lib-card-tag">Regeneração</div>
         <h3 class="lib-card-name">KPV</h3>
@@ -1269,6 +1493,7 @@
     <!-- CJC-1295 + Ipamorelin -->
     <div class="lib-card" data-cat="gh" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">△</div>
         <div class="lib-card-tag">GH &amp; Performance</div>
         <h3 class="lib-card-name">CJC-1295 + Ipamorelin</h3>
@@ -1454,6 +1679,7 @@
     <!-- Tesamorelin + Ipamorelin -->
     <div class="lib-card" data-cat="gh" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">△</div>
         <div class="lib-card-tag">GH &amp; Performance</div>
         <h3 class="lib-card-name">Tesamorelin + Ipamorelin</h3>
@@ -1501,6 +1727,7 @@
     <!-- BPC-157 standalone -->
     <div class="lib-card" data-cat="regeneracao" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">⊕</div>
         <div class="lib-card-tag">Regeneração</div>
         <h3 class="lib-card-name">BPC-157</h3>
@@ -1686,6 +1913,7 @@
     <!-- Cartalax -->
     <div class="lib-card" data-cat="longevidade" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">🦴</div>
         <div class="lib-card-tag">Longevidade</div>
         <h3 class="lib-card-name">Cartalax</h3>
@@ -1778,6 +2006,7 @@
     <!-- HGH Fragment 176-191 -->
     <div class="lib-card" data-cat="emagrecimento" onclick="toggleLib(this)">
       <div class="lib-card-head">
+        <a href="#certificados" class="coa-badge" onclick="event.stopPropagation()">🔬 CoA</a>
         <div class="lib-card-icon">◆</div>
         <div class="lib-card-tag">Emagrecimento</div>
         <h3 class="lib-card-name">HGH Fragment 176-191</h3>
@@ -1999,6 +2228,189 @@
 
 </section>
 
+<!-- CERTIFICADOS DE ANÁLISE -->
+<section id="certificados">
+  <div class="coa-header reveal">
+    <div class="section-label">Certificados de Análise</div>
+    <h2 class="section-title">Pureza <strong>comprovada</strong></h2>
+    <p class="coa-header-desc">
+      Cada lote é testado por laboratório terceirizado acreditado (Janoshik Analytical).
+      Certificados completos disponíveis mediante solicitação.
+    </p>
+  </div>
+
+  <div class="coa-grid reveal">
+
+    <div class="coa-card" onclick="openCoa('Retatrutida','coa/retatrutide.png','99.374%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">Retatrutida</div>
+      <div class="coa-card-purity">99.374% <span>pureza</span></div>
+      <div class="coa-card-meta">Retatrutide 10mg · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('Tirzepatida','coa/tirzepatide.png','99.879%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">Tirzepatida</div>
+      <div class="coa-card-purity">99.879% <span>pureza</span></div>
+      <div class="coa-card-meta">Tirzepatide 20mg · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('BPC-157','coa/bpc-157.png','99.302%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">BPC-157</div>
+      <div class="coa-card-purity">99.302% <span>pureza</span></div>
+      <div class="coa-card-meta">BPC-157 5mg · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('GHK-Cu','coa/ghk-cu.png','99.799%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">GHK-Cu</div>
+      <div class="coa-card-purity">99.799% <span>pureza</span></div>
+      <div class="coa-card-meta">GHK-Cu 50mg · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('MOTS-c','coa/mots-c.png','99.833%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">MOTS-c</div>
+      <div class="coa-card-purity">99.833% <span>pureza</span></div>
+      <div class="coa-card-meta">MOTS-C 10mg · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('Tesamorelin','coa/tesamorelin.png','99.494%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">Tesamorelin</div>
+      <div class="coa-card-purity">99.494% <span>pureza</span></div>
+      <div class="coa-card-meta">Tesamorelin 10mg · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('Ipamorelin','coa/ipamorelin.png','99.644%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">Ipamorelin</div>
+      <div class="coa-card-purity">99.644% <span>pureza</span></div>
+      <div class="coa-card-meta">Ipamorelin 10mg · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('CJC-1295','coa/cjc-1295.png','99.525%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">CJC-1295 (No DAC)</div>
+      <div class="coa-card-purity">99.525% <span>pureza</span></div>
+      <div class="coa-card-meta">CJC-1295 · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('SS-31 (Elamipretide)','coa/elamipretide.png','99.277%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">SS-31 (Elamipretide)</div>
+      <div class="coa-card-purity">99.277% <span>pureza</span></div>
+      <div class="coa-card-meta">Elamipretide 10mg · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('KPV','coa/kpv.png','99.145%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">KPV</div>
+      <div class="coa-card-purity">99.145% <span>pureza</span></div>
+      <div class="coa-card-meta">KPV 10mg · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('HGH Fragment 176-191','coa/hgh-fragment.png','99.436%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">HGH Frag 176-191</div>
+      <div class="coa-card-purity">99.436% <span>pureza</span></div>
+      <div class="coa-card-meta">HGH Fragment 176-191 5mg · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('Cartalax','coa/cartalax.png','99.576%')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">Cartalax</div>
+      <div class="coa-card-purity">99.576% <span>pureza</span></div>
+      <div class="coa-card-meta">Cartalax 20mg · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+    <div class="coa-card" onclick="openCoa('GLOW (BPC+TB+GHK)','coa/glow.png','Blend')">
+      <div class="coa-card-top">
+        <span class="coa-card-lab">🔬 Lab. terceirizado</span>
+        <span class="coa-card-status">Aprovado</span>
+      </div>
+      <div class="coa-card-name">GLOW</div>
+      <div class="coa-card-purity">70mg <span>blend verificado</span></div>
+      <div class="coa-card-meta">BPC-157 + TB-500 + GHK-Cu · Fev 2026</div>
+      <button class="coa-card-btn">Ver certificado →</button>
+    </div>
+
+  </div>
+
+  <div class="coa-cta reveal">
+    <p class="coa-cta-text">Certificado completo com QR de verificação disponível mediante solicitação.</p>
+    <a href="orcamento.html" class="coa-cta-btn">Solicitar Certificado →</a>
+  </div>
+</section>
+
+<!-- CoA Modal -->
+<div class="coa-modal" id="coaModal" onclick="if(event.target===this)closeCoa()">
+  <div class="coa-modal-content">
+    <button class="coa-modal-close" onclick="closeCoa()">✕</button>
+    <div class="coa-modal-header">
+      <div class="coa-modal-title" id="coaModalTitle">—</div>
+      <div class="coa-modal-purity" id="coaModalPurity">—</div>
+    </div>
+    <div class="coa-modal-img-wrap">
+      <img id="coaModalImg" src="" alt="Certificate of Analysis">
+      <div class="coa-modal-overlay">
+        <div class="coa-modal-watermark">Certificado sob solicitação</div>
+      </div>
+    </div>
+    <div class="coa-modal-footer">
+      <p class="coa-modal-note">Versão completa com dados de lote, QR de verificação e assinatura disponível mediante solicitação.</p>
+    </div>
+  </div>
+</div>
 
 <!-- QUOTE FORM -->
 <section id="orcamento">
@@ -2131,6 +2543,7 @@
     <a href="#library">Biblioteca</a>
     <a href="protocolo.html">Protocolo</a>
     <a href="#science">Ciência</a>
+    <a href="#certificados">Certificados</a>
     <a href="orcamento.html">Orçamento</a>
   </div>
   <div class="footer-disclaimer">
@@ -2192,6 +2605,22 @@
   function toggleLib(card) {
     card.classList.toggle('open');
   }
+
+  // CoA Modal
+  function openCoa(name, img, purity) {
+    document.getElementById('coaModalTitle').textContent = name;
+    document.getElementById('coaModalPurity').textContent = purity;
+    document.getElementById('coaModalImg').src = img;
+    document.getElementById('coaModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCoa() {
+    document.getElementById('coaModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeCoa();
+  });
 </script>
 </body>
 </html>
