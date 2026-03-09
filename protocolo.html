@@ -288,6 +288,7 @@
   .pill-reg { background: rgba(26,77,101,.5); color: #6bc5e3; }
   .pill-gh  { background: rgba(156,106,222,.15); color: #b48be6; }
   .pill-imu { background: rgba(230,162,60,.15); color: var(--amber); }
+  .pill-sex { background: rgba(236,64,122,.15); color: #ec407a; }
   .pill-rest { background: rgba(255,255,255,.04); color: var(--gray); }
 
   /* Dosage table */
@@ -474,6 +475,7 @@
     <button class="sel-filter" onclick="filterSel('regeneracao')">Regeneração</button>
     <button class="sel-filter" onclick="filterSel('gh')">GH &amp; Performance</button>
     <button class="sel-filter" onclick="filterSel('imunidade')">Imunidade</button>
+    <button class="sel-filter" onclick="filterSel('sexual')">Saúde Sexual</button>
   </div>
 
   <div class="sel-grid" id="selGrid">
@@ -502,6 +504,7 @@
       <thead>
         <tr>
           <th>Peptídeo</th>
+          <th>Frasco</th>
           <th>Dose</th>
           <th>Frequência</th>
           <th>Horário</th>
@@ -558,26 +561,29 @@ const peptides = [
     id: 'retatrutida', name: 'Retatrutida', icon: '⬡',
     category: 'emagrecimento', catLabel: 'Emagrecimento',
     desc: 'Triplo agonista GIP/GLP-1/Glucagon — até 24% de perda de peso.',
+    vialSize: '20mg / 40mg',
     dose: '1–2mg/semana', frequency: 'semanal', days: [3],
     timing: 'Jejum (manhã)', method: 'Subcutânea', cycle: '12 semanas',
     pillClass: 'pill-ema', pillLabel: 'RETA',
     escalation: 'Sem 1-4: 1mg → Sem 5-12: 2mg',
-    notes: 'Escalonamento gradual a cada 4 semanas'
+    notes: 'Vial 20mg = 12 sem completas (1 pessoa). Aplicação na quinta para cobertura do fim de semana'
   },
   {
     id: 'tirzepatida', name: 'Tirzepatida', icon: '⬡',
     category: 'emagrecimento', catLabel: 'Emagrecimento',
     desc: 'Dual agonista GIP/GLP-1 — até 21% de perda de peso.',
+    vialSize: '60mg',
     dose: '2,5–15mg/semana', frequency: 'semanal', days: [3],
-    timing: 'Jejum (manhã)', method: 'Subcutânea', cycle: '16 semanas',
+    timing: 'Jejum (manhã)', method: 'Subcutânea', cycle: '12–16 semanas',
     pillClass: 'pill-ema', pillLabel: 'TIRZE',
     escalation: '2,5mg → 5mg → 7,5mg → 10mg → 12,5mg → 15mg (a cada 4 sem)',
-    notes: 'Escalonamento lento para tolerância GI'
+    notes: 'Vial 60mg compartilhável (30mg cada = 12 sem a 2,5mg). Aplicação na quinta para cobertura do fim de semana'
   },
   {
     id: 'aod9604', name: 'AOD-9604', icon: '◇',
     category: 'emagrecimento', catLabel: 'Emagrecimento',
     desc: 'Fragmento do GH — lipólise sem efeitos do GH.',
+    vialSize: '10mg',
     dose: '200–500mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
     timing: 'Estômago vazio (manhã)', method: 'Subcutânea', cycle: '4 sem ON / 1 sem wash',
     pillClass: 'pill-ema', pillLabel: 'AOD',
@@ -588,6 +594,7 @@ const peptides = [
     id: 'tesamorelin', name: 'Tesamorelin', icon: '⬢',
     category: 'emagrecimento', catLabel: 'Emagrecimento',
     desc: 'Análogo de GHRH — estimula GH natural, reduz gordura visceral.',
+    vialSize: '10mg / 20mg',
     dose: '1–2mg/dia', frequency: 'diario', days: [0,1,2,3,4],
     timing: 'Antes de dormir', method: 'Subcutânea', cycle: '20–52 semanas',
     pillClass: 'pill-ema', pillLabel: 'TESA',
@@ -598,16 +605,18 @@ const peptides = [
     id: 'ghkcu', name: 'GHK-Cu', icon: '◈',
     category: 'regeneracao', catLabel: 'Regeneração',
     desc: 'Peptídeo de cobre — colágeno, pele, 4.000+ genes.',
-    dose: '1–2mg/dia', frequency: 'diario', days: [0,1,2,3,4],
-    timing: 'Manhã', method: 'Subcutânea', cycle: '30 dias ON / 30 dias OFF',
+    vialSize: '50mg',
+    dose: '1,6mg/dia (8 UI)', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '12 semanas (2 vials)',
     pillClass: 'pill-reg', pillLabel: 'GHK',
     escalation: null,
-    notes: '30 dias de uso seguidos de 30 dias de washout. Também disponível tópico e oral lipossomal (10mg/dia)'
+    notes: '1 vial 50mg = ~3 semanas. Reconstituir com 2,5mL BAC. Rotacionar locais: coxa, braço, glúteo'
   },
   {
     id: 'bpc157tb500', name: 'BPC-157 + TB-500', icon: '⊕',
     category: 'regeneracao', catLabel: 'Regeneração',
     desc: 'Dupla regenerativa — tendões, músculos, GI.',
+    vialSize: '10/10mg',
     dose: 'BPC 500-750mcg + TB 2mg', frequency: 'misto', days: [0,1,2,3,4],
     timing: 'Manhã', method: 'Subcutânea', cycle: '4 semanas',
     pillClass: 'pill-reg', pillLabel: 'BPC+TB',
@@ -615,9 +624,21 @@ const peptides = [
     notes: 'BPC tem fase de carga (2 sem) e manutenção (2 sem). TB-500 também tem fase de carga de 15 dias'
   },
   {
+    id: 'bpc157', name: 'BPC-157', icon: '⊕',
+    category: 'regeneracao', catLabel: 'Regeneração',
+    desc: 'Body Protection Compound — proteção gástrica e regeneração tecidual.',
+    vialSize: '10mg',
+    dose: '250–750mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea/Oral', cycle: '4–8 semanas',
+    pillClass: 'pill-reg', pillLabel: 'BPC',
+    escalation: 'Sem 1-2: 500-750mcg/dia (carga) → Sem 3+: 250-500mcg/dia (manutenção)',
+    notes: 'Versão standalone. Estável em suco gástrico — via oral também eficaz para problemas GI'
+  },
+  {
     id: 'wolverine', name: 'Wolverine Stack', icon: '⚡',
     category: 'regeneracao', catLabel: 'Regeneração',
     desc: 'Blend BPC+TB (10+10mg) — regeneração acelerada.',
+    vialSize: '10/10mg',
     dose: '0,3–0,5mL/dia', frequency: 'diario', days: [0,1,2,3,4],
     timing: 'Manhã', method: 'Subcutânea', cycle: '4–8 semanas',
     pillClass: 'pill-reg', pillLabel: 'WOLF',
@@ -625,19 +646,21 @@ const peptides = [
     notes: 'Aplicar próximo à área da lesão quando possível'
   },
   {
-    id: 'proklow', name: 'Pro Klow 80mg', icon: '✦',
+    id: 'proklow', name: 'Pro Klow', icon: '✦',
     category: 'regeneracao', catLabel: 'Regeneração',
     desc: 'Blend 4-em-1: GHK-Cu + BPC + TB + KPV.',
+    vialSize: '80mg',
     dose: '0,1–0,2mL/dia', frequency: 'diario', days: [0,1,2,3,4],
     timing: 'Manhã', method: 'Subcutânea', cycle: '8–12 semanas',
     pillClass: 'pill-reg', pillLabel: 'PKLOW',
     escalation: null,
-    notes: 'Blend multifuncional — já inclui GHK-Cu, BPC, TB e KPV'
+    notes: 'Blend multifuncional — já inclui GHK-Cu 50mg, BPC 10mg, TB 10mg e KPV 10mg'
   },
   {
     id: 'kpv', name: 'KPV', icon: '◯',
     category: 'regeneracao', catLabel: 'Regeneração',
     desc: 'Anti-inflamatório — inibe NF-κB, proteção intestinal.',
+    vialSize: '—',
     dose: '200–400mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
     timing: 'Manhã ou noite', method: 'SC/oral/tópico', cycle: 'Até resultado desejado',
     pillClass: 'pill-reg', pillLabel: 'KPV',
@@ -648,6 +671,7 @@ const peptides = [
     id: 'nad', name: 'NAD+ 500mg', icon: '⟡',
     category: 'longevidade', catLabel: 'Longevidade',
     desc: 'Coenzima essencial — energia celular, sirtuínas, DNA.',
+    vialSize: '500mg',
     dose: '500mg/sessão', frequency: '3x-semana', days: [0,2,4],
     timing: 'Manhã', method: 'Subcutânea/IV', cycle: '4–8 semanas',
     pillClass: 'pill-lon', pillLabel: 'NAD+',
@@ -658,16 +682,18 @@ const peptides = [
     id: 'motsc', name: 'MOTS-c', icon: '◎',
     category: 'longevidade', catLabel: 'Longevidade',
     desc: 'Peptídeo mitocondrial — mimético de exercício, AMPK.',
+    vialSize: '10mg / 20mg',
     dose: '5mg a cada 5 dias', frequency: 'especial', days: [0,4],
     timing: 'Manhã (pré-treino)', method: 'Subcutânea', cycle: '20 dias (4 doses)',
     pillClass: 'pill-lon', pillLabel: 'MOTS',
     escalation: null,
-    notes: '5mg a cada 5 dias, total 4 doses por ciclo (20 dias). Repetir após 6 meses. Pode interferir no sono — dose matinal'
+    notes: '5mg a cada 5 dias, total 4 doses por ciclo (20 dias). Repetir após 6 meses'
   },
   {
     id: 'ss31', name: 'SS-31 (Elamipretide)', icon: '◈',
     category: 'longevidade', catLabel: 'Longevidade',
     desc: 'Proteção mitocondrial — 5.000× concentração, cardiolipina.',
+    vialSize: '—',
     dose: '5–20mg/dia', frequency: 'diario', days: [0,1,2,3,4],
     timing: 'Manhã', method: 'Subcutânea', cycle: '4–8 semanas',
     pillClass: 'pill-lon', pillLabel: 'SS31',
@@ -678,16 +704,29 @@ const peptides = [
     id: 'cjcipa', name: 'CJC-1295 + Ipamorelin', icon: '△',
     category: 'gh', catLabel: 'GH & Performance',
     desc: 'Secretagogos — amplificam GH natural em 3-5×.',
+    vialSize: '5/5mg',
     dose: '200–300mcg cada', frequency: 'diario', days: [0,1,2,3,4],
     timing: 'Antes de dormir (estômago vazio)', method: 'Subcutânea', cycle: '8–12 sem + 4–8 sem wash',
     pillClass: 'pill-gh', pillLabel: 'CJC+IPA',
     escalation: null,
-    notes: 'Dose noturna (estômago vazio — glicose suprime GH). 8-12 sem ON + 4-8 sem washout. Dosagem por peso corporal disponível'
+    notes: 'Dose noturna (estômago vazio — glicose suprime GH). 8-12 sem ON + 4-8 sem washout'
+  },
+  {
+    id: 'tesamorelinipa', name: 'Tesamorelin + Ipamorelin', icon: '△',
+    category: 'gh', catLabel: 'GH & Performance',
+    desc: 'Combo GHRH+GHRP — estímulo de GH por vias complementares.',
+    vialSize: '10/5mg',
+    dose: 'Tesa 1mg + Ipa 200mcg', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Antes de dormir (estômago vazio)', method: 'Subcutânea', cycle: '8–12 semanas',
+    pillClass: 'pill-gh', pillLabel: 'TESA+IPA',
+    escalation: null,
+    notes: 'Tesamorelin (GHRH) + Ipamorelin (GHRP) — estímulo dual por vias complementares. Dose noturna em estômago vazio'
   },
   {
     id: 'igf1lr3', name: 'IGF-1 LR3', icon: '▲',
     category: 'gh', catLabel: 'GH & Performance',
     desc: 'Fator de crescimento 3× mais potente — hipertrofia.',
+    vialSize: '1mg',
     dose: '20–100mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
     timing: 'Pós-treino', method: 'Subcutânea/IM', cycle: '4–6 semanas',
     pillClass: 'pill-gh', pillLabel: 'IGF1',
@@ -698,37 +737,94 @@ const peptides = [
     id: 'ta1', name: 'Thymosin Alpha 1 (TA1)', icon: '🛡',
     category: 'imunidade', catLabel: 'Imunidade',
     desc: 'Imunomodulador — ativa células T, NK e dendríticas.',
+    vialSize: '15mg',
     dose: '500mcg–1,6mg/dia', frequency: 'diario', days: [0,1,2,3,4],
     timing: 'Manhã', method: 'Subcutânea', cycle: '20 dias ou 4–12 sem',
     pillClass: 'pill-imu', pillLabel: 'TA1',
     escalation: null,
-    notes: 'Protocolo intensivo: 500mcg/dia por 20 dias. Alternativo: 1,6mg 3x/sem por 4-12 sem. Efeitos colaterais leves e transitórios'
+    notes: 'Protocolo intensivo: 500mcg/dia por 20 dias. Alternativo: 1,6mg 3x/sem por 4-12 sem'
   },
   {
     id: 'semax', name: 'Semax', icon: '🧠',
     category: 'longevidade', catLabel: 'Longevidade',
     desc: 'Nootrópico — neuroproteção, BDNF, cognição e foco.',
+    vialSize: '—',
     dose: '500–1000mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
     timing: 'Manhã', method: 'SC/intranasal', cycle: '30–60 dias',
     pillClass: 'pill-lon', pillLabel: 'SEMAX',
     escalation: null,
-    notes: 'SC: 500-1000mcg/dia por 30-60 dias. Intranasal: 400-900mcg/dia. Descanso igual à duração do ciclo. Sem efeitos colaterais notáveis'
+    notes: 'SC: 500-1000mcg/dia por 30-60 dias. Intranasal: 400-900mcg/dia. Descanso igual à duração do ciclo'
+  },
+  {
+    id: 'pt141', name: 'PT-141 (Bremelanotide)', icon: '♀',
+    category: 'sexual', catLabel: 'Saúde Sexual',
+    desc: 'Agonista melanocortina — aumenta desejo e excitação sexual (aprovado FDA).',
+    vialSize: '10mg',
+    dose: '1–1,75mg/dose', frequency: 'sob-demanda', days: [],
+    timing: '45 min antes da atividade', method: 'Subcutânea', cycle: 'Conforme necessidade (máx 8x/mês)',
+    pillClass: 'pill-sex', pillLabel: 'PT141',
+    escalation: null,
+    notes: 'Sob demanda — máx 1 dose/24h e 8 doses/mês. Náusea (~40%) é o efeito mais comum — diminui com o uso. Não combinar com PDE5i em dose plena'
+  },
+  {
+    id: 'mt2', name: 'Melanotan II (MT-2)', icon: '☀',
+    category: 'sexual', catLabel: 'Saúde Sexual',
+    desc: 'Agonista melanocortina — bronzeamento, libido, controle de apetite.',
+    vialSize: '10mg',
+    dose: '250–1000mcg/dia (carga)', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Noite', method: 'Subcutânea', cycle: '6–8 sem carga + manutenção',
+    pillClass: 'pill-sex', pillLabel: 'MT2',
+    escalation: 'Sem 1-2: 250mcg/dia → Sem 3-4: 500mcg/dia → Sem 5+: até 1000mcg/dia. Manutenção: 500mcg–1mg 1-2x/sem',
+    notes: 'Iniciar com dose baixa (250mcg) e titular. Exposição UV recomendada para resultados. Monitorar pintas/moles'
+  },
+  {
+    id: 'kisspeptin', name: 'Kisspeptin-10', icon: '⚤',
+    category: 'sexual', catLabel: 'Saúde Sexual',
+    desc: 'Hormônio reprodutivo — estimula LH/FSH/Testosterona naturalmente.',
+    vialSize: '10mg',
+    dose: '100–200mcg', frequency: '2x-semana', days: [0,3],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '4–12 semanas',
+    pillClass: 'pill-sex', pillLabel: 'KISS',
+    escalation: null,
+    notes: 'Dosagem intermitente (2x/sem) para evitar taquifilaxia. Estimula eixo HPG naturalmente. Pode ser intranasal. Pausa de 4 sem entre ciclos'
+  },
+  {
+    id: 'cartalax', name: 'Cartalax', icon: '🦴',
+    category: 'longevidade', catLabel: 'Longevidade',
+    desc: 'Bioregulador de cartilagem — regeneração articular e anti-envelhecimento celular.',
+    vialSize: '20mg',
+    dose: '5–10mg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '10 dias (repetir a cada 3–6 meses)',
+    pillClass: 'pill-lon', pillLabel: 'CART',
+    escalation: null,
+    notes: 'Protocolo Khavinson: 10 dias intensivos, repetir a cada 3-6 meses. Aumenta índice de cartilagem em 18-38%. Reduz marcadores de senescência (p16, p21)'
   }
 ];
 
 // ─── SYNERGY / WARNING RULES ───
 const rules = [
+  // ── WARNINGS ──
   { type: 'warning', ids: ['tirzepatida','retatrutida'], msg: 'Ambos são agonistas GLP-1 — <strong>usar apenas um</strong>. Efeitos não se somam e risco de efeitos adversos GI aumenta.' },
   { type: 'warning', ids: ['tirzepatida','aod9604'], msg: 'Tirzepatida e AOD-9604 têm ações lipolíticas similares — <strong>considere usar apenas um</strong> para evitar redundância.' },
+  { type: 'warning', ids: ['retatrutida','aod9604'], msg: 'Retatrutida e AOD-9604 têm ações lipolíticas sobrepostas — <strong>considere usar apenas um</strong>.' },
   { type: 'warning', ids: ['wolverine','bpc157tb500'], msg: 'Wolverine Stack já contém BPC-157 + TB-500 — <strong>redundante</strong>. Escolha um dos dois.' },
+  { type: 'warning', ids: ['wolverine','bpc157'], msg: 'Wolverine Stack já contém BPC-157 — <strong>redundante</strong> usar BPC standalone junto.' },
+  { type: 'warning', ids: ['bpc157tb500','bpc157'], msg: 'BPC+TB combo já inclui BPC-157 — <strong>redundante</strong> usar BPC standalone junto.' },
   { type: 'warning', ids: ['proklow','ghkcu'], msg: 'Pro Klow já contém GHK-Cu 50mg — <strong>ajustar dose de GHK-Cu</strong> ou usar apenas Pro Klow.' },
   { type: 'warning', ids: ['proklow','kpv'], msg: 'Pro Klow já contém KPV 10mg — pode ser redundante se usar KPV separado.' },
   { type: 'warning', ids: ['proklow','bpc157tb500'], msg: 'Pro Klow já contém BPC + TB — pode ser redundante usar BPC+TB separado.' },
+  { type: 'warning', ids: ['proklow','bpc157'], msg: 'Pro Klow já contém BPC-157 — pode ser redundante usar BPC standalone junto.' },
+  { type: 'warning', ids: ['pt141','mt2'], msg: 'Ambos são agonistas de melanocortina — <strong>usar apenas um</strong> (mecanismos sobrepostos). PT-141 é derivado do MT-2.' },
+  { type: 'warning', ids: ['tesamorelin','tesamorelinipa'], msg: 'Tesamorelin standalone + combo Tesa+Ipa — <strong>redundante</strong>. Escolha um dos dois.' },
+  { type: 'warning', ids: ['cjcipa','tesamorelinipa'], msg: 'Ambos contêm Ipamorelin — <strong>atenção à sobredosagem</strong>. Usar apenas um combo por vez.' },
+  // ── SYNERGIES ──
   { type: 'synergy', ids: ['bpc157tb500','ghkcu'], msg: '<strong>Sinergia regenerativa potencializada</strong> — GHK-Cu estimula colágeno enquanto BPC+TB reparam tecido profundo.' },
+  { type: 'synergy', ids: ['bpc157','ghkcu'], msg: '<strong>Regeneração + colágeno</strong> — BPC-157 repara tecido e GHK-Cu estimula produção de colágeno.' },
   { type: 'synergy', ids: ['nad','motsc','ss31'], msg: '<strong>Stack longevidade completo</strong> — NAD+ (energia), MOTS-c (exercício), SS-31 (mitocôndria) atuam em vias complementares.' },
   { type: 'synergy', ids: ['nad','motsc'], msg: '<strong>Sinergia mitocondrial</strong> — NAD+ fornece substrato e MOTS-c ativa AMPK para otimizar metabolismo celular.' },
   { type: 'synergy', ids: ['nad','ss31'], msg: '<strong>Reparo + proteção mitocondrial</strong> — NAD+ para reparo de DNA e SS-31 para integridade da membrana.' },
   { type: 'synergy', ids: ['cjcipa','igf1lr3'], msg: '<strong>Eixo GH maximizado</strong> — CJC+Ipa amplificam GH e IGF-1 LR3 potencializa o fator de crescimento downstream.' },
+  { type: 'synergy', ids: ['tesamorelinipa','igf1lr3'], msg: '<strong>Eixo GH maximizado</strong> — Tesa+Ipa amplificam GH e IGF-1 LR3 potencializa o crescimento downstream.' },
   { type: 'synergy', ids: ['ta1','kpv'], msg: '<strong>Equilíbrio imunológico</strong> — TA1 ativa imunidade celular enquanto KPV modula inflamação via NF-κB.' },
   { type: 'synergy', ids: ['ta1','nad'], msg: '<strong>Imunidade + reparo celular</strong> — TA1 fortalece defesas e NAD+ suporta reparo de DNA nas células imunes.' },
   { type: 'synergy', ids: ['retatrutida','ghkcu'], msg: '<strong>Emagrecer sem sacrificar a pele</strong> — Retatrutida reduz gordura e GHK-Cu preserva colágeno e firmeza.' },
@@ -736,7 +832,13 @@ const rules = [
   { type: 'synergy', ids: ['tesamorelin','cjcipa'], msg: '<strong>Dupla GH</strong> — Tesamorelin (GHRH) + Ipamorelin (GHRP) estimulam GH por vias complementares.' },
   { type: 'synergy', ids: ['semax','nad'], msg: '<strong>Cognição + energia celular</strong> — Semax aumenta BDNF e NAD+ suporta função neuronal via sirtuínas.' },
   { type: 'synergy', ids: ['semax','ss31'], msg: '<strong>Neuroproteção dupla</strong> — Semax protege neurônios via BDNF e SS-31 protege mitocôndrias neuronais.' },
-  { type: 'synergy', ids: ['semax','motsc'], msg: '<strong>Performance mental + física</strong> — Semax para cognição e MOTS-c como mimético de exercício.' }
+  { type: 'synergy', ids: ['semax','motsc'], msg: '<strong>Performance mental + física</strong> — Semax para cognição e MOTS-c como mimético de exercício.' },
+  { type: 'synergy', ids: ['kisspeptin','pt141'], msg: '<strong>Saúde sexual completa</strong> — Kisspeptin estimula testosterona/hormônios e PT-141 atua diretamente na excitação.' },
+  { type: 'synergy', ids: ['kisspeptin','ta1'], msg: '<strong>Hormonal + imunidade</strong> — Kisspeptin otimiza eixo hormonal enquanto TA1 fortalece sistema imune.' },
+  { type: 'synergy', ids: ['cartalax','bpc157'], msg: '<strong>Articulações + tecido</strong> — Cartalax regenera cartilagem e BPC-157 repara tendões/ligamentos.' },
+  { type: 'synergy', ids: ['cartalax','bpc157tb500'], msg: '<strong>Regeneração articular completa</strong> — Cartalax (cartilagem) + BPC+TB (tecido mole e tendões).' },
+  { type: 'synergy', ids: ['cartalax','ghkcu'], msg: '<strong>Anti-aging tecidual</strong> — Cartalax para cartilagem/articulações e GHK-Cu para pele/colágeno.' },
+  { type: 'synergy', ids: ['mt2','aod9604'], msg: '<strong>Composição corporal + estética</strong> — MT-2 suprime apetite e bronzeia enquanto AOD queima gordura.' }
 ];
 
 // ─── STATE ───
@@ -809,12 +911,16 @@ function buildCalendar(sel) {
   const cal = document.getElementById('protoCalendar');
   cal.innerHTML = '';
 
+  // Separate scheduled vs on-demand
+  const scheduled = sel.filter(p => p.days.length > 0);
+  const onDemand = sel.filter(p => p.days.length === 0);
+
   dayNames.forEach((name, i) => {
     const div = document.createElement('div');
     div.className = 'cal-day';
 
     let pills = '';
-    sel.forEach(p => {
+    scheduled.forEach(p => {
       if (p.days.includes(i)) {
         pills += `<span class="cal-pill ${p.pillClass}">${p.pillLabel}</span>`;
       }
@@ -827,6 +933,14 @@ function buildCalendar(sel) {
     div.innerHTML = `<div class="cal-day-name">${name}</div>${pills}`;
     cal.appendChild(div);
   });
+
+  // Add on-demand note below calendar
+  if (onDemand.length > 0) {
+    const note = document.createElement('div');
+    note.style.cssText = 'grid-column:1/-1; padding:.8rem 1rem; background:rgba(236,64,122,.06); border:1px solid rgba(236,64,122,.2); border-radius:4px; margin-top:.5rem; font-size:.78rem; color:#ec407a;';
+    note.innerHTML = '⚡ <strong>Sob demanda:</strong> ' + onDemand.map(p => `${p.pillLabel} (${p.timing})`).join(' · ');
+    cal.appendChild(note);
+  }
 }
 
 // ─── BUILD DOSAGE TABLE ───
@@ -837,11 +951,14 @@ function buildDosageTable(sel) {
     'semanal': 'Semanal',
     '2x-semana': '2x por semana',
     '3x-semana': '3x por semana',
-    'misto': 'Misto (ver notas)'
+    'misto': 'Misto (ver notas)',
+    'sob-demanda': 'Sob demanda',
+    'especial': 'Ver notas'
   };
   tbody.innerHTML = sel.map(p => `
     <tr>
       <td>${p.name}</td>
+      <td style="color:var(--gold);font-size:.78rem">${p.vialSize}</td>
       <td>${p.dose}</td>
       <td>${freqLabels[p.frequency] || p.frequency}</td>
       <td>${p.timing}</td>
