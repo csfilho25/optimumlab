@@ -578,41 +578,41 @@ const peptides = [
     id: 'aod9604', name: 'AOD-9604', icon: '◇',
     category: 'emagrecimento', catLabel: 'Emagrecimento',
     desc: 'Fragmento do GH — lipólise sem efeitos do GH.',
-    dose: '250–500mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
-    timing: 'Jejum (manhã)', method: 'Subcutânea', cycle: '12 semanas',
+    dose: '200–500mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Estômago vazio (manhã)', method: 'Subcutânea', cycle: '4 sem ON / 1 sem wash',
     pillClass: 'pill-ema', pillLabel: 'AOD',
     escalation: null,
-    notes: 'Aplicar em jejum para melhor absorção'
+    notes: 'Estômago vazio obrigatório. Ciclos de 4 semanas com 1 semana de washout'
   },
   {
     id: 'tesamorelin', name: 'Tesamorelin', icon: '⬢',
     category: 'emagrecimento', catLabel: 'Emagrecimento',
     desc: 'Análogo de GHRH — estimula GH natural, reduz gordura visceral.',
     dose: '1–2mg/dia', frequency: 'diario', days: [0,1,2,3,4],
-    timing: 'Antes de dormir', method: 'Subcutânea', cycle: '8–12 semanas',
+    timing: 'Antes de dormir', method: 'Subcutânea', cycle: '20–52 semanas',
     pillClass: 'pill-ema', pillLabel: 'TESA',
     escalation: null,
-    notes: 'Dose noturna para sincronia com pico natural de GH'
+    notes: 'Dose noturna para sincronia com pico natural de GH. Estudos mostram resultados ótimos em 20-52 semanas'
   },
   {
     id: 'ghkcu', name: 'GHK-Cu', icon: '◈',
     category: 'regeneracao', catLabel: 'Regeneração',
     desc: 'Peptídeo de cobre — colágeno, pele, 4.000+ genes.',
-    dose: '1,6mg/dia (8UI)', frequency: 'diario', days: [0,1,2,3,4],
-    timing: 'Manhã', method: 'Subcutânea', cycle: '12 semanas',
+    dose: '1–2mg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '30 dias ON / 30 dias OFF',
     pillClass: 'pill-reg', pillLabel: 'GHK',
     escalation: null,
-    notes: 'Seg-Sex com descanso no fim de semana'
+    notes: '30 dias de uso seguidos de 30 dias de washout. Também disponível tópico e oral lipossomal (10mg/dia)'
   },
   {
     id: 'bpc157tb500', name: 'BPC-157 + TB-500', icon: '⊕',
     category: 'regeneracao', catLabel: 'Regeneração',
     desc: 'Dupla regenerativa — tendões, músculos, GI.',
-    dose: 'BPC 250–500mcg + TB 2mg', frequency: 'misto', days: [0,1,2,3,4],
-    timing: 'Manhã', method: 'Subcutânea', cycle: '4–8 semanas',
+    dose: 'BPC 500-750mcg + TB 2mg', frequency: 'misto', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '4 semanas',
     pillClass: 'pill-reg', pillLabel: 'BPC+TB',
-    escalation: null,
-    notes: 'BPC diário + TB-500 2x/semana (Seg e Qui)'
+    escalation: 'BPC: Sem 1-2: 500-750mcg/dia → Sem 3-4: 250-500mcg/dia. TB: 15 dias carga 2mg/dia → manutenção 1mg/dia',
+    notes: 'BPC tem fase de carga (2 sem) e manutenção (2 sem). TB-500 também tem fase de carga de 15 dias'
   },
   {
     id: 'wolverine', name: 'Wolverine Stack', icon: '⚡',
@@ -638,11 +638,11 @@ const peptides = [
     id: 'kpv', name: 'KPV', icon: '◯',
     category: 'regeneracao', catLabel: 'Regeneração',
     desc: 'Anti-inflamatório — inibe NF-κB, proteção intestinal.',
-    dose: '200–500mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
-    timing: 'Manhã ou noite', method: 'Subcutânea/oral', cycle: '4–8 semanas',
+    dose: '200–400mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã ou noite', method: 'SC/oral/tópico', cycle: 'Até resultado desejado',
     pillClass: 'pill-reg', pillLabel: 'KPV',
     escalation: null,
-    notes: 'Pode ser usado oral ou subcutâneo'
+    notes: 'SC: 200-400mcg/dia · Oral: 250mcg 2x/dia (intestino) · Tópico: 7,5mg 2x/dia (pele). Múltiplas vias disponíveis'
   },
   {
     id: 'nad', name: 'NAD+ 500mg', icon: '⟡',
@@ -658,11 +658,11 @@ const peptides = [
     id: 'motsc', name: 'MOTS-c', icon: '◎',
     category: 'longevidade', catLabel: 'Longevidade',
     desc: 'Peptídeo mitocondrial — mimético de exercício, AMPK.',
-    dose: '5–10mg', frequency: '3x-semana', days: [0,2,4],
-    timing: 'Manhã (pré-treino)', method: 'Subcutânea', cycle: '4–8 semanas',
+    dose: '5mg a cada 5 dias', frequency: 'especial', days: [0,4],
+    timing: 'Manhã (pré-treino)', method: 'Subcutânea', cycle: '20 dias (4 doses)',
     pillClass: 'pill-lon', pillLabel: 'MOTS',
     escalation: null,
-    notes: 'Ideal aplicar antes do exercício para sinergia'
+    notes: '5mg a cada 5 dias, total 4 doses por ciclo (20 dias). Repetir após 6 meses. Pode interferir no sono — dose matinal'
   },
   {
     id: 'ss31', name: 'SS-31 (Elamipretide)', icon: '◈',
@@ -678,11 +678,11 @@ const peptides = [
     id: 'cjcipa', name: 'CJC-1295 + Ipamorelin', icon: '△',
     category: 'gh', catLabel: 'GH & Performance',
     desc: 'Secretagogos — amplificam GH natural em 3-5×.',
-    dose: '100–300mcg cada', frequency: 'diario', days: [0,1,2,3,4],
-    timing: 'Antes de dormir', method: 'Subcutânea', cycle: '8–12 semanas',
+    dose: '200–300mcg cada', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Antes de dormir (estômago vazio)', method: 'Subcutânea', cycle: '8–12 sem + 4–8 sem wash',
     pillClass: 'pill-gh', pillLabel: 'CJC+IPA',
     escalation: null,
-    notes: 'Dose noturna sincroniza com pico natural de GH durante o sono'
+    notes: 'Dose noturna (estômago vazio — glicose suprime GH). 8-12 sem ON + 4-8 sem washout. Dosagem por peso corporal disponível'
   },
   {
     id: 'igf1lr3', name: 'IGF-1 LR3', icon: '▲',
@@ -698,11 +698,21 @@ const peptides = [
     id: 'ta1', name: 'Thymosin Alpha 1 (TA1)', icon: '🛡',
     category: 'imunidade', catLabel: 'Imunidade',
     desc: 'Imunomodulador — ativa células T, NK e dendríticas.',
-    dose: '1,6mg', frequency: '3x-semana', days: [0,2,4],
-    timing: 'Manhã', method: 'Subcutânea', cycle: '4–12 semanas',
+    dose: '500mcg–1,6mg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '20 dias ou 4–12 sem',
     pillClass: 'pill-imu', pillLabel: 'TA1',
     escalation: null,
-    notes: 'Aprovado como Zadaxin em 35+ países. Não causa imunossupressão.'
+    notes: 'Protocolo intensivo: 500mcg/dia por 20 dias. Alternativo: 1,6mg 3x/sem por 4-12 sem. Efeitos colaterais leves e transitórios'
+  },
+  {
+    id: 'semax', name: 'Semax', icon: '🧠',
+    category: 'longevidade', catLabel: 'Longevidade',
+    desc: 'Nootrópico — neuroproteção, BDNF, cognição e foco.',
+    dose: '500–1000mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'SC/intranasal', cycle: '30–60 dias',
+    pillClass: 'pill-lon', pillLabel: 'SEMAX',
+    escalation: null,
+    notes: 'SC: 500-1000mcg/dia por 30-60 dias. Intranasal: 400-900mcg/dia. Descanso igual à duração do ciclo. Sem efeitos colaterais notáveis'
   }
 ];
 
@@ -723,7 +733,10 @@ const rules = [
   { type: 'synergy', ids: ['ta1','nad'], msg: '<strong>Imunidade + reparo celular</strong> — TA1 fortalece defesas e NAD+ suporta reparo de DNA nas células imunes.' },
   { type: 'synergy', ids: ['retatrutida','ghkcu'], msg: '<strong>Emagrecer sem sacrificar a pele</strong> — Retatrutida reduz gordura e GHK-Cu preserva colágeno e firmeza.' },
   { type: 'synergy', ids: ['tirzepatida','ghkcu'], msg: '<strong>Perda de peso + proteção da pele</strong> — Tirzepatida emagrece e GHK-Cu combate flacidez durante o processo.' },
-  { type: 'synergy', ids: ['tesamorelin','cjcipa'], msg: '<strong>Dupla GH</strong> — Tesamorelin (GHRH) + Ipamorelin (GHRP) estimulam GH por vias complementares.' }
+  { type: 'synergy', ids: ['tesamorelin','cjcipa'], msg: '<strong>Dupla GH</strong> — Tesamorelin (GHRH) + Ipamorelin (GHRP) estimulam GH por vias complementares.' },
+  { type: 'synergy', ids: ['semax','nad'], msg: '<strong>Cognição + energia celular</strong> — Semax aumenta BDNF e NAD+ suporta função neuronal via sirtuínas.' },
+  { type: 'synergy', ids: ['semax','ss31'], msg: '<strong>Neuroproteção dupla</strong> — Semax protege neurônios via BDNF e SS-31 protege mitocôndrias neuronais.' },
+  { type: 'synergy', ids: ['semax','motsc'], msg: '<strong>Performance mental + física</strong> — Semax para cognição e MOTS-c como mimético de exercício.' }
 ];
 
 // ─── STATE ───
