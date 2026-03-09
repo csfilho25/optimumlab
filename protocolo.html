@@ -911,7 +911,7 @@ const peptides = [
     id: 'ss31', name: 'SS-31 (Elamipretide)', icon: '◈',
     category: 'longevidade', catLabel: 'Longevidade',
     desc: 'Proteção mitocondrial — 5.000× concentração, cardiolipina.',
-    vialSize: '—',
+    vialSize: '40/50mg',
     dose: '5–20mg/dia', frequency: 'diario', days: [0,1,2,3,4],
     timing: 'Manhã', method: 'Subcutânea', cycle: '4–8 semanas',
     pillClass: 'pill-lon', pillLabel: 'SS31',
@@ -1016,6 +1016,28 @@ const peptides = [
     pillClass: 'pill-lon', pillLabel: 'CART',
     escalation: null,
     notes: 'Protocolo Khavinson: 10 dias intensivos, repetir a cada 3-6 meses. Aumenta índice de cartilagem em 18-38%. Reduz marcadores de senescência (p16, p21)'
+  },
+  {
+    id: 'glutathione', name: 'Glutathione (GSH)', icon: '🛡',
+    category: 'longevidade', catLabel: 'Longevidade',
+    desc: 'Master antioxidante — detox, proteção celular, skin brightening.',
+    vialSize: '600mg',
+    dose: '200–600mg', frequency: '3x-semana', days: [0,2,4],
+    timing: 'Manhã', method: 'SC/IM/IV', cycle: '8–12 semanas',
+    pillClass: 'pill-lon', pillLabel: 'GSH',
+    escalation: null,
+    notes: 'Antioxidante intracelular #1 do corpo. SC/IM: 200-600mg. IV: 600-2000mg. Efeito skin brightening (inibe tirosinase). Potencializa ação de outros peptídeos anti-aging'
+  },
+  {
+    id: 'hghfrag', name: 'HGH Fragment 176-191', icon: '◆',
+    category: 'emagrecimento', catLabel: 'Emagrecimento',
+    desc: 'Fragmento puro do GH — lipólise potente e direcionada.',
+    vialSize: '5mg',
+    dose: '250–500mcg 2x/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Jejum (manhã) + antes de dormir', method: 'Subcutânea', cycle: '4–6 sem ON / 2 sem wash',
+    pillClass: 'pill-ema', pillLabel: 'FRAG',
+    escalation: null,
+    notes: 'Aplicar 2x/dia — manhã em jejum e noite. Sem efeito em IGF-1 ou glicose. Ciclos curtos com washout'
   }
 ];
 
@@ -1056,7 +1078,17 @@ const rules = [
   { type: 'synergy', ids: ['cartalax','bpc157'], msg: '<strong>Articulações + tecido</strong> — Cartalax regenera cartilagem e BPC-157 repara tendões/ligamentos.' },
   { type: 'synergy', ids: ['cartalax','bpc157tb500'], msg: '<strong>Regeneração articular completa</strong> — Cartalax (cartilagem) + BPC+TB (tecido mole e tendões).' },
   { type: 'synergy', ids: ['cartalax','ghkcu'], msg: '<strong>Anti-aging tecidual</strong> — Cartalax para cartilagem/articulações e GHK-Cu para pele/colágeno.' },
-  { type: 'synergy', ids: ['mt2','aod9604'], msg: '<strong>Composição corporal + estética</strong> — MT-2 suprime apetite e bronzeia enquanto AOD queima gordura.' }
+  { type: 'synergy', ids: ['mt2','aod9604'], msg: '<strong>Composição corporal + estética</strong> — MT-2 suprime apetite e bronzeia enquanto AOD queima gordura.' },
+  // ── NEW: Glutathione & HGH Frag ──
+  { type: 'warning', ids: ['hghfrag','aod9604'], msg: 'HGH Frag e AOD-9604 têm o mesmo mecanismo (fragmento do GH) — <strong>usar apenas um</strong>. AOD é a versão modificada do HGH Frag.' },
+  { type: 'synergy', ids: ['glutathione','nad'], msg: '<strong>Detox + energia celular</strong> — Glutathione neutraliza ROS e NAD+ restaura função mitocondrial. Ação anti-aging sinérgica.' },
+  { type: 'synergy', ids: ['glutathione','ghkcu'], msg: '<strong>Anti-aging completo</strong> — GSH protege contra estresse oxidativo e GHK-Cu reprograma expressão gênica para rejuvenescimento.' },
+  { type: 'synergy', ids: ['glutathione','ss31'], msg: '<strong>Proteção celular total</strong> — GSH neutraliza ROS sistêmico e SS-31 protege mitocôndrias em profundidade.' },
+  { type: 'synergy', ids: ['glutathione','ta1'], msg: '<strong>Imunidade + detox</strong> — TA1 ativa resposta imune e Glutathione suporta função dos linfócitos e NK cells.' },
+  { type: 'synergy', ids: ['glutathione','motsc'], msg: '<strong>Longevidade metabólica</strong> — GSH protege contra dano oxidativo e MOTS-c otimiza metabolismo via AMPK.' },
+  { type: 'synergy', ids: ['hghfrag','cjcipa'], msg: '<strong>GH + lipólise</strong> — CJC+Ipa amplificam GH natural e HGH Frag potencializa queima de gordura direcionada.' },
+  { type: 'synergy', ids: ['hghfrag','tesamorelinipa'], msg: '<strong>GH + lipólise</strong> — Tesa+Ipa amplificam GH e HGH Frag direciona queima de gordura sem efeitos sistêmicos.' },
+  { type: 'synergy', ids: ['hghfrag','ghkcu'], msg: '<strong>Emagrecer + firmar</strong> — HGH Frag queima gordura e GHK-Cu preserva colágeno e firmeza da pele.' }
 ];
 
 // ─── STATE ───
@@ -1117,7 +1149,7 @@ const reconData = {
   kpv: { vial: '—', diluent: 'Conforme fabricante', conc: '—', doseCalc: '200–400mcg SC', steps: ['Reconstituir conforme instruções do fabricante','SC: seringa de insulina','Oral: cápsulas entéricas','Refrigerar após reconstituição'] },
   nad: { vial: '500mg', diluent: 'Conforme fabricante', conc: '—', doseCalc: '500mg/sessão', steps: ['Pode vir em solução pronta','SC ou IV (IV deve ser administrada lentamente)','Refrigerar 2–8°C','Proteger da luz','Usar em 14 dias'] },
   motsc: { vial: '10mg / 20mg', diluent: '1–2mL BAC', conc: '10mg/mL', doseCalc: '5mg = 0,5mL (50UI)', steps: ['Reconstituir com 1mL (10mg) ou 2mL (20mg)','Girar suavemente','Refrigerar -20°C a 2–8°C','Usar em 21 dias após reconstituição'] },
-  ss31: { vial: '—', diluent: 'Conforme protocolo', conc: '—', doseCalc: '5–20mg/dia', steps: ['Reconstituir conforme instruções do fabricante','SC administração','Refrigerar -20°C a 2–8°C','Proteger da luz'] },
+  ss31: { vial: '40/50mg', diluent: '2mL BAC', conc: '20–25mg/mL', doseCalc: '10mg = 0,5mL (40mg) ou 0,4mL (50mg)', steps: ['Reconstituir com 2mL de água bacteriostática','Injetar pela parede do vial, girar suavemente','Refrigerar 2–8°C','Proteger da luz','Usar em até 28 dias'] },
   cjcipa: { vial: '5/5mg', diluent: '2mL BAC', conc: 'CJC 2,5mg/mL + Ipa 2,5mg/mL', doseCalc: '200mcg cada = 0,08mL (8UI)', steps: ['Limpar tampa com álcool','Aspirar 2mL de água bacteriostática','Injetar pela parede do vial','Girar suavemente','Refrigerar — usar em 28 dias'] },
   tesamorelinipa: { vial: '10/5mg', diluent: '2mL BAC', conc: 'Tesa 5mg/mL + Ipa 2,5mg/mL', doseCalc: 'Tesa 1mg + Ipa 200mcg ≈ 0,2mL (20UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar 2–8°C','Aplicar antes de dormir, estômago vazio','Usar em 28 dias'] },
   igf1lr3: { vial: '1mg', diluent: '1mL BAC', conc: '1mg/mL', doseCalc: '50mcg = 0,05mL (5UI)', steps: ['Reconstituir com 1mL BAC (molécula sensível)','Girar MUITO suavemente','Refrigerar 2–8°C — NUNCA congelar','Usar em 21 dias','Administrar pós-treino'] },
@@ -1126,7 +1158,9 @@ const reconData = {
   pt141: { vial: '10mg', diluent: '2mL BAC', conc: '5mg/mL', doseCalc: '1,5mg = 0,3mL (30UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar 2–8°C','Aplicar 45 min antes','Usar em 28 dias'] },
   mt2: { vial: '10mg', diluent: '2mL BAC', conc: '5mg/mL', doseCalc: '250mcg = 0,05mL (5UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar 2–8°C','Iniciar com dose baixa (250mcg)','Usar em 30 dias'] },
   kisspeptin: { vial: '10mg', diluent: '2mL BAC', conc: '5mg/mL', doseCalc: '100mcg = 0,02mL (2UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar -20°C a 2–8°C','Usar em 21 dias','Dosagem intermitente'] },
-  cartalax: { vial: '20mg', diluent: '2mL BAC', conc: '10mg/mL', doseCalc: '5mg = 0,5mL (50UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar 2–8°C','Ciclo: 10 dias consecutivos','Usar dentro do ciclo'] }
+  cartalax: { vial: '20mg', diluent: '2mL BAC', conc: '10mg/mL', doseCalc: '5mg = 0,5mL (50UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar 2–8°C','Ciclo: 10 dias consecutivos','Usar dentro do ciclo'] },
+  glutathione: { vial: '600mg', diluent: 'Conforme fabricante', conc: '—', doseCalc: '200–600mg por sessão', steps: ['Pode vir em solução pronta ou liofilizado','SC/IM: aspirar dose desejada com seringa','IV: diluir em SF 0,9% para infusão lenta (30-60min)','Refrigerar 2–8°C, proteger da luz','Sensível à oxidação — usar logo após abrir'] },
+  hghfrag: { vial: '5mg', diluent: '1mL BAC', conc: '5mg/mL', doseCalc: '250mcg = 0,05mL (5UI)', steps: ['Reconstituir com 1mL de água bacteriostática','Injetar pela parede do vial — NÃO agitar','Girar suavemente até dissolver','Refrigerar 2–8°C — usar em 28 dias','Aplicar SC 2x/dia: manhã (jejum) + noite'] }
 };
 
 // ─── SIDE EFFECTS DATABASE ───
@@ -1152,7 +1186,9 @@ const sideEffectsData = {
   pt141: { common: ['Náusea (40%)', 'Flushing facial', 'Cefaleia'], rare: ['CI: hipertensão não controlada'] },
   mt2: { common: ['Náusea', 'Flushing', 'Escurecimento de pintas', 'Ereções involuntárias'], rare: ['Surgimento de novos nevos'] },
   kisspeptin: { common: ['Rubor facial', 'Sensação de calor'], rare: ['Nenhum efeito sério reportado'] },
-  cartalax: { common: ['Dor local leve'], rare: ['Tripeptídeo — segurança excepcional'] }
+  cartalax: { common: ['Dor local leve'], rare: ['Tripeptídeo — segurança excepcional'] },
+  glutathione: { common: ['Dor no local SC/IM', 'Flushing (IV)', 'Cólicas abdominais leves'], rare: ['Molécula endógena — segurança excepcional'] },
+  hghfrag: { common: ['Eritema local', 'Cefaleia leve', 'Formigamento local'], rare: ['Sem efeitos sistêmicos do GH'] }
 };
 
 // ─── GENERATE PROTOCOL ───
