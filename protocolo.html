@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Montador de Protocolo — Optimum Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep:    #08141c;
+    --bg-dark:    #0d1e28;
+    --bg-card:    #112233;
+    --bg-card2:   #0f1d2a;
+    --teal:       #1a3d52;
+    --teal-light: #1e4d65;
+    --gold:       #c9a258;
+    --gold-light: #e0bc7a;
+    --gold-dim:   #7a5f2e;
+    --white:      #f5f0e8;
+    --gray:       #8ca0ad;
+    --text:       #d4cfc7;
+    --green:      #4caf80;
+    --amber:      #e6a23c;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-deep);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: .6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: linear-gradient(180deg, rgba(8,20,28,.95) 0%, rgba(8,20,28,0) 100%);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,162,88,.12);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem; font-weight: 300; letter-spacing: .12em;
+    color: var(--white); text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); font-weight: 600; }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: .8rem; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--gray);
+    text-decoration: none; transition: color .3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    padding: .55rem 1.4rem;
+    border: 1px solid var(--gold);
+    color: var(--gold) !important;
+    border-radius: 2px;
+    transition: all .3s !important;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--bg-deep) !important; }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header {
+    padding: 10rem 4rem 4rem;
+    text-align: center;
+    background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-dark) 100%);
+    position: relative; z-index: 1;
+  }
+  .page-header::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,162,88,.3), transparent);
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: .68rem; font-weight: 600; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300; line-height: 1.2; color: var(--white);
+  }
+  .section-title strong { font-weight: 600; }
+
+  .page-subtitle {
+    max-width: 560px; margin: 1rem auto 0;
+    font-size: .95rem; color: var(--gray); line-height: 1.7;
+  }
+
+  /* ─── STEP INDICATOR ─── */
+  .steps-indicator {
+    display: flex; justify-content: center; gap: 2rem;
+    padding: 2rem 4rem;
+    background: var(--bg-dark);
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    position: relative; z-index: 1;
+  }
+  .step-dot {
+    display: flex; align-items: center; gap: .6rem;
+    font-size: .75rem; font-weight: 500; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--gray);
+    transition: color .3s;
+  }
+  .step-dot::before {
+    content: attr(data-num);
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid rgba(201,162,88,.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .7rem; font-weight: 700; color: var(--gold-dim);
+    transition: all .3s;
+  }
+  .step-dot.active { color: var(--gold); }
+  .step-dot.active::before {
+    background: var(--gold); color: var(--bg-deep);
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(201,162,88,.3);
+  }
+  .step-dot.done::before {
+    content: '✓'; background: rgba(76,175,128,.2);
+    border-color: var(--green); color: var(--green);
+  }
+
+  /* ─── SELECTOR (STEP 1) ─── */
+  #step1 { padding: 3rem 4rem 5rem; background: var(--bg-dark); position: relative; z-index: 1; }
+
+  .sel-filters {
+    display: flex; justify-content: center; gap: .6rem;
+    flex-wrap: wrap; margin-bottom: 2.5rem;
+  }
+  .sel-filter {
+    padding: .45rem 1.2rem; border: 1px solid rgba(201,162,88,.25);
+    border-radius: 100px; font-size: .72rem; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--gray); background: transparent;
+    cursor: pointer; transition: all .3s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .sel-filter:hover { border-color: var(--gold); color: var(--gold); }
+  .sel-filter.active { background: var(--gold); color: var(--bg-deep); border-color: var(--gold); }
+
+  .sel-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    max-width: 1100px; margin: 0 auto 3rem;
+  }
+
+  .sel-card {
+    background: var(--bg-card); border: 1px solid rgba(201,162,88,.1);
+    border-radius: 4px; padding: 1.5rem;
+    cursor: pointer; transition: all .3s;
+    position: relative; user-select: none;
+  }
+  .sel-card:hover { border-color: rgba(201,162,88,.3); transform: translateY(-2px); }
+  .sel-card.hidden { display: none; }
+  .sel-card.selected {
+    border-color: var(--gold);
+    background: rgba(201,162,88,.06);
+    box-shadow: 0 0 20px rgba(201,162,88,.1);
+  }
+  .sel-card.selected::after {
+    content: '✓';
+    position: absolute; top: 1rem; right: 1rem;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--gold); color: var(--bg-deep);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .7rem; font-weight: 700;
+  }
+
+  .sel-card-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold-dim); border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: .8rem; font-size: 1rem;
+  }
+  .sel-card-tag {
+    font-size: .58rem; font-weight: 600; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: .4rem;
+  }
+  .sel-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 300; color: var(--white);
+    margin-bottom: .3rem;
+  }
+  .sel-card-desc { font-size: .75rem; color: var(--gray); line-height: 1.5; }
+
+  .sel-footer {
+    display: flex; align-items: center; justify-content: center;
+    gap: 2rem; max-width: 1100px; margin: 0 auto;
+  }
+  .sel-count {
+    font-size: .85rem; color: var(--gray);
+  }
+  .sel-count b { color: var(--gold); font-weight: 600; }
+
+  .btn-primary {
+    padding: .85rem 2.2rem;
+    background: var(--gold); color: var(--bg-deep);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600; font-size: .85rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    border: none; border-radius: 2px; cursor: pointer;
+    text-decoration: none; transition: all .3s;
+    box-shadow: 0 0 30px rgba(201,162,88,.2);
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    box-shadow: 0 0 45px rgba(201,162,88,.35);
+    transform: translateY(-2px);
+  }
+  .btn-primary:disabled {
+    opacity: .4; cursor: not-allowed;
+    transform: none; box-shadow: none;
+  }
+
+  .btn-outline {
+    padding: .85rem 2.2rem;
+    border: 1px solid rgba(255,255,255,.2);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400; font-size: .85rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    background: transparent; border-radius: 2px; cursor: pointer;
+    text-decoration: none; transition: all .3s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ─── PROTOCOL RESULT (STEP 2) ─── */
+  #step2 {
+    display: none; padding: 3rem 4rem 5rem;
+    background: var(--bg-dark); position: relative; z-index: 1;
+  }
+  #step2.show { display: block; }
+
+  .proto-section {
+    max-width: 1100px; margin: 0 auto 3.5rem;
+  }
+  .proto-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300; color: var(--white);
+    margin-bottom: 1.5rem;
+    padding-bottom: .8rem;
+    border-bottom: 1px solid rgba(201,162,88,.15);
+  }
+  .proto-section-title span { color: var(--gold); font-weight: 600; }
+
+  /* Calendar */
+  .proto-calendar {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  .cal-day {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 4px; padding: 1rem .6rem;
+    text-align: center; min-height: 100px;
+    transition: all .3s;
+  }
+  .cal-day:hover { border-color: rgba(201,162,88,.2); }
+  .cal-day-name {
+    font-size: .65rem; font-weight: 700; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--gray); margin-bottom: .8rem;
+  }
+  .cal-pill {
+    display: block; padding: .25rem .4rem;
+    border-radius: 100px; font-size: .6rem; font-weight: 600;
+    letter-spacing: .06em; margin-bottom: .3rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .pill-ema { background: rgba(201,162,88,.2); color: var(--gold); }
+  .pill-lon { background: rgba(76,175,128,.15); color: var(--green); }
+  .pill-reg { background: rgba(26,77,101,.5); color: #6bc5e3; }
+  .pill-gh  { background: rgba(156,106,222,.15); color: #b48be6; }
+  .pill-imu { background: rgba(230,162,60,.15); color: var(--amber); }
+  .pill-rest { background: rgba(255,255,255,.04); color: var(--gray); }
+
+  /* Dosage table */
+  .proto-table {
+    width: 100%; border-collapse: collapse;
+    background: var(--bg-card);
+    border: 1px solid rgba(201,162,88,.1);
+    border-radius: 4px; overflow: hidden;
+  }
+  .proto-table th {
+    font-size: .65rem; font-weight: 600; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--gold);
+    padding: 1rem 1.2rem; text-align: left;
+    background: rgba(201,162,88,.06);
+    border-bottom: 1px solid rgba(201,162,88,.15);
+  }
+  .proto-table td {
+    font-size: .82rem; color: var(--text);
+    padding: .9rem 1.2rem;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .proto-table tr:last-child td { border-bottom: none; }
+  .proto-table td:first-child { color: var(--white); font-weight: 500; }
+
+  /* Timeline */
+  .proto-timeline {
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .tl-row {
+    display: grid; grid-template-columns: 80px 1px 1fr;
+    gap: 0 1.5rem; align-items: stretch;
+  }
+  .tl-week {
+    text-align: right; padding: 1.2rem 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300; color: var(--gold-dim);
+  }
+  .tl-line {
+    position: relative; display: flex; align-items: stretch;
+    justify-content: center;
+  }
+  .tl-line::before {
+    content: ''; position: absolute;
+    left: 50%; top: 0; bottom: 0; width: 1px;
+    background: rgba(201,162,88,.2);
+    transform: translateX(-50%);
+  }
+  .tl-dot {
+    position: absolute; top: 1.4rem;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 10px rgba(201,162,88,.5);
+    transform: translateX(-50%) translateX(-.5px);
+    left: 50%; z-index: 1;
+  }
+  .tl-content {
+    padding: 1rem 0 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .tl-row:last-child .tl-content { border-bottom: none; }
+  .tl-title {
+    font-size: .8rem; font-weight: 600; color: var(--white);
+    margin-bottom: .3rem;
+  }
+  .tl-desc { font-size: .8rem; color: var(--gray); line-height: 1.5; }
+
+  /* Notes */
+  .proto-notes { display: flex; flex-direction: column; gap: .8rem; }
+  .note-card {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.2rem 1.5rem;
+    border-radius: 4px; border-left: 3px solid;
+  }
+  .note-synergy {
+    background: rgba(76,175,128,.06);
+    border-color: var(--green);
+  }
+  .note-synergy .note-icon { color: var(--green); }
+  .note-warning {
+    background: rgba(230,162,60,.06);
+    border-color: var(--amber);
+  }
+  .note-warning .note-icon { color: var(--amber); }
+  .note-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .1rem; }
+  .note-text { font-size: .82rem; color: var(--text); line-height: 1.6; }
+  .note-text strong { color: var(--white); }
+
+  /* Actions */
+  .proto-actions {
+    display: flex; gap: 1rem; justify-content: center;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 4rem;
+    border-top: 1px solid rgba(201,162,88,.12);
+    background: var(--bg-deep);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 2rem;
+    position: relative; z-index: 1;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 300; color: var(--white);
+  }
+  .footer-logo span { color: var(--gold); font-weight: 600; }
+  .footer-tagline {
+    font-size: .7rem; font-weight: 500; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gray); margin-top: .3rem;
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-size: .75rem; color: var(--gray); text-decoration: none;
+    transition: color .3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-disclaimer {
+    font-size: .7rem; color: var(--gray); max-width: 280px; line-height: 1.5;
+    opacity: .7;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { animation: fadeUp .6s ease both; }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .page-header { padding: 8rem 1.5rem 3rem; }
+    #step1, #step2 { padding: 2rem 1.5rem 4rem; }
+    .sel-grid { grid-template-columns: 1fr; }
+    .proto-calendar { grid-template-columns: repeat(4, 1fr); }
+    .proto-table { font-size: .75rem; }
+    .proto-table th, .proto-table td { padding: .7rem .6rem; }
+    .tl-row { grid-template-columns: 50px 1px 1fr; gap: 0 1rem; }
+    .sel-footer { flex-direction: column; gap: 1rem; }
+    .proto-actions { flex-direction: column; align-items: center; }
+    footer { padding: 2.5rem 1.5rem; flex-direction: column; }
+    .steps-indicator { gap: 1rem; padding: 1.5rem 1rem; }
+    .step-dot { font-size: .65rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Optimum<span>Lab</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#protocols">Protocolos</a></li>
+    <li><a href="index.html#library">Biblioteca</a></li>
+    <li><a href="protocolo.html" style="color:var(--gold)">Protocolo</a></li>
+    <li><a href="index.html#science">Ciência</a></li>
+    <li><a href="orcamento.html" class="nav-cta">Orçamento</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="section-label">Montador de Protocolo</div>
+  <h1 class="section-title">Monte seu <strong>protocolo personalizado</strong></h1>
+  <p class="page-subtitle">
+    Selecione os peptídeos que deseja utilizar e gere automaticamente um protocolo completo com calendário, dosagens e notas de compatibilidade.
+  </p>
+</div>
+
+<!-- STEP INDICATOR -->
+<div class="steps-indicator">
+  <div class="step-dot active" data-num="1" id="stepDot1">Selecionar</div>
+  <div class="step-dot" data-num="2" id="stepDot2">Protocolo</div>
+</div>
+
+<!-- STEP 1: SELECTION -->
+<div id="step1">
+  <div class="sel-filters">
+    <button class="sel-filter active" onclick="filterSel('all')">Todos</button>
+    <button class="sel-filter" onclick="filterSel('emagrecimento')">Emagrecimento</button>
+    <button class="sel-filter" onclick="filterSel('longevidade')">Longevidade</button>
+    <button class="sel-filter" onclick="filterSel('regeneracao')">Regeneração</button>
+    <button class="sel-filter" onclick="filterSel('gh')">GH &amp; Performance</button>
+    <button class="sel-filter" onclick="filterSel('imunidade')">Imunidade</button>
+  </div>
+
+  <div class="sel-grid" id="selGrid">
+    <!-- Cards gerados por JS -->
+  </div>
+
+  <div class="sel-footer">
+    <div class="sel-count"><b id="selCount">0</b> peptídeo(s) selecionado(s)</div>
+    <button class="btn-primary" id="btnGenerate" disabled onclick="generateProtocol()">Gerar Protocolo →</button>
+  </div>
+</div>
+
+<!-- STEP 2: PROTOCOL -->
+<div id="step2">
+
+  <!-- Calendar -->
+  <div class="proto-section fade-in">
+    <div class="proto-section-title">📅 Calendário <span>Semanal</span></div>
+    <div class="proto-calendar" id="protoCalendar"></div>
+  </div>
+
+  <!-- Dosage Table -->
+  <div class="proto-section fade-in">
+    <div class="proto-section-title">💊 Tabela de <span>Dosagens</span></div>
+    <table class="proto-table" id="protoTable">
+      <thead>
+        <tr>
+          <th>Peptídeo</th>
+          <th>Dose</th>
+          <th>Frequência</th>
+          <th>Horário</th>
+          <th>Via</th>
+          <th>Ciclo</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Timeline -->
+  <div class="proto-section fade-in">
+    <div class="proto-section-title">📈 Timeline de <span>Semanas</span></div>
+    <div class="proto-timeline" id="protoTimeline"></div>
+  </div>
+
+  <!-- Notes -->
+  <div class="proto-section fade-in" id="protoNotesSection" style="display:none">
+    <div class="proto-section-title">⚡ Notas de <span>Compatibilidade</span></div>
+    <div class="proto-notes" id="protoNotes"></div>
+  </div>
+
+  <!-- Actions -->
+  <div class="proto-actions">
+    <button class="btn-outline" onclick="resetProtocol()">← Alterar Seleção</button>
+    <a href="orcamento.html" class="btn-primary">Solicitar Orçamento →</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Optimum<span>Lab</span></div>
+    <div class="footer-tagline">Peptide Science · Education · Excellence</div>
+  </div>
+  <div class="footer-links">
+    <a href="index.html#protocols">Protocolos</a>
+    <a href="index.html#library">Biblioteca</a>
+    <a href="protocolo.html">Protocolo</a>
+    <a href="index.html#science">Ciência</a>
+    <a href="orcamento.html">Orçamento</a>
+  </div>
+  <div class="footer-disclaimer">
+    Este material é educativo e não substitui orientação médica profissional. Consulte sempre um profissional de saúde.
+  </div>
+</footer>
+
+<script>
+// ─── PEPTIDE DATABASE ───
+const peptides = [
+  {
+    id: 'retatrutida', name: 'Retatrutida', icon: '⬡',
+    category: 'emagrecimento', catLabel: 'Emagrecimento',
+    desc: 'Triplo agonista GIP/GLP-1/Glucagon — até 24% de perda de peso.',
+    dose: '1–2mg/semana', frequency: 'semanal', days: [3],
+    timing: 'Jejum (manhã)', method: 'Subcutânea', cycle: '12 semanas',
+    pillClass: 'pill-ema', pillLabel: 'RETA',
+    escalation: 'Sem 1-4: 1mg → Sem 5-12: 2mg',
+    notes: 'Escalonamento gradual a cada 4 semanas'
+  },
+  {
+    id: 'tirzepatida', name: 'Tirzepatida', icon: '⬡',
+    category: 'emagrecimento', catLabel: 'Emagrecimento',
+    desc: 'Dual agonista GIP/GLP-1 — até 21% de perda de peso.',
+    dose: '2,5–15mg/semana', frequency: 'semanal', days: [3],
+    timing: 'Jejum (manhã)', method: 'Subcutânea', cycle: '16 semanas',
+    pillClass: 'pill-ema', pillLabel: 'TIRZE',
+    escalation: '2,5mg → 5mg → 7,5mg → 10mg → 12,5mg → 15mg (a cada 4 sem)',
+    notes: 'Escalonamento lento para tolerância GI'
+  },
+  {
+    id: 'aod9604', name: 'AOD-9604', icon: '◇',
+    category: 'emagrecimento', catLabel: 'Emagrecimento',
+    desc: 'Fragmento do GH — lipólise sem efeitos do GH.',
+    dose: '250–500mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Jejum (manhã)', method: 'Subcutânea', cycle: '12 semanas',
+    pillClass: 'pill-ema', pillLabel: 'AOD',
+    escalation: null,
+    notes: 'Aplicar em jejum para melhor absorção'
+  },
+  {
+    id: 'tesamorelin', name: 'Tesamorelin', icon: '⬢',
+    category: 'emagrecimento', catLabel: 'Emagrecimento',
+    desc: 'Análogo de GHRH — estimula GH natural, reduz gordura visceral.',
+    dose: '1–2mg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Antes de dormir', method: 'Subcutânea', cycle: '8–12 semanas',
+    pillClass: 'pill-ema', pillLabel: 'TESA',
+    escalation: null,
+    notes: 'Dose noturna para sincronia com pico natural de GH'
+  },
+  {
+    id: 'ghkcu', name: 'GHK-Cu', icon: '◈',
+    category: 'regeneracao', catLabel: 'Regeneração',
+    desc: 'Peptídeo de cobre — colágeno, pele, 4.000+ genes.',
+    dose: '1,6mg/dia (8UI)', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '12 semanas',
+    pillClass: 'pill-reg', pillLabel: 'GHK',
+    escalation: null,
+    notes: 'Seg-Sex com descanso no fim de semana'
+  },
+  {
+    id: 'bpc157tb500', name: 'BPC-157 + TB-500', icon: '⊕',
+    category: 'regeneracao', catLabel: 'Regeneração',
+    desc: 'Dupla regenerativa — tendões, músculos, GI.',
+    dose: 'BPC 250–500mcg + TB 2mg', frequency: 'misto', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '4–8 semanas',
+    pillClass: 'pill-reg', pillLabel: 'BPC+TB',
+    escalation: null,
+    notes: 'BPC diário + TB-500 2x/semana (Seg e Qui)'
+  },
+  {
+    id: 'wolverine', name: 'Wolverine Stack', icon: '⚡',
+    category: 'regeneracao', catLabel: 'Regeneração',
+    desc: 'Blend BPC+TB (10+10mg) — regeneração acelerada.',
+    dose: '0,3–0,5mL/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '4–8 semanas',
+    pillClass: 'pill-reg', pillLabel: 'WOLF',
+    escalation: null,
+    notes: 'Aplicar próximo à área da lesão quando possível'
+  },
+  {
+    id: 'proklow', name: 'Pro Klow 80mg', icon: '✦',
+    category: 'regeneracao', catLabel: 'Regeneração',
+    desc: 'Blend 4-em-1: GHK-Cu + BPC + TB + KPV.',
+    dose: '0,1–0,2mL/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '8–12 semanas',
+    pillClass: 'pill-reg', pillLabel: 'PKLOW',
+    escalation: null,
+    notes: 'Blend multifuncional — já inclui GHK-Cu, BPC, TB e KPV'
+  },
+  {
+    id: 'kpv', name: 'KPV', icon: '◯',
+    category: 'regeneracao', catLabel: 'Regeneração',
+    desc: 'Anti-inflamatório — inibe NF-κB, proteção intestinal.',
+    dose: '200–500mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã ou noite', method: 'Subcutânea/oral', cycle: '4–8 semanas',
+    pillClass: 'pill-reg', pillLabel: 'KPV',
+    escalation: null,
+    notes: 'Pode ser usado oral ou subcutâneo'
+  },
+  {
+    id: 'nad', name: 'NAD+ 500mg', icon: '⟡',
+    category: 'longevidade', catLabel: 'Longevidade',
+    desc: 'Coenzima essencial — energia celular, sirtuínas, DNA.',
+    dose: '500mg/sessão', frequency: '3x-semana', days: [0,2,4],
+    timing: 'Manhã', method: 'Subcutânea/IV', cycle: '4–8 semanas',
+    pillClass: 'pill-lon', pillLabel: 'NAD+',
+    escalation: null,
+    notes: 'IV para máxima biodisponibilidade; SC como alternativa'
+  },
+  {
+    id: 'motsc', name: 'MOTS-c', icon: '◎',
+    category: 'longevidade', catLabel: 'Longevidade',
+    desc: 'Peptídeo mitocondrial — mimético de exercício, AMPK.',
+    dose: '5–10mg', frequency: '3x-semana', days: [0,2,4],
+    timing: 'Manhã (pré-treino)', method: 'Subcutânea', cycle: '4–8 semanas',
+    pillClass: 'pill-lon', pillLabel: 'MOTS',
+    escalation: null,
+    notes: 'Ideal aplicar antes do exercício para sinergia'
+  },
+  {
+    id: 'ss31', name: 'SS-31 (Elamipretide)', icon: '◈',
+    category: 'longevidade', catLabel: 'Longevidade',
+    desc: 'Proteção mitocondrial — 5.000× concentração, cardiolipina.',
+    dose: '5–20mg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '4–8 semanas',
+    pillClass: 'pill-lon', pillLabel: 'SS31',
+    escalation: null,
+    notes: 'Estudos clínicos em andamento — uso off-label'
+  },
+  {
+    id: 'cjcipa', name: 'CJC-1295 + Ipamorelin', icon: '△',
+    category: 'gh', catLabel: 'GH & Performance',
+    desc: 'Secretagogos — amplificam GH natural em 3-5×.',
+    dose: '100–300mcg cada', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Antes de dormir', method: 'Subcutânea', cycle: '8–12 semanas',
+    pillClass: 'pill-gh', pillLabel: 'CJC+IPA',
+    escalation: null,
+    notes: 'Dose noturna sincroniza com pico natural de GH durante o sono'
+  },
+  {
+    id: 'igf1lr3', name: 'IGF-1 LR3', icon: '▲',
+    category: 'gh', catLabel: 'GH & Performance',
+    desc: 'Fator de crescimento 3× mais potente — hipertrofia.',
+    dose: '20–100mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Pós-treino', method: 'Subcutânea/IM', cycle: '4–6 semanas',
+    pillClass: 'pill-gh', pillLabel: 'IGF1',
+    escalation: null,
+    notes: 'Ciclos curtos de 4-6 semanas para evitar dessensibilização'
+  },
+  {
+    id: 'ta1', name: 'Thymosin Alpha 1 (TA1)', icon: '🛡',
+    category: 'imunidade', catLabel: 'Imunidade',
+    desc: 'Imunomodulador — ativa células T, NK e dendríticas.',
+    dose: '1,6mg', frequency: '3x-semana', days: [0,2,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '4–12 semanas',
+    pillClass: 'pill-imu', pillLabel: 'TA1',
+    escalation: null,
+    notes: 'Aprovado como Zadaxin em 35+ países. Não causa imunossupressão.'
+  }
+];
+
+// ─── SYNERGY / WARNING RULES ───
+const rules = [
+  { type: 'warning', ids: ['tirzepatida','retatrutida'], msg: 'Ambos são agonistas GLP-1 — <strong>usar apenas um</strong>. Efeitos não se somam e risco de efeitos adversos GI aumenta.' },
+  { type: 'warning', ids: ['tirzepatida','aod9604'], msg: 'Tirzepatida e AOD-9604 têm ações lipolíticas similares — <strong>considere usar apenas um</strong> para evitar redundância.' },
+  { type: 'warning', ids: ['wolverine','bpc157tb500'], msg: 'Wolverine Stack já contém BPC-157 + TB-500 — <strong>redundante</strong>. Escolha um dos dois.' },
+  { type: 'warning', ids: ['proklow','ghkcu'], msg: 'Pro Klow já contém GHK-Cu 50mg — <strong>ajustar dose de GHK-Cu</strong> ou usar apenas Pro Klow.' },
+  { type: 'warning', ids: ['proklow','kpv'], msg: 'Pro Klow já contém KPV 10mg — pode ser redundante se usar KPV separado.' },
+  { type: 'warning', ids: ['proklow','bpc157tb500'], msg: 'Pro Klow já contém BPC + TB — pode ser redundante usar BPC+TB separado.' },
+  { type: 'synergy', ids: ['bpc157tb500','ghkcu'], msg: '<strong>Sinergia regenerativa potencializada</strong> — GHK-Cu estimula colágeno enquanto BPC+TB reparam tecido profundo.' },
+  { type: 'synergy', ids: ['nad','motsc','ss31'], msg: '<strong>Stack longevidade completo</strong> — NAD+ (energia), MOTS-c (exercício), SS-31 (mitocôndria) atuam em vias complementares.' },
+  { type: 'synergy', ids: ['nad','motsc'], msg: '<strong>Sinergia mitocondrial</strong> — NAD+ fornece substrato e MOTS-c ativa AMPK para otimizar metabolismo celular.' },
+  { type: 'synergy', ids: ['nad','ss31'], msg: '<strong>Reparo + proteção mitocondrial</strong> — NAD+ para reparo de DNA e SS-31 para integridade da membrana.' },
+  { type: 'synergy', ids: ['cjcipa','igf1lr3'], msg: '<strong>Eixo GH maximizado</strong> — CJC+Ipa amplificam GH e IGF-1 LR3 potencializa o fator de crescimento downstream.' },
+  { type: 'synergy', ids: ['ta1','kpv'], msg: '<strong>Equilíbrio imunológico</strong> — TA1 ativa imunidade celular enquanto KPV modula inflamação via NF-κB.' },
+  { type: 'synergy', ids: ['ta1','nad'], msg: '<strong>Imunidade + reparo celular</strong> — TA1 fortalece defesas e NAD+ suporta reparo de DNA nas células imunes.' },
+  { type: 'synergy', ids: ['retatrutida','ghkcu'], msg: '<strong>Emagrecer sem sacrificar a pele</strong> — Retatrutida reduz gordura e GHK-Cu preserva colágeno e firmeza.' },
+  { type: 'synergy', ids: ['tirzepatida','ghkcu'], msg: '<strong>Perda de peso + proteção da pele</strong> — Tirzepatida emagrece e GHK-Cu combate flacidez durante o processo.' },
+  { type: 'synergy', ids: ['tesamorelin','cjcipa'], msg: '<strong>Dupla GH</strong> — Tesamorelin (GHRH) + Ipamorelin (GHRP) estimulam GH por vias complementares.' }
+];
+
+// ─── STATE ───
+let selected = new Set();
+
+// ─── RENDER CARDS ───
+function renderCards() {
+  const grid = document.getElementById('selGrid');
+  grid.innerHTML = peptides.map(p => `
+    <div class="sel-card" data-id="${p.id}" data-cat="${p.category}" onclick="toggleSelect('${p.id}')">
+      <div class="sel-card-icon">${p.icon}</div>
+      <div class="sel-card-tag">${p.catLabel}</div>
+      <div class="sel-card-name">${p.name}</div>
+      <div class="sel-card-desc">${p.desc}</div>
+    </div>
+  `).join('');
+}
+
+// ─── TOGGLE SELECT ───
+function toggleSelect(id) {
+  if (selected.has(id)) selected.delete(id);
+  else selected.add(id);
+  updateSelectionUI();
+}
+
+function updateSelectionUI() {
+  document.querySelectorAll('.sel-card').forEach(card => {
+    card.classList.toggle('selected', selected.has(card.dataset.id));
+  });
+  document.getElementById('selCount').textContent = selected.size;
+  document.getElementById('btnGenerate').disabled = selected.size === 0;
+}
+
+// ─── FILTER ───
+function filterSel(cat) {
+  document.querySelectorAll('.sel-filter').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.sel-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+// ─── GENERATE PROTOCOL ───
+function generateProtocol() {
+  if (selected.size === 0) return;
+
+  const sel = peptides.filter(p => selected.has(p.id));
+
+  buildCalendar(sel);
+  buildDosageTable(sel);
+  buildTimeline(sel);
+  buildNotes(sel);
+
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').classList.add('show');
+  document.getElementById('stepDot1').classList.remove('active');
+  document.getElementById('stepDot1').classList.add('done');
+  document.getElementById('stepDot2').classList.add('active');
+
+  window.scrollTo({ top: document.querySelector('.steps-indicator').offsetTop - 80, behavior: 'smooth' });
+}
+
+// ─── BUILD CALENDAR ───
+function buildCalendar(sel) {
+  const dayNames = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+  const cal = document.getElementById('protoCalendar');
+  cal.innerHTML = '';
+
+  dayNames.forEach((name, i) => {
+    const div = document.createElement('div');
+    div.className = 'cal-day';
+
+    let pills = '';
+    sel.forEach(p => {
+      if (p.days.includes(i)) {
+        pills += `<span class="cal-pill ${p.pillClass}">${p.pillLabel}</span>`;
+      }
+    });
+
+    if (!pills) {
+      pills = '<span class="cal-pill pill-rest">Descanso</span>';
+    }
+
+    div.innerHTML = `<div class="cal-day-name">${name}</div>${pills}`;
+    cal.appendChild(div);
+  });
+}
+
+// ─── BUILD DOSAGE TABLE ───
+function buildDosageTable(sel) {
+  const tbody = document.querySelector('#protoTable tbody');
+  const freqLabels = {
+    'diario': 'Diário (Seg-Sex)',
+    'semanal': 'Semanal',
+    '2x-semana': '2x por semana',
+    '3x-semana': '3x por semana',
+    'misto': 'Misto (ver notas)'
+  };
+  tbody.innerHTML = sel.map(p => `
+    <tr>
+      <td>${p.name}</td>
+      <td>${p.dose}</td>
+      <td>${freqLabels[p.frequency] || p.frequency}</td>
+      <td>${p.timing}</td>
+      <td>${p.method}</td>
+      <td>${p.cycle}</td>
+    </tr>
+  `).join('');
+}
+
+// ─── BUILD TIMELINE ───
+function buildTimeline(sel) {
+  const tl = document.getElementById('protoTimeline');
+  const hasEscalation = sel.some(p => p.escalation);
+
+  // Determine max cycle
+  let maxWeeks = 8;
+  sel.forEach(p => {
+    const match = p.cycle.match(/(\d+)/g);
+    if (match) {
+      const w = Math.max(...match.map(Number));
+      if (w > maxWeeks) maxWeeks = w;
+    }
+  });
+
+  let rows = '';
+
+  // Weeks 1-2: Adaptation
+  const adaptNotes = sel.map(p => `${p.pillLabel}: ${p.dose}`).join(' · ');
+  rows += buildTlRow('1–2', 'Fase de Adaptação', `Início dos peptídeos. Organismo ajustando. ${adaptNotes}`, '');
+
+  // Weeks 3-4
+  rows += buildTlRow('3–4', 'Tolerância Estabelecida', 'Corpo adaptado. Primeiros sinais de benefícios começam a aparecer.', '');
+
+  // Week 5+ escalation
+  if (hasEscalation) {
+    const escNotes = sel.filter(p => p.escalation).map(p => `${p.name}: ${p.escalation}`).join(' | ');
+    rows += buildTlRow('5', '↑ Escalonamento de Dose', escNotes, 'color:var(--gold)');
+  }
+
+  // Mid cycle
+  const midWeek = hasEscalation ? '5–8' : '5–6';
+  rows += buildTlRow(midWeek, 'Resultados Visíveis', 'Efeitos terapêuticos perceptíveis. Composição corporal, energia e recuperação em melhora.', '');
+
+  // Final phase
+  if (maxWeeks >= 9) {
+    rows += buildTlRow(`9–${maxWeeks}`, 'Pico dos Resultados', 'Fase de máximos benefícios. Resultados consolidados. Avaliar continuidade com profissional de saúde.', 'color:var(--gold-light)');
+  }
+
+  tl.innerHTML = rows;
+}
+
+function buildTlRow(week, title, desc, dotStyle) {
+  return `
+    <div class="tl-row">
+      <div class="tl-week">${week}</div>
+      <div class="tl-line"><div class="tl-dot" ${dotStyle ? `style="background:${dotStyle.replace('color:','')}"` : ''}></div></div>
+      <div class="tl-content">
+        <div class="tl-title" ${dotStyle ? `style="${dotStyle}"` : ''}>${title}</div>
+        <div class="tl-desc">${desc}</div>
+      </div>
+    </div>`;
+}
+
+// ─── BUILD NOTES ───
+function buildNotes(sel) {
+  const ids = new Set(sel.map(p => p.id));
+  const notes = [];
+
+  rules.forEach(rule => {
+    // Check if ALL ids in the rule are selected
+    const match = rule.ids.every(id => ids.has(id));
+    // For rules with 3 items, also check partial matches (any 2 of 3)
+    if (match) {
+      notes.push(rule);
+    }
+  });
+
+  // Add individual notes
+  sel.forEach(p => {
+    if (p.notes) {
+      notes.push({ type: 'info', msg: `<strong>${p.name}:</strong> ${p.notes}` });
+    }
+  });
+
+  const section = document.getElementById('protoNotesSection');
+  const container = document.getElementById('protoNotes');
+
+  if (notes.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+  container.innerHTML = notes.map(n => {
+    if (n.type === 'synergy') {
+      return `<div class="note-card note-synergy"><span class="note-icon">✦</span><div class="note-text">${n.msg}</div></div>`;
+    } else if (n.type === 'warning') {
+      return `<div class="note-card note-warning"><span class="note-icon">⚠</span><div class="note-text">${n.msg}</div></div>`;
+    } else {
+      return `<div class="note-card note-synergy" style="border-color:var(--gray); background:rgba(140,160,173,.06)"><span class="note-icon" style="color:var(--gray)">ℹ</span><div class="note-text">${n.msg}</div></div>`;
+    }
+  }).join('');
+}
+
+// ─── RESET ───
+function resetProtocol() {
+  document.getElementById('step2').classList.remove('show');
+  document.getElementById('step1').style.display = 'block';
+  document.getElementById('stepDot2').classList.remove('active');
+  document.getElementById('stepDot1').classList.remove('done');
+  document.getElementById('stepDot1').classList.add('active');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── INIT ───
+renderCards();
+</script>
+</body>
+</html>
