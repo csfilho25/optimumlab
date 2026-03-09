@@ -376,6 +376,155 @@
   .note-text { font-size: .82rem; color: var(--text); line-height: 1.6; }
   .note-text strong { color: var(--white); }
 
+  /* Reconstitution section */
+  .proto-recon-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .recon-card {
+    background: var(--bg-card); border: 1px solid rgba(201,162,88,.1);
+    border-radius: 4px; padding: 1.5rem; position: relative;
+  }
+  .recon-card-title {
+    font-size: .7rem; font-weight: 700; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: .8rem;
+  }
+  .recon-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-weight: 300; color: var(--white);
+    margin-bottom: .6rem;
+  }
+  .recon-step {
+    display: flex; gap: .6rem; align-items: baseline;
+    font-size: .8rem; color: var(--text); line-height: 1.6;
+    margin-bottom: .4rem;
+  }
+  .recon-step-num {
+    background: var(--gold); color: var(--bg-deep);
+    width: 18px; height: 18px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .6rem; font-weight: 700; flex-shrink: 0;
+  }
+  .recon-info {
+    font-size: .75rem; color: var(--gray); line-height: 1.6;
+    background: rgba(201,162,88,.06); border-left: 2px solid var(--gold-dim);
+    padding: .6rem .8rem; border-radius: 0 3px 3px 0; margin-top: .8rem;
+  }
+
+  /* Side effects table */
+  .effects-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: .5rem;
+  }
+  .effect-item {
+    display: flex; align-items: center; gap: .6rem;
+    padding: .5rem .8rem; background: rgba(255,255,255,.02);
+    border-radius: 3px; font-size: .8rem; color: var(--text);
+  }
+  .effect-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .effect-dot.common { background: var(--amber); }
+  .effect-dot.rare { background: var(--gray); }
+  .effect-label { font-size: .65rem; color: var(--gray); font-weight: 600; text-transform: uppercase; letter-spacing: .1em; }
+
+  /* Application tips */
+  .tips-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;
+  }
+  .tip-card {
+    background: var(--bg-card); border: 1px solid rgba(201,162,88,.08);
+    border-radius: 4px; padding: 1.2rem; text-align: center;
+  }
+  .tip-icon { font-size: 1.8rem; margin-bottom: .6rem; }
+  .tip-title {
+    font-size: .7rem; font-weight: 700; color: var(--gold);
+    letter-spacing: .12em; text-transform: uppercase; margin-bottom: .4rem;
+  }
+  .tip-text { font-size: .78rem; color: var(--gray); line-height: 1.5; }
+
+  /* Quick reference card */
+  .quick-ref {
+    background: linear-gradient(135deg, rgba(201,162,88,.08), rgba(201,162,88,.02));
+    border: 1px solid rgba(201,162,88,.2);
+    border-radius: 6px; padding: 2rem;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  }
+  .quick-ref-title {
+    grid-column: 1/-1;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 300; color: var(--gold);
+    text-align: center; margin-bottom: .5rem;
+  }
+  .quick-ref-item {
+    font-size: .82rem; color: var(--text); padding: .4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    display: flex; justify-content: space-between;
+  }
+  .quick-ref-item strong { color: var(--gold); }
+
+  /* ─── CONTENT PROTECTION ─── */
+  .protected-content {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+  }
+  .protected-content::after {
+    content: '';
+    position: absolute; inset: 0;
+    pointer-events: none; z-index: 2;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 80px,
+      rgba(201,162,88,.015) 80px,
+      rgba(201,162,88,.015) 82px
+    );
+  }
+  .watermark {
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem; font-weight: 300;
+    color: rgba(201,162,88,.04);
+    pointer-events: none; z-index: 999;
+    white-space: nowrap;
+    letter-spacing: .2em;
+    display: none;
+  }
+  #step2.show .watermark { display: block; }
+
+  /* Premium blur overlay */
+  .premium-blur {
+    position: relative;
+  }
+  .premium-blur .proto-section:nth-child(n+4) {
+    filter: blur(4px);
+    pointer-events: none;
+  }
+  .premium-blur .proto-section:nth-child(n+4)::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent, rgba(8,20,28,.8));
+  }
+  .premium-cta {
+    text-align: center; padding: 3rem 2rem;
+    background: linear-gradient(180deg, transparent, rgba(8,20,28,.9) 40%);
+    margin-top: -6rem; position: relative; z-index: 10;
+  }
+  .premium-cta h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 300; color: var(--white);
+    margin-bottom: .6rem;
+  }
+  .premium-cta p {
+    font-size: .85rem; color: var(--gray); margin-bottom: 1.5rem;
+    max-width: 500px; margin-left: auto; margin-right: auto;
+  }
+  .premium-cta .btn-primary {
+    font-size: .9rem; padding: .8rem 2.5rem;
+  }
+
   /* Actions */
   .proto-actions {
     display: flex; gap: 1rem; justify-content: center;
@@ -434,6 +583,10 @@
     footer { padding: 2.5rem 1.5rem; flex-direction: column; }
     .steps-indicator { gap: 1rem; padding: 1.5rem 1rem; }
     .step-dot { font-size: .65rem; }
+    .proto-recon-grid { grid-template-columns: 1fr; }
+    .effects-grid { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .quick-ref { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -443,7 +596,6 @@
 <nav>
   <a href="index.html" class="nav-logo">Optimum<span>Lab</span></a>
   <ul class="nav-links">
-    <li><a href="index.html#protocols">Protocolos</a></li>
     <li><a href="index.html#library">Biblioteca</a></li>
     <li><a href="protocolo.html" style="color:var(--gold)">Protocolo</a></li>
     <li><a href="index.html#science">Ciência</a></li>
@@ -489,7 +641,8 @@
 </div>
 
 <!-- STEP 2: PROTOCOL -->
-<div id="step2">
+<div id="step2" class="protected-content">
+  <div class="watermark">OPTIMUM LAB</div>
 
   <!-- Calendar -->
   <div class="proto-section fade-in">
@@ -528,6 +681,72 @@
     <div class="proto-notes" id="protoNotes"></div>
   </div>
 
+  <!-- Reconstitution (Premium) -->
+  <div class="proto-section fade-in" id="protoReconSection">
+    <div class="proto-section-title">🧪 Reconstituição &amp; <span>Preparo</span></div>
+    <div class="proto-recon-grid" id="protoRecon"></div>
+  </div>
+
+  <!-- Application Guide (Premium) -->
+  <div class="proto-section fade-in" id="protoTipsSection">
+    <div class="proto-section-title">💉 Guia de <span>Aplicação</span></div>
+    <div class="tips-grid" id="protoTips">
+      <div class="tip-card">
+        <div class="tip-icon">🧊</div>
+        <div class="tip-title">Armazenamento</div>
+        <div class="tip-text">Manter frascos reconstituídos refrigerados (2–8°C). Nunca congelar após reconstituição. Pó liofilizado: temperatura ambiente.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">💉</div>
+        <div class="tip-title">Aplicação SC</div>
+        <div class="tip-text">Limpar a área com álcool 70%. Pinçar a pele em ângulo de 45°. Rotacionar locais: abdômen, coxa, braço, glúteo.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">⏰</div>
+        <div class="tip-title">Horários</div>
+        <div class="tip-text">Secretagogos de GH: antes de dormir, estômago vazio. Metabólicos: jejum matinal. GHK-Cu: manhã.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🔄</div>
+        <div class="tip-title">Rodízio</div>
+        <div class="tip-text">Alternar os locais de aplicação para evitar lipodistrofia local. Mínimo 2cm entre aplicações no mesmo local.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">⚠️</div>
+        <div class="tip-title">Atenção</div>
+        <div class="tip-text">Não misturar peptídeos na mesma seringa. Usar seringa de insulina (29-31G). Descartar agulhas após uso único.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🩺</div>
+        <div class="tip-title">Acompanhamento</div>
+        <div class="tip-text">Fazer exames laboratoriais antes de iniciar e a cada 4-6 semanas. Monitorar: hemograma, perfil lipídico, função hepática/renal.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Side Effects (Premium) -->
+  <div class="proto-section fade-in" id="protoEffectsSection">
+    <div class="proto-section-title">⚕️ Efeitos Colaterais <span>Possíveis</span></div>
+    <div class="effects-grid" id="protoEffects"></div>
+    <div style="margin-top:1rem; font-size:.75rem; color:var(--gray); text-align:center;">
+      <span class="effect-dot common" style="display:inline-block; margin-right:.3rem;"></span> Comuns &nbsp;&nbsp;
+      <span class="effect-dot rare" style="display:inline-block; margin-right:.3rem;"></span> Raros
+    </div>
+  </div>
+
+  <!-- Quick Reference (Premium) -->
+  <div class="proto-section fade-in" id="protoQuickRef">
+    <div class="proto-section-title">📋 Referência <span>Rápida</span></div>
+    <div class="quick-ref" id="protoQuickRefCard"></div>
+  </div>
+
+  <!-- Premium CTA Overlay -->
+  <div class="premium-cta" id="premiumCta">
+    <h3>Protocolo <em>Completo</em></h3>
+    <p>O protocolo completo com instruções detalhadas de reconstituição, guia de aplicação passo-a-passo, tabela de efeitos colaterais e cartão de referência rápida será enviado em PDF após a compra.</p>
+    <a href="orcamento.html" class="btn-primary">Solicitar Orçamento →</a>
+  </div>
+
   <!-- Actions -->
   <div class="proto-actions">
     <button class="btn-outline" onclick="resetProtocol()">← Alterar Seleção</button>
@@ -543,7 +762,6 @@
     <div class="footer-tagline">Peptide Science · Education · Excellence</div>
   </div>
   <div class="footer-links">
-    <a href="index.html#protocols">Protocolos</a>
     <a href="index.html#library">Biblioteca</a>
     <a href="protocolo.html">Protocolo</a>
     <a href="index.html#science">Ciência</a>
@@ -885,6 +1103,58 @@ function filterSel(cat) {
   });
 }
 
+// ─── RECONSTITUTION DATABASE ───
+const reconData = {
+  retatrutida: { vial: '20mg', diluent: '2mL BAC', conc: '10mg/mL', doseCalc: '1mg = 0,1mL (10UI)', steps: ['Retirar tampa do frasco e limpar com álcool 70%','Aspirar 2mL de água bacteriostática com seringa','Injetar lentamente pela parede do vial (não direto no pó)','Girar suavemente até dissolver — NÃO agitar','Refrigerar 2–8°C — usar em 28 dias'] },
+  tirzepatida: { vial: '60mg', diluent: '3mL BAC', conc: '20mg/mL', doseCalc: '2,5mg = 0,125mL (≈12,5UI)', steps: ['Limpar tampa com álcool 70%','Aspirar 3mL de água bacteriostática','Injetar lentamente pela parede do vial','Girar suavemente até completa dissolução','Refrigerar 2–8°C — usar em 28 dias'] },
+  aod9604: { vial: '10mg', diluent: '2mL BAC', conc: '5mg/mL', doseCalc: '300mcg = 0,06mL (6UI)', steps: ['Limpar tampa com álcool','Aspirar 2mL de água bacteriostática','Injetar pela parede do vial','Girar suavemente','Refrigerar — usar em 28 dias'] },
+  tesamorelin: { vial: '10mg / 20mg', diluent: '2mL BAC', conc: '5–10mg/mL', doseCalc: '1mg = 0,2mL (10mg) ou 0,1mL (20mg)', steps: ['Limpar tampa com álcool','Reconstituir com 2mL BAC','Girar suavemente','Refrigerar — usar em 28 dias','Aplicar antes de dormir'] },
+  ghkcu: { vial: '50mg', diluent: '2,5mL BAC', conc: '20mg/mL', doseCalc: '1,6mg = 0,08mL (8UI)', steps: ['Limpar tampa com álcool','Aspirar 2,5mL de água bacteriostática','Injetar pela parede — solução ficará azulada (cobre)','Girar suavemente até dissolver','Refrigerar 2–8°C — usar em 30 dias'] },
+  bpc157tb500: { vial: '10/10mg', diluent: '2mL BAC', conc: 'BPC 5mg/mL + TB 5mg/mL', doseCalc: '500mcg BPC + 500mcg TB = 0,1mL (10UI)', steps: ['Limpar tampa com álcool','Aspirar 2mL de água bacteriostática','Injetar lentamente','Girar suavemente','Refrigerar — usar em 28 dias'] },
+  bpc157: { vial: '10mg', diluent: '2mL BAC', conc: '5mg/mL', doseCalc: '500mcg = 0,1mL (10UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar — usar em 28 dias','Aplicar SC ou oral (estável em ácido gástrico)'] },
+  wolverine: { vial: '10/10mg', diluent: '2mL BAC', conc: '5/5mg/mL', doseCalc: '0,3–0,5mL/dia', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar — usar em 28 dias','Aplicar próximo à lesão'] },
+  proklow: { vial: '80mg (4-em-1)', diluent: '2,5mL BAC', conc: '32mg/mL total', doseCalc: '0,1–0,2mL/dia', steps: ['Reconstituir com 2,5mL BAC','Girar suavemente (solução pode ficar levemente azulada)','Refrigerar 2–8°C','Proteger da luz','Usar em 28 dias'] },
+  kpv: { vial: '—', diluent: 'Conforme fabricante', conc: '—', doseCalc: '200–400mcg SC', steps: ['Reconstituir conforme instruções do fabricante','SC: seringa de insulina','Oral: cápsulas entéricas','Refrigerar após reconstituição'] },
+  nad: { vial: '500mg', diluent: 'Conforme fabricante', conc: '—', doseCalc: '500mg/sessão', steps: ['Pode vir em solução pronta','SC ou IV (IV deve ser administrada lentamente)','Refrigerar 2–8°C','Proteger da luz','Usar em 14 dias'] },
+  motsc: { vial: '10mg / 20mg', diluent: '1–2mL BAC', conc: '10mg/mL', doseCalc: '5mg = 0,5mL (50UI)', steps: ['Reconstituir com 1mL (10mg) ou 2mL (20mg)','Girar suavemente','Refrigerar -20°C a 2–8°C','Usar em 21 dias após reconstituição'] },
+  ss31: { vial: '—', diluent: 'Conforme protocolo', conc: '—', doseCalc: '5–20mg/dia', steps: ['Reconstituir conforme instruções do fabricante','SC administração','Refrigerar -20°C a 2–8°C','Proteger da luz'] },
+  cjcipa: { vial: '5/5mg', diluent: '2mL BAC', conc: 'CJC 2,5mg/mL + Ipa 2,5mg/mL', doseCalc: '200mcg cada = 0,08mL (8UI)', steps: ['Limpar tampa com álcool','Aspirar 2mL de água bacteriostática','Injetar pela parede do vial','Girar suavemente','Refrigerar — usar em 28 dias'] },
+  tesamorelinipa: { vial: '10/5mg', diluent: '2mL BAC', conc: 'Tesa 5mg/mL + Ipa 2,5mg/mL', doseCalc: 'Tesa 1mg + Ipa 200mcg ≈ 0,2mL (20UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar 2–8°C','Aplicar antes de dormir, estômago vazio','Usar em 28 dias'] },
+  igf1lr3: { vial: '1mg', diluent: '1mL BAC', conc: '1mg/mL', doseCalc: '50mcg = 0,05mL (5UI)', steps: ['Reconstituir com 1mL BAC (molécula sensível)','Girar MUITO suavemente','Refrigerar 2–8°C — NUNCA congelar','Usar em 21 dias','Administrar pós-treino'] },
+  ta1: { vial: '15mg', diluent: '1,5mL BAC', conc: '10mg/mL', doseCalc: '1,6mg = 0,16mL (16UI)', steps: ['Reconstituir com 1,5mL BAC','Girar suavemente','Refrigerar 2–8°C','Usar em 28 dias','Aplicar SC abdômen ou coxa'] },
+  semax: { vial: '—', diluent: 'Conforme formulação', conc: '—', doseCalc: '500–1000mcg/dia', steps: ['SC: reconstituir conforme fabricante','Intranasal: spray pronto','Refrigerar após abertura'] },
+  pt141: { vial: '10mg', diluent: '2mL BAC', conc: '5mg/mL', doseCalc: '1,5mg = 0,3mL (30UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar 2–8°C','Aplicar 45 min antes','Usar em 28 dias'] },
+  mt2: { vial: '10mg', diluent: '2mL BAC', conc: '5mg/mL', doseCalc: '250mcg = 0,05mL (5UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar 2–8°C','Iniciar com dose baixa (250mcg)','Usar em 30 dias'] },
+  kisspeptin: { vial: '10mg', diluent: '2mL BAC', conc: '5mg/mL', doseCalc: '100mcg = 0,02mL (2UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar -20°C a 2–8°C','Usar em 21 dias','Dosagem intermitente'] },
+  cartalax: { vial: '20mg', diluent: '2mL BAC', conc: '10mg/mL', doseCalc: '5mg = 0,5mL (50UI)', steps: ['Reconstituir com 2mL BAC','Girar suavemente','Refrigerar 2–8°C','Ciclo: 10 dias consecutivos','Usar dentro do ciclo'] }
+};
+
+// ─── SIDE EFFECTS DATABASE ───
+const sideEffectsData = {
+  retatrutida: { common: ['Náusea (15-25%)', 'Diarreia', 'Redução de apetite', 'Constipação'], rare: ['Pancreatite', 'Hipoglicemia'] },
+  tirzepatida: { common: ['Náusea (12-18%)', 'Diarreia', 'Constipação', 'Desconforto abdominal'], rare: ['Pancreatite', 'Reações alérgicas'] },
+  aod9604: { common: ['Cefaleia leve', 'Eritema local'], rare: ['Sem efeitos sistêmicos do GH'] },
+  tesamorelin: { common: ['Reações no local', 'Artralgia', 'Edema periférico'], rare: ['Parestesias', '↑IGF-1 transitório'] },
+  ghkcu: { common: ['Eritema local leve', 'Sensibilidade local'], rare: ['Perfil endógeno — segurança excelente'] },
+  bpc157tb500: { common: ['Dor local leve', 'Fadiga transitória'], rare: ['Sem toxicidade reportada'] },
+  bpc157: { common: ['Dor local leve'], rare: ['Sem DL50 determinada — seguro'] },
+  wolverine: { common: ['Irritação local'], rare: ['Perfil idêntico ao BPC+TB'] },
+  proklow: { common: ['Eritema local (cobre)', 'Calor transitório'], rare: ['Perfil seguro — componentes endógenos'] },
+  kpv: { common: ['Praticamente nenhum'], rare: ['Segurança excepcional'] },
+  nad: { common: ['Flushing (IV)', 'Dor no local SC', 'Fadiga inicial'], rare: ['Molécula endógena — segura'] },
+  motsc: { common: ['Rubor local', 'Hipoglicemia leve em jejum'], rare: ['Dados humanos limitados'] },
+  ss31: { common: ['Reação local', 'Cefaleia'], rare: ['Perfil favorável em Fase 1-3'] },
+  cjcipa: { common: ['Rubor/flushing', 'Sonolência', 'Retenção hídrica leve'], rare: ['Formigamento dose-dependente'] },
+  tesamorelinipa: { common: ['Rubor transitório', 'Sonolência', 'Retenção hídrica'], rare: ['Artralgia', 'Formigamento'] },
+  igf1lr3: { common: ['Hipoglicemia', 'Inchaço articular', 'Dor local IM'], rare: ['Parestesias', 'Letargia'] },
+  ta1: { common: ['Dor/eritema local', 'Fadiga transitória'], rare: ['30+ anos de uso clínico — seguro'] },
+  semax: { common: ['Irritação nasal (intranasal)'], rare: ['25+ anos sem efeitos adversos sérios'] },
+  pt141: { common: ['Náusea (40%)', 'Flushing facial', 'Cefaleia'], rare: ['CI: hipertensão não controlada'] },
+  mt2: { common: ['Náusea', 'Flushing', 'Escurecimento de pintas', 'Ereções involuntárias'], rare: ['Surgimento de novos nevos'] },
+  kisspeptin: { common: ['Rubor facial', 'Sensação de calor'], rare: ['Nenhum efeito sério reportado'] },
+  cartalax: { common: ['Dor local leve'], rare: ['Tripeptídeo — segurança excepcional'] }
+};
+
 // ─── GENERATE PROTOCOL ───
 function generateProtocol() {
   if (selected.size === 0) return;
@@ -895,12 +1165,18 @@ function generateProtocol() {
   buildDosageTable(sel);
   buildTimeline(sel);
   buildNotes(sel);
+  buildReconstitution(sel);
+  buildEffects(sel);
+  buildQuickRef(sel);
 
   document.getElementById('step1').style.display = 'none';
   document.getElementById('step2').classList.add('show');
   document.getElementById('stepDot1').classList.remove('active');
   document.getElementById('stepDot1').classList.add('done');
   document.getElementById('stepDot2').classList.add('active');
+
+  // Apply premium blur to sections after the first 3
+  applyPremiumBlur();
 
   window.scrollTo({ top: document.querySelector('.steps-indicator').offsetTop - 80, behavior: 'smooth' });
 }
@@ -1063,6 +1339,107 @@ function buildNotes(sel) {
   }).join('');
 }
 
+// ─── BUILD RECONSTITUTION ───
+function buildReconstitution(sel) {
+  const container = document.getElementById('protoRecon');
+  container.innerHTML = sel.map(p => {
+    const r = reconData[p.id];
+    if (!r) return '';
+    const stepsHtml = r.steps.map((s, i) => `
+      <div class="recon-step">
+        <span class="recon-step-num">${i + 1}</span>
+        <span>${s}</span>
+      </div>
+    `).join('');
+    return `
+      <div class="recon-card">
+        <div class="recon-card-title">${p.catLabel}</div>
+        <div class="recon-card-name">${p.name}</div>
+        ${stepsHtml}
+        <div class="recon-info">
+          <strong>Frasco:</strong> ${r.vial} · <strong>Diluente:</strong> ${r.diluent} · <strong>Concentração:</strong> ${r.conc}<br>
+          <strong>Dose:</strong> ${r.doseCalc}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ─── BUILD EFFECTS ───
+function buildEffects(sel) {
+  const container = document.getElementById('protoEffects');
+  let html = '';
+  sel.forEach(p => {
+    const e = sideEffectsData[p.id];
+    if (!e) return;
+    e.common.forEach(ef => {
+      html += `<div class="effect-item"><span class="effect-dot common"></span><strong style="color:var(--white);margin-right:.3rem;font-size:.75rem">${p.pillLabel}:</strong> ${ef}</div>`;
+    });
+    e.rare.forEach(ef => {
+      html += `<div class="effect-item"><span class="effect-dot rare"></span><strong style="color:var(--gray);margin-right:.3rem;font-size:.75rem">${p.pillLabel}:</strong> ${ef}</div>`;
+    });
+  });
+  container.innerHTML = html;
+}
+
+// ─── BUILD QUICK REFERENCE ───
+function buildQuickRef(sel) {
+  const container = document.getElementById('protoQuickRefCard');
+  let leftCol = '';
+  let rightCol = '';
+
+  sel.forEach((p, i) => {
+    const item = `
+      <div class="quick-ref-item">
+        <span>${p.name}</span>
+        <strong>${p.dose}</strong>
+      </div>`;
+    if (i % 2 === 0) leftCol += item;
+    else rightCol += item;
+  });
+
+  // Kit summary
+  const kitItems = sel.map(p => `${p.name} (${p.vialSize})`).join(' · ');
+
+  container.innerHTML = `
+    <div class="quick-ref-title">Cartão de Referência Rápida</div>
+    <div>${leftCol}</div>
+    <div>${rightCol}</div>
+    <div style="grid-column:1/-1; margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(201,162,88,.15);">
+      <div style="font-size:.7rem; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin-bottom:.5rem;">Kit Completo</div>
+      <div style="font-size:.82rem; color:var(--text); line-height:1.6;">${kitItems}</div>
+      <div style="font-size:.82rem; color:var(--gray); margin-top:.5rem;">+ Água Bacteriostática 3mL (incluso)</div>
+    </div>
+  `;
+}
+
+// ─── APPLY PREMIUM BLUR ───
+function applyPremiumBlur() {
+  const sections = document.querySelectorAll('#step2 .proto-section');
+  // Blur sections after the 3rd (calendar, dosages, timeline are visible; rest is premium)
+  sections.forEach((sec, i) => {
+    if (i >= 3) {
+      sec.style.filter = 'blur(3px)';
+      sec.style.pointerEvents = 'none';
+      sec.style.position = 'relative';
+    }
+  });
+  document.getElementById('premiumCta').style.display = 'block';
+}
+
+// ─── CONTENT PROTECTION ───
+document.addEventListener('contextmenu', function(e) {
+  if (document.getElementById('step2').classList.contains('show')) {
+    e.preventDefault();
+  }
+});
+document.addEventListener('keydown', function(e) {
+  if (document.getElementById('step2').classList.contains('show')) {
+    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S' || e.key === 'p' || e.key === 'P' || e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A')) {
+      e.preventDefault();
+    }
+  }
+});
+
 // ─── RESET ───
 function resetProtocol() {
   document.getElementById('step2').classList.remove('show');
@@ -1070,6 +1447,13 @@ function resetProtocol() {
   document.getElementById('stepDot2').classList.remove('active');
   document.getElementById('stepDot1').classList.remove('done');
   document.getElementById('stepDot1').classList.add('active');
+
+  // Remove blur
+  document.querySelectorAll('#step2 .proto-section').forEach(sec => {
+    sec.style.filter = '';
+    sec.style.pointerEvents = '';
+  });
+  document.getElementById('premiumCta').style.display = 'none';
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }

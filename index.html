@@ -216,85 +216,6 @@
 
   .section-title strong { font-weight: 600; }
 
-  /* ─── PROTOCOLS ─── */
-  #protocols {
-    padding: 8rem 4rem;
-    background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-dark) 100%);
-  }
-
-  .protocols-header {
-    text-align: center; margin-bottom: 5rem;
-  }
-
-  .protocols-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px;
-    max-width: 1100px; margin: 0 auto;
-    border: 1px solid rgba(201,162,88,.12);
-  }
-
-  .protocol-card {
-    background: var(--bg-card);
-    padding: 3.5rem;
-    position: relative; overflow: hidden;
-    transition: transform .4s, background .4s;
-  }
-  .protocol-card:hover { background: var(--teal); transform: translateY(-4px); }
-
-  .protocol-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    opacity: 0; transition: opacity .4s;
-  }
-  .protocol-card:hover::before { opacity: 1; }
-
-  .protocol-icon {
-    width: 48px; height: 48px;
-    border: 1px solid var(--gold-dim);
-    border-radius: 2px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.8rem;
-    font-size: 1.3rem;
-  }
-
-  .protocol-tag {
-    display: inline-block;
-    font-size: .65rem; font-weight: 600; letter-spacing: .2em;
-    text-transform: uppercase; color: var(--gold);
-    margin-bottom: .8rem;
-  }
-
-  .protocol-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem; font-weight: 300; color: var(--white);
-    margin-bottom: .6rem;
-  }
-
-  .protocol-desc {
-    font-size: .9rem; line-height: 1.7; color: var(--gray);
-    margin-bottom: 2rem;
-  }
-
-  .protocol-features { list-style: none; margin-bottom: 2.5rem; }
-  .protocol-features li {
-    display: flex; align-items: center; gap: .8rem;
-    font-size: .85rem; color: var(--text);
-    padding: .5rem 0;
-    border-bottom: 1px solid rgba(255,255,255,.05);
-  }
-  .protocol-features li::before {
-    content: '→';
-    color: var(--gold); font-size: .75rem; flex-shrink: 0;
-  }
-
-  .protocol-dosage {
-    background: rgba(201,162,88,.08);
-    border-left: 2px solid var(--gold);
-    padding: 1rem 1.2rem;
-    font-size: .8rem; color: var(--gray); line-height: 1.6;
-    border-radius: 0 2px 2px 0;
-  }
-
   /* ─── ABOUT / WHY ─── */
   #about {
     padding: 8rem 4rem;
@@ -671,8 +592,8 @@
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
-    #protocols, #about, #schedule, #orcamento, #science, #library { padding: 5rem 1.5rem; }
-    .protocols-grid, .about-grid, .orcamento-wrap { grid-template-columns: 1fr; }
+    #about, #schedule, #orcamento, #science, #library { padding: 5rem 1.5rem; }
+    .about-grid, .orcamento-wrap { grid-template-columns: 1fr; }
     .week-grid { grid-template-columns: repeat(4,1fr); }
     .results-grid { grid-template-columns: 1fr; }
     .lib-grid { grid-template-columns: 1fr; }
@@ -738,7 +659,7 @@
     max-height: 0; overflow: hidden; transition: max-height .4s ease;
     padding: 0 1.5rem;
   }
-  .lib-card.open .lib-card-body { max-height: 600px; }
+  .lib-card.open .lib-card-body { max-height: 3000px; }
   .lib-card-inner {
     padding: 0 0 1.5rem; border-top: 1px solid rgba(255,255,255,.06);
     padding-top: 1rem;
@@ -749,6 +670,38 @@
     display: flex; align-items: center; gap: .6rem;
   }
   .lib-feat li::before { content: '→'; color: var(--gold); font-size: .7rem; flex-shrink: 0; }
+  .lib-section { margin-bottom: 1.2rem; }
+  .lib-section-title {
+    font-size: .65rem; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: .5rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .lib-section-title::before {
+    content: ''; width: 14px; height: 1px; background: var(--gold-dim);
+  }
+  .lib-section-text {
+    font-size: .8rem; color: var(--gray); line-height: 1.7;
+  }
+  .lib-studies { list-style: none; }
+  .lib-studies li {
+    font-size: .78rem; color: var(--text); padding: .3rem 0;
+    display: flex; align-items: baseline; gap: .5rem;
+  }
+  .lib-studies li::before { content: '▸'; color: var(--gold); font-size: .65rem; flex-shrink: 0; }
+  .lib-study-ref { font-size: .65rem; color: var(--gold-dim); font-style: italic; }
+  .lib-effects { list-style: none; }
+  .lib-effects li {
+    font-size: .78rem; color: var(--gray); padding: .25rem 0;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .lib-effects li::before { content: '•'; color: #e6a23c; flex-shrink: 0; }
+  .lib-effects li.rare::before { color: var(--gray); }
+  .lib-recon {
+    background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06);
+    border-radius: 3px; padding: .8rem 1rem; font-size: .78rem;
+    color: var(--text); line-height: 1.7;
+  }
+  .lib-recon strong { color: var(--gold); font-weight: 600; }
   .lib-dose {
     background: rgba(201,162,88,.08); border-left: 2px solid var(--gold);
     padding: .8rem 1rem; font-size: .75rem; color: var(--gray);
@@ -769,7 +722,6 @@
 <nav>
   <a href="#" class="nav-logo">Optimum<span>Lab</span></a>
   <ul class="nav-links">
-    <li><a href="#protocols">Protocolos</a></li>
     <li><a href="#library">Biblioteca</a></li>
     <li><a href="protocolo.html">Protocolo</a></li>
     <li><a href="#science">Ciência</a></li>
@@ -796,7 +748,7 @@
 
   <div class="hero-actions">
     <a href="orcamento.html" class="btn-primary">Solicitar Orçamento</a>
-    <a href="#protocols" class="btn-outline">Ver Protocolos</a>
+    <a href="#library" class="btn-outline">Ver Biblioteca</a>
   </div>
 
   <div class="hero-stats">
@@ -821,95 +773,6 @@
   <div class="hero-divider"></div>
 </section>
 
-<!-- PROTOCOLS -->
-<section id="protocols">
-  <div class="protocols-header reveal">
-    <div class="section-label">Nossos Protocolos</div>
-    <h2 class="section-title">Tecnologia de <strong>última geração</strong></h2>
-  </div>
-
-  <div class="protocols-grid reveal">
-
-    <!-- RETATRUTIDA -->
-    <div class="protocol-card">
-      <div class="protocol-icon">⬡</div>
-      <div class="protocol-tag">Triplo Agonista GIP/GLP-1/Glucagon</div>
-      <h3 class="protocol-name">Retatrutida</h3>
-      <p class="protocol-desc">
-        O primeiro triplo agonista do mundo — atua em 3 receptores simultaneamente para máxima eficácia metabólica e perda de gordura visceral.
-      </p>
-      <ul class="protocol-features">
-        <li>Queima de gordura abdominal visceral</li>
-        <li>Controle de apetite e saciedade</li>
-        <li>Aceleração do metabolismo basal</li>
-        <li>Melhora do perfil lipídico e pressão</li>
-        <li>Reversão de esteatose hepática</li>
-      </ul>
-      <div class="protocol-dosage">
-        <strong style="color:var(--gold)">Protocolo:</strong> Sem 1-4: 1mg | Sem 5-12: 2mg<br>
-        Aplicação semanal (quinta-feira) · Subcutânea · 1 vial 20mg = 12 semanas
-      </div>
-    </div>
-
-    <!-- GHK-Cu -->
-    <div class="protocol-card">
-      <div class="protocol-icon">◈</div>
-      <div class="protocol-tag">Peptídeo de Cobre — Colágeno &amp; Pele</div>
-      <h3 class="protocol-name">GHK-Cu</h3>
-      <p class="protocol-desc">
-        Tripeptídeo endógeno que modula mais de 4.000 genes — ativando juventude, regeneração e combatendo o envelhecimento em profundidade.
-      </p>
-      <ul class="protocol-features">
-        <li>Estímulo de colágeno tipos I, III e IV</li>
-        <li>Firmeza e elasticidade da pele</li>
-        <li>Combate à flacidez durante perda de peso</li>
-        <li>Crescimento e espessura dos fios</li>
-        <li>Neuroproteção e anti-inflamatório</li>
-      </ul>
-      <div class="protocol-dosage">
-        <strong style="color:var(--gold)">Protocolo:</strong> 1,6mg/dia (8UI) · Segunda a sexta<br>
-        Subcutânea · 2 vials 50mg = 12 semanas completas
-      </div>
-    </div>
-
-    <!-- COMBO -->
-    <div class="protocol-card" style="grid-column: 1/-1; display:grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 3rem 3.5rem;">
-      <div>
-        <div class="protocol-tag">Protocolo Combinado</div>
-        <h3 class="protocol-name" style="font-size:1.6rem;">Retatrutida + GHK-Cu</h3>
-        <p class="protocol-desc">
-          A Retatrutida promove perda de peso acelerada — e o GHK-Cu protege e renova a pele durante esse processo. Emagreça sem sacrificar a aparência.
-        </p>
-      </div>
-      <div>
-        <div class="chart-title" style="margin-bottom:1rem;">Comparativo de Eficácia</div>
-        <div class="chart-row">
-          <span class="chart-label" style="font-size:.75rem">Semaglutida</span>
-          <div class="chart-bar-wrap">
-            <div class="chart-bar" style="--w:60%"></div>
-          </div>
-          <span class="chart-val">~15%</span>
-        </div>
-        <div class="chart-row">
-          <span class="chart-label" style="font-size:.75rem">Tirzepatida</span>
-          <div class="chart-bar-wrap">
-            <div class="chart-bar" style="--w:82%"></div>
-          </div>
-          <span class="chart-val">~21%</span>
-        </div>
-        <div class="chart-row">
-          <span class="chart-label" style="font-size:.75rem; color:var(--gold)">Retatrutida</span>
-          <div class="chart-bar-wrap">
-            <div class="chart-bar" style="--w:100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold-light))"></div>
-          </div>
-          <span class="chart-val" style="color:var(--gold-light)">~24%</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
 <!-- LIBRARY -->
 <section id="library">
   <div class="library-header reveal">
@@ -932,6 +795,100 @@
 
   <div class="lib-grid reveal">
 
+    <!-- Retatrutida -->
+    <div class="lib-card" data-cat="emagrecimento" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">⬡</div>
+        <div class="lib-card-tag">Emagrecimento</div>
+        <h3 class="lib-card-name">Retatrutida</h3>
+        <p class="lib-card-sub">Primeiro triplo agonista GIP/GLP-1/Glucagon — até 24% de perda de peso em Fase 2.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">A Retatrutida é o primeiro triplo agonista do mundo, atuando simultaneamente nos receptores GIP, GLP-1 e Glucagon. O agonismo de GLP-1 reduz apetite e retarda esvaziamento gástrico; GIP potencializa a ação insulínica e melhora sensibilidade metabólica; Glucagon acelera termogênese e oxidação lipídica hepática — resultando em perda de gordura visceral e subcutânea superior a monoterapias.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Perda de peso de 24,2% em 48 semanas (Fase 2, dose 12mg) <span class="lib-study-ref">— Jastreboff et al., NEJM 2023</span></li>
+              <li>Resolução de esteatose hepática (MASLD) em até 86% dos participantes <span class="lib-study-ref">— Dados Fase 2</span></li>
+              <li>Redução de HbA1c de 2,02% em pacientes com DM2 <span class="lib-study-ref">— Rosenstock et al., Lancet 2023</span></li>
+              <li>Superioridade vs Semaglutida (~15%) e Tirzepatida (~21%) em perda ponderal</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Náusea (dose-dependente, 15-25% — diminui com escalonamento)</li>
+              <li>Diarreia, vômito, constipação (transitórios)</li>
+              <li>Redução de apetite acentuada (desejável)</li>
+              <li class="rare">Raro: pancreatite, hipoglicemia (se associado a sulfonilureia)</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 20mg:</strong> Reconstituir com 2mL de água bacteriostática → concentração 10mg/mL. Cada 0,1mL = 1mg.<br>
+              <strong>Frasco 40mg:</strong> Reconstituir com 2mL → 20mg/mL. Cada 0,1mL = 2mg.<br>
+              <strong>Armazenamento:</strong> Pó liofilizado: temperatura ambiente (até 2 anos). Reconstituído: refrigerado 2–8°C, proteger da luz. Usar em até 28 dias.
+            </div>
+          </div>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> Escalonamento: 1mg (sem 1-4) → 2mg (sem 5-12) · Aplicação semanal subcutânea (quinta-feira) · Frasco: 20mg ou 40mg
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GHK-Cu -->
+    <div class="lib-card" data-cat="regeneracao" onclick="toggleLib(this)">
+      <div class="lib-card-head">
+        <div class="lib-card-icon">◈</div>
+        <div class="lib-card-tag">Regeneração</div>
+        <h3 class="lib-card-name">GHK-Cu</h3>
+        <p class="lib-card-sub">Peptídeo de cobre — modula 4.000+ genes, estímulo de colágeno e anti-envelhecimento profundo.</p>
+        <span class="lib-card-arrow">▼</span>
+      </div>
+      <div class="lib-card-body">
+        <div class="lib-card-inner">
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">GHK-Cu (Gly-His-Lys-Cu²⁺) é um tripeptídeo endógeno naturalmente presente no plasma humano que declina com a idade (200ng/mL aos 20 anos → 80ng/mL aos 60+). Liga-se a íons de cobre e modula a expressão de mais de 4.000 genes humanos — ativando genes de reparação e suprimindo genes de inflamação e destruição. Estimula produção de colágeno I, III e IV, elastina, proteoglicanos, decorina e glicosaminoglicanos (GAGs).</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Aumento de 70% na espessura da pele e melhora significativa na firmeza <span class="lib-study-ref">— Pickart et al., J Cosmet Dermatol</span></li>
+              <li>Reprogramação da expressão gênica de fibroblastos envelhecidos para estado jovem <span class="lib-study-ref">— Broad Gene Study, GeneChip</span></li>
+              <li>Estímulo de crescimento capilar em 71% dos pacientes vs minoxidil (52%) <span class="lib-study-ref">— Estudos comparativos</span></li>
+              <li>Ação antioxidante (SOD, catalase), anti-inflamatória (↓TNF-α, IL-6) e neuroprotetora</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Eritema leve no local da aplicação (transitório)</li>
+              <li>Sensibilidade ou inchaço local (raro)</li>
+              <li class="rare">Perfil de segurança excelente — peptídeo endógeno natural</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 50mg:</strong> Reconstituir com 2,5mL de água bacteriostática → concentração 20mg/mL. Cada 0,1mL (10UI) = 2mg. Para dose de 1,6mg/dia = 8UI por aplicação.<br>
+              <strong>Armazenamento:</strong> Pó: temperatura ambiente protegido da luz. Reconstituído: refrigerado 2–8°C, usar em até 30 dias. Não congelar.
+            </div>
+          </div>
+          <div class="lib-dose">
+            <strong style="color:var(--gold)">Protocolo:</strong> 1,6mg/dia (8UI) · Subcutânea · Segunda a sexta · 2 vials 50mg = 12 semanas completas · Frasco: 50mg
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Tirzepatida -->
     <div class="lib-card" data-cat="emagrecimento" onclick="toggleLib(this)">
       <div class="lib-card-head">
@@ -943,15 +900,37 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Agonista duplo GIP + GLP-1 (aprovado FDA)</li>
-            <li>Controle glicêmico e redução de apetite</li>
-            <li>Redução de gordura visceral e hepática</li>
-            <li>Melhora de marcadores cardiometabólicos</li>
-            <li>Dose semanal — meia-vida ~5 dias</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">Tirzepatida é um dual agonista GIP/GLP-1 (twincretina) que ativa simultaneamente dois receptores incretínicos. O agonismo de GLP-1 reduz apetite via centro hipotalâmico e retarda esvaziamento gástrico. O agonismo de GIP melhora sensibilidade insulínica e potencializa a secreção de insulina glicose-dependente. A combinação resulta em controle glicêmico superior e perda de peso significativamente maior que agonistas simples.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Perda de peso de 20,9% em 72 semanas (SURMOUNT-1, dose 15mg) <span class="lib-study-ref">— Jastreboff et al., NEJM 2022</span></li>
+              <li>Redução de HbA1c de até 2,58% vs placebo <span class="lib-study-ref">— SURPASS-1, Rosenstock et al.</span></li>
+              <li>91% dos pacientes atingiram HbA1c &lt;7% <span class="lib-study-ref">— Dados agrupados SURPASS</span></li>
+              <li>Aprovação FDA para diabetes (Mounjaro) e obesidade (Zepbound)</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Náusea (12-18%, diminui com escalonamento gradual)</li>
+              <li>Diarreia, constipação, desconforto abdominal</li>
+              <li>Redução de apetite significativa</li>
+              <li class="rare">Raro: pancreatite, reações no local de injeção</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 60mg:</strong> Reconstituir com 3mL de água bacteriostática → concentração 20mg/mL. Para dose de 2,5mg = 0,125mL (≈12,5UI). Escalonar a cada 4 semanas.<br>
+              <strong>Armazenamento:</strong> Pó: temperatura ambiente. Reconstituído: refrigerado 2–8°C, usar em até 28 dias. Proteger da luz.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> Escalonamento: 2,5mg → 5mg → 7,5mg → 10mg → 12,5mg → 15mg · Incrementos a cada 4 semanas · Aplicação semanal subcutânea
+            <strong style="color:var(--gold)">Protocolo:</strong> Escalonamento: 2,5mg → 5mg → 7,5mg → 10mg → 12,5mg → 15mg · Incrementos a cada 4 semanas · Semanal SC · Frasco: 60mg
           </div>
         </div>
       </div>
@@ -968,15 +947,36 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Fragmento modificado do hormônio do crescimento</li>
-            <li>Estimula lipólise e inibe lipogênese</li>
-            <li>Sem impacto em IGF-1 ou glicose</li>
-            <li>Perfil de segurança GRAS (FDA)</li>
-            <li>Ação direcionada em tecido adiposo</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">AOD-9604 é o fragmento modificado do GH humano (aminoácidos 176-191) com uma tirosina adicional na posição N-terminal. Retém a atividade lipolítica do GH completo sem afetar receptores de IGF-1 ou crescimento. Estimula lipólise via ativação da lipase hormônio-sensível (HSL) em adipócitos e inibe lipogênese, promovendo oxidação preferencial de gordura como fonte energética.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Status GRAS (Generally Recognized As Safe) concedido pela FDA</li>
+              <li>Sem efeito sobre IGF-1, glicose, insulina ou tolerância à glicose <span class="lib-study-ref">— Estudos de segurança</span></li>
+              <li>Lipólise aumentada sem as complicações metabólicas do GH exógeno</li>
+              <li>Pesquisas em regeneração de cartilagem e reparo osteoarticular em andamento</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Dor de cabeça leve (transitória)</li>
+              <li>Eritema leve no local da aplicação</li>
+              <li class="rare">Perfil de segurança excelente — sem efeitos sistêmicos do GH</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 10mg:</strong> Reconstituir com 2mL de água bacteriostática → concentração 5mg/mL. Para dose de 300mcg = 0,06mL (6UI).<br>
+              <strong>Armazenamento:</strong> Pó: temperatura ambiente. Reconstituído: refrigerado 2–8°C, usar em até 28 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 200–500mcg/dia · Estômago vazio · Subcutânea abdominal · Ciclos de 4 sem ON / 1 sem washout
+            <strong style="color:var(--gold)">Protocolo:</strong> 200–500mcg/dia · Estômago vazio · SC abdominal · Ciclos 4 sem ON / 1 sem washout · Frasco: 10mg
           </div>
         </div>
       </div>
@@ -993,15 +993,38 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Análogo sintético de GHRH (aprovado FDA — Egrifta)</li>
-            <li>Estimula secreção pulsátil natural de GH</li>
-            <li>Redução significativa de gordura visceral</li>
-            <li>Preserva a regulação fisiológica do eixo GH</li>
-            <li>Melhora da composição corporal e perfil lipídico</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">Tesamorelin é um análogo sintético de 44 aminoácidos do GHRH (Growth Hormone-Releasing Hormone) com modificação trans-3-hexenóica para estabilidade. Liga-se ao receptor GHRH na hipófise anterior, estimulando a secreção pulsátil natural de GH. Preserva o feedback negativo fisiológico — ou seja, não dessensibiliza o eixo somatotrófico. O GH liberado estimula lipólise e oxidação de ácidos graxos, especialmente em tecido adiposo visceral.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Aprovado FDA como Egrifta para lipodistrofia associada ao HIV</li>
+              <li>Redução de 15-18% do tecido adiposo visceral (TAV) em 26 semanas <span class="lib-study-ref">— Falutz et al., JAMA 2007</span></li>
+              <li>Melhora do perfil lipídico: ↓triglicerídeos e ↓colesterol total</li>
+              <li>Sem efeito negativo na tolerância à glicose em doses terapêuticas</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Reações no local de injeção (eritema, prurido)</li>
+              <li>Artralgia e mialgia (dose-dependente)</li>
+              <li>Edema periférico leve</li>
+              <li class="rare">Raro: parestesias, elevação transitória de IGF-1</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 10mg:</strong> Reconstituir com 2mL de água bacteriostática → 5mg/mL. Para dose de 1mg = 0,2mL (20UI).<br>
+              <strong>Frasco 20mg:</strong> Reconstituir com 2mL → 10mg/mL. Para dose de 1mg = 0,1mL (10UI).<br>
+              <strong>Armazenamento:</strong> Pó: refrigerado ou temperatura ambiente. Reconstituído: 2–8°C, usar em até 28 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 1–2mg/dia · Subcutânea antes de dormir · Ciclo de 20–52 semanas para resultados completos
+            <strong style="color:var(--gold)">Protocolo:</strong> 1–2mg/dia · SC antes de dormir · Ciclo 20–52 semanas · Frasco: 10mg ou 20mg
           </div>
         </div>
       </div>
@@ -1018,15 +1041,37 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Cofator em 500+ reações enzimáticas</li>
-            <li>Ativa sirtuínas (SIRT1–SIRT7) — reguladores do envelhecimento</li>
-            <li>Suporta reparo de DNA via PARPs</li>
-            <li>Melhora função mitocondrial e energia celular</li>
-            <li>Neuroproteção e clareza cognitiva</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">NAD+ (Nicotinamida Adenina Dinucleotídeo) é cofator essencial em mais de 500 reações enzimáticas, incluindo a cadeia de transporte de elétrons mitocondrial. Declina ~50% entre os 40-60 anos. Ativa as sirtuínas (SIRT1–SIRT7), enzimas desacetilases que regulam envelhecimento, metabolismo e reparo de DNA. Também é substrato das PARPs (Poly ADP-Ribose Polymerases), enzimas de reparo de DNA, e do CD38 (sinalização imune).</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Aumento de 40-50% nos níveis séricos de NAD+ após suplementação parenteral <span class="lib-study-ref">— Yoshino et al., Science 2018</span></li>
+              <li>Melhora na função mitocondrial e bioenergética celular em idosos <span class="lib-study-ref">— Massudi et al., PLoS One</span></li>
+              <li>Restauração da capacidade regenerativa de células-tronco envelhecidas <span class="lib-study-ref">— Zhang et al., Science 2016</span></li>
+              <li>Neuroproteção e melhora cognitiva em modelos de neurodegeneração</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Flushing (rubor facial) transitório na administração IV</li>
+              <li>Dor/sensibilidade no local de aplicação SC</li>
+              <li>Fadiga temporária nas primeiras sessões (detox celular)</li>
+              <li class="rare">Perfil de segurança excelente — molécula endógena</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 500mg:</strong> Já em solução ou reconstituir conforme instruções do fabricante. Administração SC ou IV lenta.<br>
+              <strong>Armazenamento:</strong> Refrigerado 2–8°C. Proteger da luz. Solução reconstituída: usar em até 14 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 500mg por sessão · Subcutânea ou IV · 1–3x por semana · Ciclos de 4–8 semanas
+            <strong style="color:var(--gold)">Protocolo:</strong> 500mg por sessão · SC ou IV · 1–3x por semana · Ciclos de 4–8 semanas
           </div>
         </div>
       </div>
@@ -1043,15 +1088,37 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Codificado pelo DNA mitocondrial (12S rRNA)</li>
-            <li>Ativa via AMPK — mimético de exercício</li>
-            <li>Regula metabolismo de glicose e ácidos graxos</li>
-            <li>Proteção contra estresse metabólico e envelhecimento</li>
-            <li>Melhora resistência física e composição corporal</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">MOTS-c é um peptídeo de 16 aminoácidos codificado pelo DNA mitocondrial (gene 12S rRNA) — um dos poucos peptídeos funcionais derivados do genoma mitocondrial. Ativa a via AMPK (AMP-activated protein kinase), o principal sensor energético celular, mimetizando os efeitos moleculares do exercício físico. Regula metabolismo de glicose e ácidos graxos, melhora sensibilidade insulínica e protege contra estresse metabólico.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Melhora na homeostase de glicose e sensibilidade insulínica em modelos pré-clínicos <span class="lib-study-ref">— Lee et al., Cell Metabolism 2015</span></li>
+              <li>Prevenção de obesidade induzida por dieta hiperlipídica <span class="lib-study-ref">— Dados pré-clínicos</span></li>
+              <li>Polimorfismo m.1382A>C associado a longevidade excepcional em populações japonesas <span class="lib-study-ref">— Fuku et al., Aging Cell</span></li>
+              <li>Transloca para o núcleo sob estresse — regula diretamente expressão gênica</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Leve rubor no local de aplicação</li>
+              <li>Hipoglicemia leve se usado em jejum prolongado</li>
+              <li class="rare">Dados clínicos humanos ainda limitados — molécula em pesquisa</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 10mg:</strong> Reconstituir com 1mL de água bacteriostática → 10mg/mL. Para dose de 5mg = 0,5mL (50UI).<br>
+              <strong>Frasco 20mg:</strong> Reconstituir com 2mL → 10mg/mL. Para dose de 5mg = 0,5mL (50UI).<br>
+              <strong>Armazenamento:</strong> Pó: -20°C ou 2–8°C. Reconstituído: refrigerado 2–8°C, usar em até 21 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 5mg a cada 5 dias · 4 doses por ciclo (20 dias) · Subcutânea · Manhã antes do exercício · Repetir após 6 meses
+            <strong style="color:var(--gold)">Protocolo:</strong> 5mg a cada 5 dias · 4 doses por ciclo (20 dias) · SC manhã antes do exercício · Repetir após 6 meses · Frasco: 10mg ou 20mg
           </div>
         </div>
       </div>
@@ -1068,15 +1135,36 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Penetra e concentra 5.000× na membrana mitocondrial</li>
-            <li>Estabiliza cardiolipina — integridade da membrana</li>
-            <li>Reduz estresse oxidativo mitocondrial (ROS)</li>
-            <li>Restaura produção de ATP em células envelhecidas</li>
-            <li>Proteção cardiovascular, renal e neurológica</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">SS-31 (D-Arg-Dmt-Lys-Phe-NH₂) é um tetrapeptídeo mitocondrial-targeted que se acumula >5.000× na membrana interna da mitocôndria. Liga-se seletivamente à cardiolipina, um fosfolipídeo exclusivo da membrana mitocondrial interna, estabilizando a cadeia de transporte de elétrons (Complexos I-IV). Reduz produção de espécies reativas de oxigênio (ROS), restaura produção de ATP e previne a abertura do poro de permeabilidade mitocondrial (mPTP).</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Restauração de ATP mitocondrial em cardiomiócitos envelhecidos <span class="lib-study-ref">— Szeto et al., Br J Pharmacol</span></li>
+              <li>Fase 2/3 para miopatia mitocondrial de Barth (TAZPOWER) <span class="lib-study-ref">— Stealth BioTherapeutics</span></li>
+              <li>Proteção renal em isquemia-reperfusão e insuficiência cardíaca <span class="lib-study-ref">— Birk et al., J Am Soc Nephrol</span></li>
+              <li>Reversão de disfunção mitocondrial associada ao envelhecimento em múltiplos tecidos</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Reação no local de injeção (eritema, dor leve)</li>
+              <li>Cefaleia transitória</li>
+              <li class="rare">Perfil de segurança favorável em estudos clínicos de Fase 1–3</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Reconstituição:</strong> Conforme concentração do fabricante. Administração SC ou IV conforme protocolo clínico.<br>
+              <strong>Armazenamento:</strong> Pó liofilizado: -20°C a 2–8°C. Reconstituído: refrigerado 2–8°C, proteger da luz. Usar em até 14 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 5–20mg/dia · Subcutânea · Ciclos de 4–8 semanas · Estudos clínicos em andamento
+            <strong style="color:var(--gold)">Protocolo:</strong> 5–20mg/dia · SC · Ciclos de 4–8 semanas · Estudos clínicos em andamento
           </div>
         </div>
       </div>
@@ -1093,15 +1181,36 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>BPC-157: Proteção gástrica, estimula NO e angiogênese</li>
-            <li>TB-500: Regula actina, migração celular e regeneração</li>
-            <li>Sinergia em reparo de tendões, ligamentos e músculos</li>
-            <li>Proteção e regeneração do trato gastrointestinal</li>
-            <li>Ação anti-inflamatória sistêmica</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text"><strong>BPC-157</strong> (Body Protection Compound) é um pentadecapeptídeo derivado de proteínas de proteção gástrica humanas. Estimula produção de óxido nítrico (NO), angiogênese (VEGF), e expressão de GH receptor em tendões. Atua via via FAK-paxillin e JAK-2/STAT-3. <strong>TB-500</strong> (Timosina Beta-4) é um peptídeo de 43 aminoácidos que regula actina-G, promovendo migração celular, diferenciação e angiogênese. A combinação gera sinergia: BPC-157 protege e repara, TB-500 acelera migração e remodelação tecidual.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>BPC-157: Cicatrização acelerada de tendões, ligamentos e músculos em modelos animais <span class="lib-study-ref">— Sikiric et al., Curr Pharm Des</span></li>
+              <li>TB-500: Recuperação cardíaca pós-infarto e regeneração de vasos <span class="lib-study-ref">— Bock-Marquette et al., Nature 2004</span></li>
+              <li>Proteção gástrica do BPC-157 contra úlceras por AINES, álcool e estresse</li>
+              <li>Efeito neuroprotetor do BPC-157 — contrabalança neurotoxicidade dopaminérgica</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Dor/eritema leve no local de aplicação</li>
+              <li>Fadiga transitória nos primeiros dias</li>
+              <li class="rare">Perfil de segurança excelente — sem toxicidade reportada em doses terapêuticas</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 10/10mg:</strong> Reconstituir com 2mL de água bacteriostática → BPC 5mg/mL + TB 5mg/mL. Para dose de 500mcg BPC + 500mcg TB = 0,1mL (10UI).<br>
+              <strong>Armazenamento:</strong> Pó: -20°C a 2–8°C. Reconstituído: refrigerado 2–8°C, usar em até 28 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> BPC-157: Sem 1-2: 500-750mcg/dia, Sem 3-4: 250-500mcg/dia · TB-500: 2mg/dia (15 dias carga), depois 1mg/dia · SC · 4–8 semanas
+            <strong style="color:var(--gold)">Protocolo:</strong> BPC: Sem 1-2: 500-750mcg/dia, Sem 3-4: 250-500mcg/dia · TB: 2mg/dia (15d carga), depois 1mg/dia · SC · 4–8 sem · Frasco: 10/10mg
           </div>
         </div>
       </div>
@@ -1118,15 +1227,35 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Blend otimizado: BPC-157 10mg + TB-500 10mg</li>
-            <li>Praticidade de dose única com dois peptídeos</li>
-            <li>Recuperação muscular e articular acelerada</li>
-            <li>Ideal para atletas e lesões recorrentes</li>
-            <li>Suporte à cicatrização e regeneração tecidual</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">Formulação blend otimizada contendo BPC-157 (10mg) e TB-500 (10mg) no mesmo vial, proporcionando sinergia regenerativa com praticidade de dose única. A co-formulação garante proporção ideal entre os dois peptídeos, eliminando a necessidade de reconstituição e administração separadas. O mecanismo é idêntico ao BPC-157 + TB-500 individual, mas com a vantagem da dose pré-balanceada e estabilidade da formulação conjunta.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Indicações Principais</h4>
+            <ul class="lib-studies">
+              <li>Lesões tendíneas e ligamentares (rotator cuff, aquiles, ligamentos cruzados)</li>
+              <li>Recuperação pós-cirúrgica e pós-treino intenso</li>
+              <li>Inflamação articular crônica e artropatias</li>
+              <li>Lesões musculares recorrentes em atletas</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Irritação local transitória</li>
+              <li class="rare">Perfil idêntico ao BPC-157 + TB-500 separados — segurança excelente</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 10/10mg:</strong> Reconstituir com 2mL de água bacteriostática → 5mg/mL de cada. Dose: 0,3–0,5mL/dia SC. Aplicar próximo à área da lesão quando possível.<br>
+              <strong>Armazenamento:</strong> Pó: 2–8°C. Reconstituído: refrigerado, usar em até 28 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 0,3–0,5mL/dia · Subcutânea · Próximo à área da lesão · Ciclos de 4–8 semanas
+            <strong style="color:var(--gold)">Protocolo:</strong> 0,3–0,5mL/dia · SC próximo à lesão · Seg-Sex · 4–8 semanas · Frasco: 10/10mg
           </div>
         </div>
       </div>
@@ -1143,15 +1272,36 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>GHK-Cu 50mg: Colágeno, pele, 4.000+ genes</li>
-            <li>BPC-157 10mg: Proteção gástrica e tecidual</li>
-            <li>TB-500 10mg: Regeneração e migração celular</li>
-            <li>KPV 10mg: Anti-inflamatório (inibe NF-κB)</li>
-            <li>Abordagem sinérgica multissistêmica</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">Formulação exclusiva combinando 4 peptídeos regenerativos sinérgicos: <strong>GHK-Cu</strong> (50mg) ativa 4.000+ genes de reparação e estimula colágeno; <strong>BPC-157</strong> (10mg) protege tecidos e estimula angiogênese via NO; <strong>TB-500</strong> (10mg) regula actina e promove migração celular; <strong>KPV</strong> (10mg) inibe NF-κB, o principal regulador de inflamação sistêmica. A ação combinada abrange remodelação, proteção, regeneração e controle inflamatório.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Indicações Principais</h4>
+            <ul class="lib-studies">
+              <li>Anti-aging e rejuvenescimento de pele (colágeno + elastina + anti-inflamatório)</li>
+              <li>Suporte regenerativo durante perda de peso (combate flacidez)</li>
+              <li>Recuperação global: articular, muscular, GI e neuronal</li>
+              <li>Condições inflamatórias crônicas e autoimunes (via KPV)</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Eritema no local de aplicação (pelo GHK-Cu com cobre)</li>
+              <li>Sensação de calor local transitória</li>
+              <li class="rare">Perfil seguro — todos os componentes são endógenos ou derivados biológicos</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 80mg (4-em-1):</strong> Reconstituir com 2,5mL de água bacteriostática. Dose: 0,1–0,2mL/dia SC.<br>
+              <strong>Armazenamento:</strong> Pó: refrigerado 2–8°C. Reconstituído: refrigerado, proteger da luz, usar em até 28 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 0,1–0,2mL/dia · Subcutânea · Segunda a sexta · Ciclos de 8–12 semanas
+            <strong style="color:var(--gold)">Protocolo:</strong> 0,1–0,2mL/dia · SC · Seg-Sex · 8–12 semanas · Frasco: 80mg
           </div>
         </div>
       </div>
@@ -1168,15 +1318,35 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Derivado do α-MSH (hormônio melanocortina)</li>
-            <li>Inibe via NF-κB — master switch inflamatório</li>
-            <li>Proteção da mucosa intestinal (gut health)</li>
-            <li>Ação imunomoduladora sem imunossupressão</li>
-            <li>Potencial em condições autoimunes e inflamatórias</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">KPV (Lys-Pro-Val) é um tripeptídeo derivado da porção C-terminal do α-MSH (alfa-hormônio melanócito-estimulante). Inibe a via NF-κB — o "master switch" da inflamação — impedindo a translocação nuclear e a transcrição de citocinas pró-inflamatórias (TNF-α, IL-1β, IL-6). Também modula a via MAPK/ERK. Ao contrário de imunossupressores, não deprime a função imune — atua como imunomodulador, reduzindo inflamação patológica enquanto preserva defesas.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Redução significativa de colite em modelos experimentais (oral e SC) <span class="lib-study-ref">— Dalmasso et al., PLoS One</span></li>
+              <li>Proteção da mucosa intestinal e redução de permeabilidade (leaky gut) <span class="lib-study-ref">— Brzoska et al., J Invest Dermatol</span></li>
+              <li>Efeito anti-inflamatório tópico em dermatites e condições cutâneas</li>
+              <li>Potencial em DII (Doença Inflamatória Intestinal), artrite e condições autoimunes</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Praticamente nenhum efeito adverso reportado</li>
+              <li class="rare">Perfil de segurança excepcional — tripeptídeo simples, sem atividade melanocortina</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Administração múltipla:</strong> SC: 200–400mcg/dia · Oral: cápsulas 250mcg 2x/dia · Tópico: gel/creme 7,5mg 2x/dia.<br>
+              <strong>Armazenamento:</strong> Pó: 2–8°C. Reconstituído: refrigerado, usar conforme forma de administração.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> SC: 200–400mcg/dia · Oral: 250mcg 2x/dia · Tópico: 7,5mg 2x/dia · Até atingir resultado desejado
+            <strong style="color:var(--gold)">Protocolo:</strong> SC: 200–400mcg/dia · Oral: 250mcg 2x/dia · Tópico: 7,5mg 2x/dia · Até resolução
           </div>
         </div>
       </div>
@@ -1193,15 +1363,37 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>CJC-1295: Análogo de GHRH com meia-vida prolongada</li>
-            <li>Ipamorelin: GHRP seletivo, sem aumento de cortisol/prolactina</li>
-            <li>Amplificação de 3–5× do pulso natural de GH</li>
-            <li>Melhora da composição corporal e sono profundo</li>
-            <li>Regeneração tecidual e recuperação acelerada</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text"><strong>CJC-1295</strong> é um análogo de GHRH (Growth Hormone-Releasing Hormone) com 30 aminoácidos, modificado com Drug Affinity Complex (DAC) para meia-vida prolongada (~8 dias). Estimula a hipófise anterior a secretar GH. <strong>Ipamorelin</strong> é um pentapeptídeo GHRP (Growth Hormone-Releasing Peptide) altamente seletivo para o receptor de Grelina (GHS-R1a) — amplifica o pulso de GH sem aumentar cortisol, prolactina ou aldosterona. A combinação GHRH + GHRP cria amplificação sinérgica de 3–5× no pulso natural de GH.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Amplificação sustentada de GH por até 6 dias com CJC-1295 DAC <span class="lib-study-ref">— Teichman et al., JCEM 2006</span></li>
+              <li>Ipamorelin: aumento dose-dependente de GH sem efeitos em ACTH/cortisol <span class="lib-study-ref">— Raun et al., Eur J Endocrinol</span></li>
+              <li>Melhora significativa na composição corporal, qualidade do sono e recuperação</li>
+              <li>Sem dessensibilização da hipófise com uso prolongado em doses fisiológicas</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Rubor/flushing transitório (10-15 min pós-injeção)</li>
+              <li>Sonolência (desejável — indica pico de GH)</li>
+              <li>Retenção hídrica leve nas primeiras semanas</li>
+              <li class="rare">Raro: formigamento nos dedos (dose-dependente)</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 5/5mg:</strong> Reconstituir com 2mL de água bacteriostática → CJC 2,5mg/mL + Ipa 2,5mg/mL. Para dose de 200mcg de cada = 0,08mL (8UI). Aplicar antes de dormir, estômago vazio (2h sem carboidratos).<br>
+              <strong>Armazenamento:</strong> Pó: 2–8°C. Reconstituído: refrigerado 2–8°C, usar em até 28 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 200–300mcg de cada · SC antes de dormir (estômago vazio) · 5x/semana · 8–12 sem ON / 4–8 sem washout · Dosagem por peso disponível
+            <strong style="color:var(--gold)">Protocolo:</strong> 200–300mcg de cada · SC antes de dormir · 5x/sem · 8–12 sem ON / 4–8 sem washout · Frasco: 5/5mg
           </div>
         </div>
       </div>
@@ -1218,15 +1410,37 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Versão modificada com meia-vida estendida (20–30h)</li>
-            <li>3× mais potente que IGF-1 nativo</li>
-            <li>Hiperplasia muscular — criação de novas fibras</li>
-            <li>Melhora captação de nutrientes pelas células</li>
-            <li>Recuperação acelerada pós-treino e lesões</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">IGF-1 LR3 (Long R3 Insulin-like Growth Factor-1) é uma versão modificada do IGF-1 humano com substituição de Glu³ por Arg³ e extensão de 13 aminoácidos no N-terminal. Estas modificações reduzem a ligação às IGFBPs (proteínas de ligação) em >100×, resultando em 3× mais potência biológica e meia-vida estendida de 20-30h (vs 12-15 min do IGF-1 nativo). Ativa o receptor IGF-1R, promovendo síntese proteica (via PI3K/Akt/mTOR), hiperplasia muscular (criação de novas fibras) e captação de nutrientes.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Hiperplasia muscular documentada (criação de novas miofibras) em modelos pré-clínicos</li>
+              <li>Aumento de captação de aminoácidos e glicose pelas células musculares</li>
+              <li>Aceleração de regeneração tecidual e recuperação pós-lesão</li>
+              <li>Efeito anti-catabólico durante restrição calórica ou treino intenso</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Hipoglicemia (monitorar glicemia, especialmente pós-injeção)</li>
+              <li>Inchaço articular transitório</li>
+              <li>Dor no local de aplicação intramuscular</li>
+              <li class="rare">Raro: parestesias, letargia dose-dependente</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 1mg:</strong> Reconstituir com 1mL de água bacteriostática → 1mg/mL = 1000mcg/mL. Para dose de 50mcg = 0,05mL (5UI). Administrar SC ou IM bilateral pós-treino.<br>
+              <strong>Armazenamento:</strong> Pó: -20°C (sensível). Reconstituído: 2–8°C, usar em até 21 dias. Não congelar após reconstituição.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 20–100mcg/dia · Subcutânea ou intramuscular · Pós-treino · Ciclos de 4–6 semanas
+            <strong style="color:var(--gold)">Protocolo:</strong> 20–100mcg/dia · SC ou IM · Pós-treino · Ciclos 4–6 semanas · Frasco: 1mg
           </div>
         </div>
       </div>
@@ -1243,15 +1457,35 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Peptídeo sintético derivado do ACTH (fragmento 4-10)</li>
-            <li>Aumenta BDNF e receptores trkB — neuroplasticidade</li>
-            <li>71% precisão em testes cognitivos vs 41% controle</li>
-            <li>Gastroproteção: ~90% de cicatrização de úlceras pépticas</li>
-            <li>Sem efeitos colaterais notáveis em estudos clínicos</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">Semax (Met-Glu-His-Phe-Pro-Gly-Pro) é um heptapeptídeo sintético baseado no fragmento 4-10 do ACTH, desenvolvido pelo Instituto de Genética Molecular da Academia Russa de Ciências. Aumenta significativamente a expressão de BDNF (Brain-Derived Neurotrophic Factor) e seus receptores TrkB, promovendo neuroplasticidade e sobrevivência neuronal. Modula os sistemas serotoninérgico e dopaminérgico sem afinidade adrenocortical — ou seja, não afeta cortisol ou eixo HPA.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>71% de precisão em testes cognitivos vs 41% no grupo controle <span class="lib-study-ref">— Aseev et al., Bull Exp Biol Med</span></li>
+              <li>~90% de cicatrização de úlceras pépticas (efeito gastroprotetor) <span class="lib-study-ref">— Estudos clínicos russos</span></li>
+              <li>Aprovado na Rússia e Ucrânia para AVC isquêmico agudo e declínio cognitivo</li>
+              <li>Aumento de BDNF em até 4× nas primeiras horas após administração</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Irritação nasal leve (via intranasal)</li>
+              <li class="rare">Praticamente nenhum efeito adverso reportado em 25+ anos de uso clínico</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Administração SC:</strong> 500–1000mcg/dia por 30–60 dias. <strong>Intranasal:</strong> 400–900mcg/dia por 3–5 dias.<br>
+              <strong>Armazenamento:</strong> Pó: 2–8°C. Reconstituído: refrigerado, usar conforme via de administração.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> SC: 500–1000mcg/dia por 30–60 dias · Intranasal: 400–900mcg/dia por 3–5 dias · Descanso igual à duração do ciclo
+            <strong style="color:var(--gold)">Protocolo:</strong> SC: 500–1000mcg/dia × 30–60 dias · Intranasal: 400–900mcg/dia × 3–5 dias · Descanso igual à duração
           </div>
         </div>
       </div>
@@ -1268,15 +1502,36 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Peptídeo tímico de 28 aminoácidos</li>
-            <li>Ativa células T helper, NK e dendríticas</li>
-            <li>Imunomodulador sem causar imunossupressão</li>
-            <li>Atividade anti-viral e anti-tumoral documentada</li>
-            <li>Aprovado como Zadaxin em 35+ países</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">Thymosin Alpha 1 é um peptídeo de 28 aminoácidos originalmente isolado da fração 5 do timo (Thymosin Fraction 5) por Allan Goldstein em 1977. Atua como imunomodulador primário: ativa células T helper (CD4+), células NK (Natural Killer), células dendríticas e macrófagos via receptores TLR2, TLR7 e TLR9. Promove maturação de células T imaturas, aumenta produção de IL-2 e IFN-α, e modula o equilíbrio Th1/Th2. Diferente de imunossupressores, TA1 equilibra a resposta imune sem suprimi-la.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Aprovado como Zadaxin em 35+ países para hepatite B/C crônica <span class="lib-study-ref">— SciClone Pharmaceuticals</span></li>
+              <li>Redução de mortalidade em sepse grave em 60% <span class="lib-study-ref">— Wu et al., Crit Care 2013</span></li>
+              <li>Potencialização de vacinas contra influenza em idosos imunocomprometidos <span class="lib-study-ref">— Garaci et al., Ann NY Acad Sci</span></li>
+              <li>Atividade anti-tumoral adjuvante em melanoma e carcinoma hepatocelular</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Dor/eritema no local de injeção (leve)</li>
+              <li>Fadiga transitória nos primeiros dias</li>
+              <li class="rare">Perfil de segurança excepcional — >30 anos de uso clínico mundial</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 15mg:</strong> Reconstituir com 1,5mL de água bacteriostática → 10mg/mL. Para dose de 1,6mg = 0,16mL (16UI). Para dose de 500mcg = 0,05mL (5UI).<br>
+              <strong>Armazenamento:</strong> Pó: temperatura ambiente. Reconstituído: 2–8°C, usar em até 28 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 500mcg–1,6mg/dia · Subcutânea · Diário por 20 dias ou 3x/sem por 4–12 semanas · Frasco: 15mg
+            <strong style="color:var(--gold)">Protocolo:</strong> 500mcg–1,6mg/dia · SC · Diário ×20 dias ou 3x/sem ×4–12 sem · Frasco: 15mg
           </div>
         </div>
       </div>
@@ -1293,15 +1548,37 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Tesamorelin (GHRH) + Ipamorelin (GHRP) em 1 frasco</li>
-            <li>Estímulo dual por vias complementares</li>
-            <li>Amplificação do pulso natural de GH</li>
-            <li>Ipamorelin seletivo — sem aumento de cortisol/prolactina</li>
-            <li>Melhora composição corporal, sono e recuperação</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">Combinação de <strong>Tesamorelin</strong> (GHRH — estimula hipófise via receptor GHRH-R) e <strong>Ipamorelin</strong> (GHRP — ativa receptor de grelina GHS-R1a) em um único vial. A ação dual cria amplificação sinérgica: Tesamorelin "abre a porta" para secreção de GH e Ipamorelin "empurra" a liberação. Tesamorelin aprovado FDA como Egrifta — Ipamorelin seletivo sem elevar cortisol, prolactina ou aldosterona. Resultado: pico de GH fisiológico 3-5× superior ao basal.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Tesamorelin: ↓15-18% gordura visceral em 26 semanas <span class="lib-study-ref">— FDA-approved data</span></li>
+              <li>Ipamorelin: aumento de GH dose-dependente sem efeitos em ACTH/cortisol <span class="lib-study-ref">— Raun et al.</span></li>
+              <li>Combo: amplificação sinérgica superior a cada secretagogo individualmente</li>
+              <li>Melhora na qualidade do sono, recuperação e composição corporal</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Rubor/flushing transitório pós-injeção</li>
+              <li>Sonolência (indica pico de GH — administrar antes de dormir)</li>
+              <li>Retenção hídrica leve inicial</li>
+              <li class="rare">Raro: artralgia, formigamento dose-dependente</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 10/5mg:</strong> Reconstituir com 2mL → Tesa 5mg/mL + Ipa 2,5mg/mL. Para dose de Tesa 1mg + Ipa 200mcg ≈ 0,2mL (20UI). Aplicar SC antes de dormir, estômago vazio.<br>
+              <strong>Armazenamento:</strong> Pó: 2–8°C. Reconstituído: refrigerado, usar em até 28 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> Tesa 1mg + Ipa 200mcg · SC antes de dormir (estômago vazio) · 5x/sem · 8–12 semanas · Frasco: 10/5mg
+            <strong style="color:var(--gold)">Protocolo:</strong> Tesa 1mg + Ipa 200mcg · SC antes de dormir · 5x/sem · 8–12 sem · Frasco: 10/5mg
           </div>
         </div>
       </div>
@@ -1318,15 +1595,35 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Peptídeo derivado da proteção gástrica (BPC)</li>
-            <li>Estimula produção de NO e angiogênese</li>
-            <li>Reparo de tendões, ligamentos e trato GI</li>
-            <li>Estável em suco gástrico — via oral eficaz para problemas GI</li>
-            <li>Ação anti-inflamatória e citoprotetora</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">BPC-157 (Body Protection Compound-157) é um pentadecapeptídeo de 15 aminoácidos derivado de uma proteína de proteção gástrica humana. Estimula produção de óxido nítrico (NO) via eNOS, promove angiogênese (VEGF) e ativa as vias FAK-paxillin e JAK-2/STAT-3 para migração e proliferação celular. Única entre peptídeos: é estável em suco gástrico (pH 1-2), permitindo administração oral eficaz para condições gastrointestinais. Aumenta expressão de receptor de GH em tendões e ligamentos.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Reparo acelerado de tendão de Aquiles, manguito rotador e ligamentos cruzados <span class="lib-study-ref">— Sikiric et al., Curr Pharm Des</span></li>
+              <li>Proteção gástrica contra úlceras por AINES, álcool, estresse e capsaicina <span class="lib-study-ref">— Sikiric et al., J Physiol</span></li>
+              <li>Contrabalança neurotoxicidade por MPP+, metanfetamina e agonistas dopaminérgicos</li>
+              <li>Efeito anxiolítico e antidepressivo em modelos pré-clínicos</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Dor/eritema leve no local de aplicação SC</li>
+              <li class="rare">Sem toxicidade reportada — nenhuma DL50 determinada (não atingível)</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 10mg:</strong> Reconstituir com 2mL de água bacteriostática → 5mg/mL. Para dose de 500mcg = 0,1mL (10UI). Para dose de 250mcg = 0,05mL (5UI).<br>
+              <strong>Armazenamento:</strong> Pó: 2–8°C. Reconstituído: refrigerado, usar em até 28 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> Sem 1-2: 500-750mcg/dia (carga), Sem 3+: 250-500mcg/dia · SC ou Oral · 4–8 semanas · Frasco: 10mg
+            <strong style="color:var(--gold)">Protocolo:</strong> Sem 1-2: 500-750mcg/dia (carga) · Sem 3+: 250-500mcg/dia · SC ou Oral · 4–8 sem · Frasco: 10mg
           </div>
         </div>
       </div>
@@ -1343,15 +1640,37 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Atua no SNC (hipotálamo) via receptores melanocortina</li>
-            <li>Aumenta desejo sexual via vias dopaminérgicas</li>
-            <li>Eficaz em homens e mulheres</li>
-            <li>Funciona em homens que falharam com PDE5i (Viagra/Cialis)</li>
-            <li>Aprovado FDA para HSDD em mulheres pré-menopáusicas</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">PT-141 (Bremelanotide) é um peptídeo cíclico heptapeptídeo, metabolito ativo do Melanotan II, que atua como agonista dos receptores melanocortina MC3R e MC4R no sistema nervoso central (hipotálamo). Diferente do Viagra/Cialis (periférico/vascular), PT-141 age centralmente — ativando vias dopaminérgicas e oxitocinérgicas responsáveis pelo desejo e excitação sexual. É o primeiro tratamento aprovado que age diretamente no circuito neural do desejo, não apenas na mecânica vascular.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Aprovado FDA como Vyleesi para HSDD em mulheres pré-menopáusicas (2019) <span class="lib-study-ref">— AMAG Pharmaceuticals</span></li>
+              <li>Aumento significativo no desejo sexual e satisfação em mulheres com HSDD <span class="lib-study-ref">— RECONNECT trial</span></li>
+              <li>Eficácia em homens com disfunção erétil refratária a PDE5i <span class="lib-study-ref">— Diamond et al., Urology</span></li>
+              <li>Início de ação: 30-45 min. Duração: 6-12 horas</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Náusea (40% — principal efeito, dose-dependente, diminui com uso)</li>
+              <li>Flushing facial e hiperpigmentação transitória</li>
+              <li>Cefaleia leve</li>
+              <li class="rare">Contraindicação: hipertensão não controlada. Máximo 8 doses/mês.</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 10mg:</strong> Reconstituir com 2mL de água bacteriostática → 5mg/mL. Para dose de 1,5mg = 0,3mL (30UI). Aplicar SC abdominal 45 min antes da atividade.<br>
+              <strong>Armazenamento:</strong> Pó: temperatura ambiente. Reconstituído: 2–8°C, usar em até 28 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 1–1,75mg SC · 45 min antes da atividade · Sob demanda (máx 8x/mês) · Náusea comum no início · Frasco: 10mg
+            <strong style="color:var(--gold)">Protocolo:</strong> 1–1,75mg SC · 45 min antes · Sob demanda (máx 8x/mês) · Frasco: 10mg
           </div>
         </div>
       </div>
@@ -1368,15 +1687,38 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Agonista não-seletivo MC1R/MC3R/MC4R/MC5R</li>
-            <li>Estimula melanogênese — bronzeamento sem UV excessivo</li>
-            <li>Efeito pró-erétil via MC3R/MC4R</li>
-            <li>Supressão de apetite via MC4R</li>
-            <li>Pode conferir fotoproteção parcial</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">Melanotan II é um análogo cíclico do α-MSH (alfa-hormônio melanócito-estimulante) que atua como agonista não-seletivo dos receptores melanocortina MC1R, MC3R, MC4R e MC5R. Via MC1R: estimula melanogênese nos melanócitos, aumentando produção de eumelanina (pigmento escuro) e promovendo bronzeamento. Via MC3R/MC4R: efeito pró-erétil central e supressão de apetite. Desenvolvido na Universidade do Arizona para fotoproteção em populações de pele clara.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Aumento significativo de melanogênese e bronzeamento sem exposição solar excessiva <span class="lib-study-ref">— Dorr et al., Life Sci 1996</span></li>
+              <li>Ereção induzida em homens saudáveis e com disfunção erétil <span class="lib-study-ref">— Wessells et al., J Urology</span></li>
+              <li>Supressão de apetite dose-dependente via ativação MC4R central</li>
+              <li>Fotoproteção parcial: aumento da tolerância ao UV em pele tipo I-II</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Náusea (dose-dependente — iniciar com dose baixa)</li>
+              <li>Flushing facial e rubor</li>
+              <li>Escurecimento de nevos (pintas) existentes — monitorar</li>
+              <li>Ereções involuntárias (nos primeiros dias)</li>
+              <li class="rare">Raro: surgimento de novos nevos — acompanhamento dermatológico recomendado</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 10mg:</strong> Reconstituir com 2mL de água bacteriostática → 5mg/mL. Dose de carga: 250mcg = 0,05mL (5UI). Aumentar gradualmente até 1000mcg.<br>
+              <strong>Armazenamento:</strong> Pó: temperatura ambiente. Reconstituído: 2–8°C, usar em até 30 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> Carga: 250–1000mcg/dia SC por 6–8 sem · Manutenção: 500mcg–1mg 1-2x/sem · Iniciar com dose baixa · Frasco: 10mg
+            <strong style="color:var(--gold)">Protocolo:</strong> Carga: 250–1000mcg/dia SC × 6–8 sem · Manutenção: 500mcg–1mg 1-2x/sem · Frasco: 10mg
           </div>
         </div>
       </div>
@@ -1393,15 +1735,35 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Liga-se ao GPR54/KISS1R nos neurônios GnRH</li>
-            <li>Estimula LH e FSH pulsátil — aumenta testosterona</li>
-            <li>Promissor para fertilidade (trigger de IVF sem OHSS)</li>
-            <li>Melhora processamento sexual cerebral (estudo JAMA)</li>
-            <li>Perfil de segurança excelente — sem efeitos colaterais sérios</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">Kisspeptin-10 é a forma ativa de 10 aminoácidos do neuropeptídeo Kisspeptin, codificado pelo gene KISS1. Liga-se ao receptor GPR54 (KISS1R) nos neurônios GnRH do hipotálamo, estimulando secreção pulsátil de GnRH → LH → FSH → Testosterona/Estradiol. É considerado o "gatilho mestre" do eixo HPG (Hipotálamo-Hipófise-Gonadal). Também atua no processamento sexual cerebral — o cérebro "interpreta" estímulos sexuais com mais intensidade.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Aumento agudo de LH e testosterona em homens saudáveis <span class="lib-study-ref">— Dhillo et al., JCEM 2005</span></li>
+              <li>Melhora no processamento sexual cerebral (fMRI) em homens com baixo desejo <span class="lib-study-ref">— Comninos et al., JAMA Network</span></li>
+              <li>Trigger seguro para maturação oocitária em IVF (sem risco de OHSS) <span class="lib-study-ref">— Abbara et al., JCEM 2015</span></li>
+              <li>Restauração de pulsatilidade de LH em amenorreia hipotalâmica funcional</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Rubor facial e sensação de calor (transitórios)</li>
+              <li class="rare">Perfil de segurança excelente — nenhum efeito adverso sério em estudos clínicos</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 10mg:</strong> Reconstituir com 2mL de água bacteriostática → 5mg/mL. Para dose de 100mcg = 0,02mL (2UI). Administração intermitente para evitar dessensibilização.<br>
+              <strong>Armazenamento:</strong> Pó: -20°C a 2–8°C. Reconstituído: 2–8°C, usar em até 21 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 100–200mcg SC · 2x/semana (intermitente) · 4–12 semanas · Pausa 4 sem entre ciclos · Frasco: 10mg
+            <strong style="color:var(--gold)">Protocolo:</strong> 100–200mcg SC · 2x/sem (intermitente) · 4–12 sem · Pausa 4 sem entre ciclos · Frasco: 10mg
           </div>
         </div>
       </div>
@@ -1418,15 +1780,35 @@
       </div>
       <div class="lib-card-body">
         <div class="lib-card-inner">
-          <ul class="lib-feat">
-            <li>Tripeptídeo bioregulador (família Khavinson)</li>
-            <li>Aumenta índice de cartilagem em 18–38%</li>
-            <li>Reduz marcadores de senescência (p16, p21, p53)</li>
-            <li>Aumenta SIRT6 (longevidade) e Ki-67 (proliferação)</li>
-            <li>Inibe MMP-9 — preserva matriz extracelular</li>
-          </ul>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Mecanismo de Ação</h4>
+            <p class="lib-section-text">Cartalax (Ala-Glu-Asp) é um tripeptídeo bioregulador da família Khavinson, desenvolvido no Instituto de Gerontologia de São Petersburgo, Rússia. Atua por regulação epigenética: penetra no núcleo celular e interage com regiões promotoras de genes relacionados à cartilagem e envelhecimento. Reduz marcadores de senescência celular (p16, p21, p53), aumenta SIRT6 (sirtuína de longevidade), Ki-67 (proliferação) e inibe MMP-9 (enzima que degrada matriz extracelular), preservando cartilagem e tecido conjuntivo.</p>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Evidência Clínica</h4>
+            <ul class="lib-studies">
+              <li>Aumento de 18–38% no índice de cartilagem em condrócitos humanos in vitro <span class="lib-study-ref">— Khavinson et al., Bull Exp Biol Med</span></li>
+              <li>Redução de biomarcadores de senescência e aumento de telomerase <span class="lib-study-ref">— Anisimov et al., Biogerontology</span></li>
+              <li>Efeitos regulatórios que persistem por 3–6 meses após ciclo de 10 dias</li>
+              <li>Parte da classe de peptídeos bioreguladores com 40+ anos de pesquisa na Rússia</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Efeitos Colaterais</h4>
+            <ul class="lib-effects">
+              <li>Dor leve no local de aplicação</li>
+              <li class="rare">Perfil de segurança excepcional — tripeptídeo curto sem atividade hormonal</li>
+            </ul>
+          </div>
+          <div class="lib-section">
+            <h4 class="lib-section-title">Reconstituição &amp; Armazenamento</h4>
+            <div class="lib-recon">
+              <strong>Frasco 20mg:</strong> Reconstituir com 2mL de água bacteriostática → 10mg/mL. Para dose de 5mg = 0,5mL (50UI). Ciclo curto: 10 dias consecutivos.<br>
+              <strong>Armazenamento:</strong> Pó: temperatura ambiente. Reconstituído: 2–8°C, usar dentro do ciclo de 10 dias.
+            </div>
+          </div>
           <div class="lib-dose">
-            <strong style="color:var(--gold)">Protocolo:</strong> 5–10mg/dia SC · 10 dias consecutivos · Repetir a cada 3–6 meses · Efeitos regulatórios duradouros · Frasco: 20mg
+            <strong style="color:var(--gold)">Protocolo:</strong> 5–10mg/dia SC · 10 dias consecutivos · Repetir a cada 3–6 meses · Efeitos duradouros · Frasco: 20mg
           </div>
         </div>
       </div>
@@ -1683,7 +2065,6 @@
     <div class="footer-tagline">Peptide Science · Education · Excellence</div>
   </div>
   <div class="footer-links">
-    <a href="#protocols">Protocolos</a>
     <a href="#library">Biblioteca</a>
     <a href="protocolo.html">Protocolo</a>
     <a href="#science">Ciência</a>
@@ -1730,8 +2111,6 @@
       }
     });
   }, { threshold: 0.3 });
-  document.querySelectorAll('.protocol-card').forEach(c => barObserver.observe(c));
-
   // Library filter
   function filterLib(cat) {
     document.querySelectorAll('.lib-filter').forEach(b => b.classList.remove('active'));
