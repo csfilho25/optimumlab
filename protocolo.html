@@ -1075,6 +1075,17 @@ const peptides = [
     notes: 'Estudos clínicos em andamento — uso off-label'
   },
   {
+    id: 'ipamorelin', name: 'Ipamorelin', icon: '△',
+    category: 'gh', catLabel: 'GH & Performance',
+    desc: 'GHRP seletivo — estimula GH sem afetar cortisol ou prolactina.',
+    vialSize: '5mg',
+    dose: '200–300mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Antes de dormir (estômago vazio)', method: 'Subcutânea', cycle: '8–12 sem + 4–8 sem wash',
+    pillClass: 'pill-gh', pillLabel: 'IPA',
+    escalation: null,
+    notes: 'Dose noturna em estômago vazio. GHRP mais seletivo — não eleva cortisol, ACTH, prolactina nem fome (diferente do GHRP-6). Frasco: 5mg'
+  },
+  {
     id: 'cjcipa', name: 'CJC-1295 + Ipamorelin', icon: '△',
     category: 'gh', catLabel: 'GH & Performance',
     desc: 'Secretagogos — amplificam GH natural em 3-5×.',
@@ -1216,6 +1227,8 @@ const rules = [
   { type: 'warning', ids: ['pt141','mt2'], msg: 'Ambos são agonistas de melanocortina — <strong>usar apenas um</strong> (mecanismos sobrepostos). PT-141 é derivado do MT-2.' },
   { type: 'warning', ids: ['tesamorelin','tesamorelinipa'], msg: 'Tesamorelin standalone + combo Tesa+Ipa — <strong>redundante</strong>. Escolha um dos dois.' },
   { type: 'warning', ids: ['cjcipa','tesamorelinipa'], msg: 'Ambos contêm Ipamorelin — <strong>atenção à sobredosagem</strong>. Usar apenas um combo por vez.' },
+  { type: 'warning', ids: ['ipamorelin','cjcipa'], msg: 'CJC+Ipa já contém Ipamorelin — <strong>redundante</strong> usar Ipa standalone junto.' },
+  { type: 'warning', ids: ['ipamorelin','tesamorelinipa'], msg: 'Tesa+Ipa já contém Ipamorelin — <strong>redundante</strong> usar Ipa standalone junto.' },
   // ── SYNERGIES ──
   { type: 'synergy', ids: ['bpc157tb500','ghkcu'], msg: '<strong>Sinergia regenerativa potencializada</strong> — GHK-Cu estimula colágeno enquanto BPC+TB reparam tecido profundo.' },
   { type: 'synergy', ids: ['bpc157','ghkcu'], msg: '<strong>Regeneração + colágeno</strong> — BPC-157 repara tecido e GHK-Cu estimula produção de colágeno.' },
