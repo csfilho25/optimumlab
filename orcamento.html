@@ -399,9 +399,37 @@ html,body{height:100%;background:var(--bg);font-family:'Outfit',sans-serif;color
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--card2);border-radius:3px}
+
+/* ── LOGIN GATE ── */
+#loginGate{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column}
+#loginGate.hidden{display:none}
+.login-box{text-align:center;max-width:380px;width:90%}
+.login-logo{font-family:'Outfit',sans-serif;font-size:2rem;font-weight:300;color:#f5f0e8;margin-bottom:.3rem}
+.login-logo span{color:var(--gold);font-weight:600}
+.login-tagline{font-size:.65rem;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--text2);margin-bottom:2.5rem}
+.login-input{width:100%;box-sizing:border-box;padding:.9rem 1.2rem;background:var(--card);border:1px solid rgba(201,162,88,.15);border-radius:4px;color:#f5f0e8;font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s}
+.login-input::placeholder{color:var(--text2);opacity:.6}
+.login-input:focus{border-color:var(--gold)}
+.login-btn{width:100%;margin-top:1rem;padding:.85rem;background:var(--gold);color:var(--bg);font-family:'Outfit',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;border:none;border-radius:3px;cursor:pointer;transition:all .3s}
+.login-btn:hover{background:var(--gold2);box-shadow:0 0 30px rgba(201,162,88,.25)}
+.login-error{color:#e85d5d;font-size:.78rem;margin-top:.8rem;opacity:0;transition:opacity .3s}
+.login-error.show{opacity:1}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.login-shake{animation:shake .4s ease}
 </style>
 </head>
 <body>
+
+<!-- LOGIN GATE -->
+<div id="loginGate">
+  <div class="login-box">
+    <div class="login-logo">Optimum<span>Lab</span></div>
+    <div class="login-tagline">Peptide Science · Education · Excellence</div>
+    <input type="password" class="login-input" id="loginPass" placeholder="Senha de acesso" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Entrar →</button>
+    <div class="login-error" id="loginError">Senha incorreta</div>
+  </div>
+</div>
 
 <!-- HEADER -->
 <div class="header">
@@ -1095,6 +1123,41 @@ function goBack() {
 // ── INIT ──────────────────────────────────────────────────────────────────────
 updateStepper();
 updateCart();
+// ─── AUTH SYSTEM ───
+const HASH_MASTER = 'cf18297f85c4aa6e8572395f1c56c77226d84bf239d1f8c1865afd585beb0072';
+const HASH_STD    = 'fde10733d53ea5f2da70f56ab1d1f94a34f75402cd42983a2ddd033b8c09c288';
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function doLogin() {
+  const pass = document.getElementById('loginPass').value;
+  const hash = await sha256(pass);
+  if (hash === HASH_MASTER || hash === HASH_STD) {
+    sessionStorage.setItem('ol_auth', hash === HASH_MASTER ? 'master' : 'standard');
+    document.getElementById('loginGate').classList.add('hidden');
+    document.body.style.overflow = '';
+  } else {
+    const err = document.getElementById('loginError');
+    err.classList.add('show');
+    const box = document.querySelector('.login-box');
+    box.classList.remove('login-shake');
+    void box.offsetWidth;
+    box.classList.add('login-shake');
+    setTimeout(() => err.classList.remove('show'), 2500);
+  }
+}
+
+(function() {
+  const auth = sessionStorage.getItem('ol_auth');
+  if (auth === 'master' || auth === 'standard') {
+    document.getElementById('loginGate').classList.add('hidden');
+  } else {
+    document.body.style.overflow = 'hidden';
+  }
+})();
 </script>
 </body>
 </html>
