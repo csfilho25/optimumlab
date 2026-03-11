@@ -306,6 +306,7 @@
   .pill-gh  { background: rgba(156,106,222,.15); color: #b48be6; }
   .pill-imu { background: rgba(230,162,60,.15); color: var(--amber); }
   .pill-sex { background: rgba(236,64,122,.15); color: #ec407a; }
+  .pill-cer { background: rgba(100,149,237,.15); color: #6495ed; }
   .pill-rest { background: rgba(255,255,255,.04); color: var(--gray); }
 
   /* Dosage table */
@@ -769,6 +770,7 @@
     <button class="sel-filter" onclick="filterSel('gh')">GH &amp; Performance</button>
     <button class="sel-filter" onclick="filterSel('imunidade')">Imunidade</button>
     <button class="sel-filter" onclick="filterSel('sexual')">Saúde Sexual</button>
+    <button class="sel-filter" onclick="filterSel('cerebro')">Cérebro &amp; Sono</button>
   </div>
 
   <div class="sel-grid" id="selGrid">
@@ -1205,6 +1207,160 @@ const peptides = [
     pillClass: 'pill-ema', pillLabel: 'FRAG',
     escalation: null,
     notes: 'Aplicar 2x/dia — manhã em jejum e noite. Sem efeito em IGF-1 ou glicose. Ciclos curtos com washout'
+  },
+  {
+    id: 'cagrilintide', name: 'Cagrilintide', icon: '◆',
+    category: 'emagrecimento', catLabel: 'Emagrecimento',
+    desc: 'Análogo de amilina de longa ação — controle de apetite e saciedade.',
+    vialSize: '5mg',
+    dose: '0,25–2,4mg/semana', frequency: 'semanal', days: [3],
+    timing: 'Manhã em jejum', method: 'Subcutânea', cycle: '12–24 semanas',
+    pillClass: 'pill-ema', pillLabel: 'CAGRI',
+    escalation: 'Sem 1-4: 0,25mg → Sem 5-8: 0,5mg → Sem 9-12: 1,0mg → Sem 13+: 1,7–2,4mg',
+    notes: 'Escalonar dose a cada 4 semanas. Mecanismo complementar ao GLP-1 (sinergia). Frasco 5mg — R$ 500,00'
+  },
+  {
+    id: 'mazdutide', name: 'Mazdutide', icon: '⬢',
+    category: 'emagrecimento', catLabel: 'Emagrecimento',
+    desc: 'Duplo agonista GLP-1/Glucagon — metabolismo acelerado e gordura hepática.',
+    vialSize: '10mg',
+    dose: '3–9mg/semana', frequency: 'semanal', days: [3],
+    timing: 'Manhã em jejum', method: 'Subcutânea', cycle: '12–24 semanas',
+    pillClass: 'pill-ema', pillLabel: 'MAZ',
+    escalation: 'Sem 1-4: 3mg → Sem 5-8: 6mg → Sem 9+: 9mg',
+    notes: 'Escalonar a cada 4 semanas. Ação dual: GLP-1 (saciedade) + Glucagon (termogênese). Benefício hepático (MASLD). Frasco 10mg — R$ 800,00'
+  },
+  {
+    id: 'amino1mq', name: '5-Amino-1MQ', icon: '⊞',
+    category: 'emagrecimento', catLabel: 'Emagrecimento',
+    desc: 'Inibidor de NNMT — aumenta NAD+, ativa metabolismo e queima gordura.',
+    vialSize: '50mg (cápsulas)',
+    dose: '50–100mg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Jejum (manhã)', method: 'Oral', cycle: '4–8 semanas',
+    pillClass: 'pill-ema', pillLabel: '1MQ',
+    escalation: null,
+    notes: 'Via oral — não requer injeção. Inibe NNMT → aumenta NAD+ e SAM intracelular. Frasco 50mg — R$ 800,00'
+  },
+  {
+    id: 'glow', name: 'GLOW Stack', icon: '✧',
+    category: 'regeneracao', catLabel: 'Regeneração',
+    desc: 'Stack beleza 3-em-1: GHK-Cu 50mg + BPC 10mg + TB 10mg.',
+    vialSize: '70mg (blend)',
+    dose: '0,1–0,2mL/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '8–12 semanas',
+    pillClass: 'pill-reg', pillLabel: 'GLOW',
+    escalation: null,
+    notes: 'Blend triplo regenerativo para pele, cabelo e tecido conjuntivo. Contém GHK-Cu 50mg + BPC-157 10mg + TB-500 10mg. Frasco 70mg — R$ 800,00'
+  },
+  {
+    id: 'pegmgf', name: 'PEG-MGF', icon: '⊕',
+    category: 'regeneracao', catLabel: 'Regeneração',
+    desc: 'Fator de Crescimento Mecânico PEGilado — hipertrofia e recuperação.',
+    vialSize: '2mg',
+    dose: '200mcg', frequency: 'especial', days: [0,2,4],
+    timing: 'Pós-treino', method: 'IM ou SC', cycle: '4–6 semanas',
+    pillClass: 'pill-reg', pillLabel: 'MGF',
+    escalation: null,
+    notes: 'Aplicar imediatamente pós-treino. Ativa células satélites musculares. 2-3x/semana. Frasco 2mg — R$ 500,00'
+  },
+  {
+    id: 'hexarelin', name: 'Hexarelin', icon: '⬠',
+    category: 'gh', catLabel: 'GH & Performance',
+    desc: 'Secretagogo potente de GH — massa magra e cardioproteção.',
+    vialSize: '2mg',
+    dose: '100–200mcg 2–3x/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã + antes de dormir (estômago vazio)', method: 'Subcutânea', cycle: '8–12 sem + 4 sem wash',
+    pillClass: 'pill-gh', pillLabel: 'HEX',
+    escalation: null,
+    notes: 'GHRP mais potente. Eleva cortisol/prolactina em doses altas (diferente do Ipa). Efeito cardioprotetor único. Frasco 2mg — R$ 300,00'
+  },
+  {
+    id: 'testagen', name: 'Testagen', icon: '♂',
+    category: 'sexual', catLabel: 'Saúde Sexual',
+    desc: 'Bioregulador testicular — suporte à produção natural de testosterona.',
+    vialSize: '20mg',
+    dose: '5–10mg/dia', frequency: 'diario', days: [0,1,2,3,4,5,6],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '10–20 dias (repetir a cada 3–6 meses)',
+    pillClass: 'pill-sex', pillLabel: 'TEST',
+    escalation: null,
+    notes: 'Protocolo Khavinson: 10-20 dias intensivos, repetir a cada 3-6 meses. Sem supressão do eixo HPG. Frasco 20mg — R$ 800,00'
+  },
+  {
+    id: 'cardiogen', name: 'Cardiogen', icon: '♡',
+    category: 'longevidade', catLabel: 'Longevidade',
+    desc: 'Bioregulador cardíaco — proteção e regeneração do miocárdio.',
+    vialSize: '20mg',
+    dose: '5–10mg/dia', frequency: 'diario', days: [0,1,2,3,4,5,6],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '10 dias (repetir a cada 3–6 meses)',
+    pillClass: 'pill-lon', pillLabel: 'CARD',
+    escalation: null,
+    notes: 'Protocolo Khavinson: 10 dias intensivos. Proteção cardiaca e melhora da função ventricular. Frasco 20mg — R$ 800,00'
+  },
+  {
+    id: 'livagen', name: 'Livagen', icon: '⊛',
+    category: 'imunidade', catLabel: 'Imunidade',
+    desc: 'Bioregulador imunomodulador — longevidade, imunidade e hepatoproteção.',
+    vialSize: '20mg',
+    dose: '5–10mg/dia', frequency: 'diario', days: [0,1,2,3,4,5,6],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '10–20 dias (repetir a cada 3–6 meses)',
+    pillClass: 'pill-imu', pillLabel: 'LIV',
+    escalation: null,
+    notes: 'Dipeptídeo Lys-Glu. Descondensa heterocromatina em linfócitos. Hepatoprotetor. Frasco 20mg — R$ 800,00'
+  },
+  {
+    id: 'prostamax', name: 'Prostamax', icon: '⊙',
+    category: 'longevidade', catLabel: 'Longevidade',
+    desc: 'Bioregulador prostático — saúde e função da próstata.',
+    vialSize: '20mg',
+    dose: '5–10mg/dia', frequency: 'diario', days: [0,1,2,3,4,5,6],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '10 dias (repetir a cada 3–6 meses)',
+    pillClass: 'pill-lon', pillLabel: 'PROS',
+    escalation: null,
+    notes: 'Protocolo Khavinson: 10 dias. Indicado para homens 40+. Sem efeitos antiandrogênicos sistêmicos. Frasco 20mg — R$ 800,00'
+  },
+  {
+    id: 'humanin', name: 'Humanin', icon: '∞',
+    category: 'longevidade', catLabel: 'Longevidade',
+    desc: 'Peptídeo mitocondrial — neuroproteção, cardioproteção e longevidade.',
+    vialSize: '10mg',
+    dose: '1–5mg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'Subcutânea', cycle: '4–8 semanas',
+    pillClass: 'pill-lon', pillLabel: 'HUM',
+    escalation: null,
+    notes: 'MDP (Mitochondrial-Derived Peptide). Anti-apoptótico via STAT3. Centenários têm níveis elevados. Frasco 10mg — R$ 1.200,00'
+  },
+  {
+    id: 'slupp332', name: 'SLU-PP-332', icon: '⚡',
+    category: 'longevidade', catLabel: 'Longevidade',
+    desc: 'Agonista ERR — mimético de exercício, endurance e metabolismo.',
+    vialSize: '5mg',
+    dose: '5mg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã (pré-treino)', method: 'Subcutânea', cycle: '4–8 semanas',
+    pillClass: 'pill-lon', pillLabel: 'SLU',
+    escalation: null,
+    notes: 'Mimético de exercício — ativa ERRα/β/γ, biogênese mitocondrial e transição de fibras musculares. Frasco 5mg — R$ 450,00'
+  },
+  {
+    id: 'dsip', name: 'DSIP', icon: '☽',
+    category: 'cerebro', catLabel: 'Cérebro & Sono',
+    desc: 'Delta Sleep-Inducing Peptide — qualidade do sono profundo.',
+    vialSize: '5mg',
+    dose: '100–300mcg', frequency: 'diario', days: [0,1,2,3,4],
+    timing: '30–60 min antes de dormir', method: 'SC ou IM', cycle: '2–4 semanas',
+    pillClass: 'pill-cer', pillLabel: 'DSIP',
+    escalation: null,
+    notes: 'Modula GABA e serotonina. Aumenta ondas delta (sono profundo N3). Não é sedativo — normaliza arquitetura do sono. Sem dependência. Frasco 5mg — R$ 300,00'
+  },
+  {
+    id: 'naselank', name: 'NA Selank', icon: '◈',
+    category: 'cerebro', catLabel: 'Cérebro & Sono',
+    desc: 'Ansiolítico nootropico — reduz ansiedade sem sedação, aumenta BDNF.',
+    vialSize: '10mg',
+    dose: '250–500mcg/dia', frequency: 'diario', days: [0,1,2,3,4],
+    timing: 'Manhã', method: 'SC ou Intranasal', cycle: '14–30 dias + pausa igual',
+    pillClass: 'pill-cer', pillLabel: 'SEL',
+    escalation: null,
+    notes: 'N-Acetyl Selank — forma estabilizada. Modula GABA sem sedação. Aumenta BDNF. Sem dependência. SC ou intranasal. Frasco 10mg — R$ 500,00'
   }
 ];
 
@@ -1262,7 +1418,47 @@ const rules = [
   { type: 'synergy', ids: ['glutathione','motsc'], msg: '<strong>Longevidade metabólica</strong> — GSH protege contra dano oxidativo e MOTS-c otimiza metabolismo via AMPK.' },
   { type: 'synergy', ids: ['hghfrag','cjcipa'], msg: '<strong>GH + lipólise</strong> — CJC+Ipa amplificam GH natural e HGH Frag potencializa queima de gordura direcionada.' },
   { type: 'synergy', ids: ['hghfrag','tesamorelinipa'], msg: '<strong>GH + lipólise</strong> — Tesa+Ipa amplificam GH e HGH Frag direciona queima de gordura sem efeitos sistêmicos.' },
-  { type: 'synergy', ids: ['hghfrag','ghkcu'], msg: '<strong>Emagrecer + firmar</strong> — HGH Frag queima gordura e GHK-Cu preserva colágeno e firmeza da pele.' }
+  { type: 'synergy', ids: ['hghfrag','ghkcu'], msg: '<strong>Emagrecer + firmar</strong> — HGH Frag queima gordura e GHK-Cu preserva colágeno e firmeza da pele.' },
+  // ── NEW: Peptídeos adicionais ──
+  // WARNINGS
+  { type: 'warning', ids: ['cagrilintide','retatrutida'], msg: 'Ambos atuam em saciedade — combinação pode intensificar efeitos GI. <strong>Monitorar tolerância.</strong>' },
+  { type: 'warning', ids: ['mazdutide','retatrutida'], msg: 'Ambos são agonistas GLP-1 — <strong>usar apenas um</strong>. Mecanismos sobrepostos.' },
+  { type: 'warning', ids: ['mazdutide','tirzepatida'], msg: 'Ambos são agonistas GLP-1 — <strong>usar apenas um</strong>. Efeitos GI cumulativos.' },
+  { type: 'warning', ids: ['glow','ghkcu'], msg: 'GLOW já contém GHK-Cu 50mg — <strong>redundante</strong> usar GHK-Cu standalone junto.' },
+  { type: 'warning', ids: ['glow','bpc157'], msg: 'GLOW já contém BPC-157 10mg — <strong>redundante</strong> usar BPC standalone junto.' },
+  { type: 'warning', ids: ['glow','tb500'], msg: 'GLOW já contém TB-500 10mg — <strong>redundante</strong> usar TB standalone junto.' },
+  { type: 'warning', ids: ['glow','bpc157tb500'], msg: 'GLOW já contém BPC + TB — <strong>redundante</strong> usar combo BPC+TB junto.' },
+  { type: 'warning', ids: ['glow','wolverine'], msg: 'GLOW já contém BPC + TB — <strong>redundante</strong> com Wolverine Stack.' },
+  { type: 'warning', ids: ['glow','proklow'], msg: 'GLOW e Pro Klow compartilham GHK-Cu, BPC e TB — <strong>alta redundância</strong>. Escolha um.' },
+  { type: 'warning', ids: ['hexarelin','ipamorelin'], msg: 'Ambos são GHRPs — <strong>mecanismos sobrepostos</strong>. Hexarelin é menos seletivo (eleva cortisol/prolactina).' },
+  { type: 'warning', ids: ['hexarelin','cjcipa'], msg: 'CJC+Ipa já contém Ipamorelin (GHRP) — Hexarelin adicional pode ser <strong>redundante ou excessivo</strong>.' },
+  { type: 'warning', ids: ['testagen','kisspeptin'], msg: 'Ambos estimulam produção de testosterona — <strong>monitorar níveis hormonais</strong> para evitar excesso.' },
+  { type: 'warning', ids: ['dsip','naselank'], msg: 'Ambos modulam GABA — <strong>potencial de sedação aditiva</strong>. Ajustar doses ao combinar.' },
+  { type: 'warning', ids: ['pegmgf','igf1lr3'], msg: 'MGF é variante de IGF-1 — <strong>mecanismos sobrepostos</strong>. Usar em dias alternados ou ciclos separados.' },
+  // SYNERGIES
+  { type: 'synergy', ids: ['cagrilintide','tirzepatida'], msg: '<strong>CagriSema-like</strong> — Amilina + GLP-1 por vias complementares. Perda de peso potencializada (~25%).' },
+  { type: 'synergy', ids: ['amino1mq','nad'], msg: '<strong>NAD+ duplo</strong> — 5-Amino-1MQ inibe NNMT (preserva NAD+) e NAD+ suplementa diretamente. Sinergia metabólica.' },
+  { type: 'synergy', ids: ['amino1mq','motsc'], msg: '<strong>Metabolismo potencializado</strong> — 1MQ aumenta NAD+ intracelular e MOTS-c ativa AMPK.' },
+  { type: 'synergy', ids: ['glow','cartalax'], msg: '<strong>Rejuvenescimento completo</strong> — GLOW para pele/colágeno e Cartalax para cartilagem/articulações.' },
+  { type: 'synergy', ids: ['pegmgf','bpc157'], msg: '<strong>Recuperação muscular máxima</strong> — PEG-MGF ativa células satélites e BPC-157 repara tecido danificado.' },
+  { type: 'synergy', ids: ['pegmgf','cjcipa'], msg: '<strong>Hipertrofia + GH</strong> — CJC+Ipa amplificam GH e PEG-MGF potencializa crescimento muscular local.' },
+  { type: 'synergy', ids: ['hexarelin','tesamorelin'], msg: '<strong>GH maximizado</strong> — Tesamorelin (GHRH) + Hexarelin (GHRP) estimulam GH por vias complementares.' },
+  { type: 'synergy', ids: ['testagen','pt141'], msg: '<strong>Saúde sexual masculina</strong> — Testagen para testosterona endógena + PT-141 para excitação/libido.' },
+  { type: 'synergy', ids: ['cardiogen','ss31'], msg: '<strong>Cardioproteção completa</strong> — Cardiogen regenera miocárdio e SS-31 protege mitocôndrias cardíacas.' },
+  { type: 'synergy', ids: ['cardiogen','humanin'], msg: '<strong>Proteção cardíaca dupla</strong> — Cardiogen (bioregulador) + Humanin (anti-apoptótico mitocondrial).' },
+  { type: 'synergy', ids: ['cardiogen','nad'], msg: '<strong>Energia cardíaca</strong> — Cardiogen para função cardíaca e NAD+ para energia celular do miocárdio.' },
+  { type: 'synergy', ids: ['livagen','ta1'], msg: '<strong>Imunidade potencializada</strong> — Livagen descondensa cromatina imune e TA1 ativa células T/NK.' },
+  { type: 'synergy', ids: ['livagen','glutathione'], msg: '<strong>Hepatoproteção dupla</strong> — Livagen protege hepatócitos e Glutathione neutraliza ROS hepático.' },
+  { type: 'synergy', ids: ['prostamax','testagen'], msg: '<strong>Saúde masculina Khavinson</strong> — Prostamax (próstata) + Testagen (testosterona) em protocolo sinérgico.' },
+  { type: 'synergy', ids: ['humanin','ss31'], msg: '<strong>Mitocôndria total</strong> — Humanin (anti-apoptótico) + SS-31 (integridade de membrana). Proteção mitocondrial máxima.' },
+  { type: 'synergy', ids: ['humanin','nad'], msg: '<strong>Longevidade celular</strong> — Humanin protege contra apoptose e NAD+ restaura função mitocondrial e reparo de DNA.' },
+  { type: 'synergy', ids: ['humanin','motsc'], msg: '<strong>MDPs combinados</strong> — Humanin (neuroproteção) + MOTS-c (metabolismo). Peptídeos mitocondriais sinérgicos.' },
+  { type: 'synergy', ids: ['slupp332','motsc'], msg: '<strong>Exercise mimetics</strong> — SLU-PP-332 (ERR/biogênese) + MOTS-c (AMPK). Exercício em pílula amplificado.' },
+  { type: 'synergy', ids: ['slupp332','nad'], msg: '<strong>Performance + energia</strong> — SLU-PP-332 aumenta capacidade oxidativa e NAD+ fornece substrato energético.' },
+  { type: 'synergy', ids: ['dsip','ghkcu'], msg: '<strong>Regeneração noturna</strong> — DSIP otimiza sono profundo (quando GH é liberado) e GHK-Cu regenera tecido durante o sono.' },
+  { type: 'synergy', ids: ['dsip','cjcipa'], msg: '<strong>GH + sono profundo</strong> — DSIP maximiza sono delta e CJC+Ipa amplificam GH noturno. Sinergia fisiológica.' },
+  { type: 'synergy', ids: ['naselank','semax'], msg: '<strong>Nootropic stack</strong> — Selank (ansiolítico/BDNF) + Semax (foco/cognição). Combinação clássica russa.' },
+  { type: 'synergy', ids: ['naselank','nad'], msg: '<strong>Cérebro + energia</strong> — NA Selank para BDNF e neuroplasticidade, NAD+ para energia neuronal.' }
 ];
 
 // ─── STATE ───
